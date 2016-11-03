@@ -5,6 +5,8 @@ import PageHeader from '../components/page-header';
 import PageFooter from '../components/page-footer';
 
 import UploadForm from '../components/upload-form';
+import FailureModal from '../components/failure-modal';
+import SuccessModal from '../components/success-modal';
 
 var App = React.createClass({
   displayName: 'App',
@@ -17,6 +19,8 @@ var App = React.createClass({
           <div className='inpage__body'>
 
             <UploadForm />
+            <FailureModal />
+            <SuccessModal />
 
           </div>
         </main>

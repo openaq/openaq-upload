@@ -1,17 +1,22 @@
 'use strict';
 import React from 'react';
-import { csvParse } from '../utils/parser';
 import fileReaderStream from 'filereader-stream';
 import validator from 'jsonschema';
 import csv from 'csv-stream';
+
 import measurementSchema from '../utils/measurement-schema';
 
+import FailureModal from './failure-modal';
+
 var UploadForm = React.createClass({
-  displayName: 'Uploader',
+  displayName: 'UploadForm',
+  propTypes: {
+    visible: React.PropTypes.array
+  },
 
   getInitialState: function () {
     return {
-      errors: 'Error messages will appear here, if applicable'
+      errors: []
     };
   },
 
@@ -36,8 +41,8 @@ var UploadForm = React.createClass({
     }
   },
 
-  parseCsv: function (event) {
-    const csvData = event.target.files[0];
+  parseCsv: function () {
+    const csvData = this.csvData;
     const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
     let failures = [];
     let line = 0;
@@ -114,14 +119,20 @@ var UploadForm = React.createClass({
       .on('end', () => {
         this.logOutput(failures);
       });
+  },
 
-    console.log('Attempting to use an imported version of the parse will return undefined. The "return" appears to be executed before the on("end") method is ready: ', csvParse(event.target.files[0]));
-    console.log('\nWhen a very similar parser is contained within the React component, the on("end") method is properly executed after the data is ready, allowing it to print to the error messages form.\n');
+  storeCsv: function (event) {
+    this.csvData = event.target.files[0];
   },
 
   render: function () {
+    const errors = this.state.errors;
+    const failureModal = errors.length
+      ? <FailureModal errors={errors} />
+      : '';
     return (
-      <section className='fold' id='status__api'>
+      <section className='fold' id='uploader'>
+        {failureModal}
         <div className='inner'>
           <header className='fold__header'>
             <h1 className='fold__title'>OpenAQ Uploader</h1>
@@ -137,15 +148,8 @@ var UploadForm = React.createClass({
           <fieldset className='form__fieldset'>
 
             <div className='form__group'>
-              <label className='form__label' htmlFor='form-input'>Enter you API token</label>
-              <div className='form__input-group'>
-                <input type='text' className='form__control form__control--medium' id='form-input' placeholder='Please enter your uploader API token' />
-              </div>
-            </div>
-
-            <div className='form__group'>
               <label className='form__label' htmlFor='form-input'>Please select a CSV file</label>
-              <input type='file' className='form__control' id='form-file' accept='text/plain' onChange={this.parseCsv} />
+              <input type='file' className='form__control' id='form-file' accept='text/plain' onChange={this.storeCsv} />
               <div className='form__input-group'>
                 <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--example-icon'><label htmlFor='form-file'>Choose File</label></button></span>
                 <input type='text' className='form__control form__control--medium' id='form-input' placeholder='No file chosen' />
@@ -153,11 +157,13 @@ var UploadForm = React.createClass({
             </div>
 
             <div className='form__group'>
-              <label className='form__label' htmlFor='form-textarea'>Error messages</label>
-              <textarea className='form__control' id='form-textarea' rows='4' placeholder={this.state.errors}></textarea>
+              <label className='form__label' htmlFor='form-input'>Please enter you API token</label>
+              <div className='form__input-group'>
+                <input type='text' className='form__control form__control--medium' id='form-input' placeholder='Please enter your uploader API token' />
+              </div>
             </div>
 
-            <button className='button button--base' type='button'><span>Submit CSV</span></button>
+            <button className='button button--base' type='button' onClick={this.parseCsv}><span>Validate CSV</span></button>
 
           </fieldset>
         </div>

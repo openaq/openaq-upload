@@ -81,6 +81,7 @@
     "jsonschema": "^1.1.0",
     "openaq-design-system": "git+https://github.com/openaq/openaq-design-system",
     "react": "^15.2.1",
+    "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.2.1"
   }
 }
