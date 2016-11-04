@@ -4,13 +4,11 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 const FailureModal = React.createClass({
   displayName: 'FailureModal',
   propTypes: {
-    visible: React.PropTypes.bool,
     errors: React.PropTypes.string
   },
 
   getInitialState: function () {
     return {
-      errors: [],
       visible: false
     };
   },
@@ -30,7 +28,7 @@ const FailureModal = React.createClass({
         <div className='modal__inner'>
           <header className='modal__header'>
             <div className='modal__headline'>
-              <h1 className='modal__title'>Lorem Ipsum</h1>
+              <h1 className='modal__title'>Validation Failure</h1>
               <button className='modal__button-dismiss' title='Close' onClick={() => this.toggleModal()}><span>Dismiss</span></button>
             </div>
           </header>
@@ -43,7 +41,7 @@ const FailureModal = React.createClass({
             </div>
             <div className='form__group'>
               <label className='form__label' htmlFor='form-textarea'>Error messages</label>
-              <textarea className='form__control' id='form-textarea' rows='7' placeholder={this.props.errors}></textarea>
+              <textarea className='form__control' id='form-textarea' rows='7' defaultValue={this.props.errors}></textarea>
             </div>
           </section>
         </div>

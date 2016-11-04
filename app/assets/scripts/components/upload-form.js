@@ -7,16 +7,19 @@ import csv from 'csv-stream';
 import measurementSchema from '../utils/measurement-schema';
 
 import FailureModal from './failure-modal';
+import SuccessModal from './success-modal';
 
 var UploadForm = React.createClass({
   displayName: 'UploadForm',
   propTypes: {
-    visible: React.PropTypes.array
+    errors: React.PropTypes.array,
+    showModal: React.PropTypes.bool
   },
 
   getInitialState: function () {
     return {
-      errors: []
+      errors: [],
+      showModal: false
     };
   },
 
@@ -25,7 +28,10 @@ var UploadForm = React.createClass({
     failures.forEach((failure) => {
       errorText += `${failure}\n`;
     });
-    this.setState({errors: errorText});
+    this.setState({
+      errors: errorText,
+      showModal: true
+    });
   },
 
   checkHeader: function (header, failures) {
@@ -131,12 +137,14 @@ var UploadForm = React.createClass({
 
   render: function () {
     const errors = this.state.errors;
-    const failureModal = errors.length
-      ? <FailureModal errors={errors} />
-      : '';
+    const showModal = this.state.showModal;
     return (
       <section className='fold' id='uploader'>
-        {failureModal}
+        {showModal
+          ? <FailureModal errors={errors} /> : ''}
+        {showModal
+          ? <SuccessModal visible={showModal} errors={errors} />
+          : ''}
         <div className='inner'>
           <header className='fold__header'>
             <h1 className='fold__title'>OpenAQ Uploader</h1>
