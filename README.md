@@ -13,6 +13,14 @@ After these basic requirements are met, run the following commands in the websit
 $ npm install
 ```
 
+## Development environment (server)
+This site depends on the server to acquire credentials for uploading to S3. In production, this server will
+be hosted by the OpenAQ maintainers, but a development server can be launched locally from the __server__
+directory of this project. After running `npm install` in the __server__ directory, the server can be launched
+using the command `env S3_ACCESS_KEY=xxx S3_SECRET_KEY=xxx S3_BUCKET=xxx S3_REGION=xxx node server.js`, with
+the credentials to the desired S3 bucket. The bucket will need to have a CORS policy permissive of uploads from
+the localhost port you use for development.
+
 ### Getting started
 
 ```
@@ -27,3 +35,5 @@ Compile the sass files, javascript... Use this instead of ```npm run serve``` if
 ```
 $ npm run build
 ```
+
+env S3_ACCESS_KEY=xxx S3_SECRET_KEY=xxx S3_BUCKET=xxx S3_REGION=xxx node server.js
