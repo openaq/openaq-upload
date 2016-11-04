@@ -1,6 +1,6 @@
 parameter,unit,value,averagingPeriod/value,averagingPeriod/unit,sourceName,sourceType,attribution/name,attribution/url,date/utc,date/local,mobile,location,city,country,coordinates/latitude,coordinates/longitude
 pm25,ppm,45,15,hours,A Corporation,other,A Corporation|Another Corporation|Yet Another Corporation,https://www.corporation.org/||https://www.yetanothercorporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,TRUE,Blagdon Alley,Washington,US,38.906197,-77.024224
 pm10,ug/m^3,45,15,hours,,research,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,T17:30:00-05:00,FALSE,Blagdon Alley,12,US,latitude,-77.024224
-no2,ppm,45,Eleven,days,A Corporation,other,A Corporation,A Corporation,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,0,Blagdon Alley,Washington,US,38.906197,-77.024224
-so2,,nine,15,hours,A Corporation,government,0,https://www.corporation.org/,2016-03-14,2016-03-14T17:30:00-05:00,TRUE,0,Washington,USA,38.906197,longitude
+,ppm,45,Eleven,days,A Corporation,other,A Corporation,A Corporation,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,0,Blagdon Alley,Washington,US,38.906197,-77.024224
+so2,,nine,15,hours,A Corporation,government,0,https://www.corporation.org/,3/14/16,2016-03-14T17:30:00-05:00,TRUE,0,Washington,USA,38.906197,longitude
 so2,ug/m^3,,15,hours,A Corporation,none,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,perhaps,Blagdon Alley,Washington,USA,38.906197,-77.024224

@@ -13,7 +13,7 @@
         },
         "unit": {
             "type": "string",
-            "enum": ["µg/m³", "ppm"]
+            "enum": ["ug/m^3", "ppm"]
         },
         "averagingPeriod": {
             "type": "object",

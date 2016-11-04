@@ -91,7 +91,11 @@ var UploadForm = React.createClass({
                 // This is hard to represent in csv; we may be able to find a better way.
                 const urls = data['attribution/url'].split('|');
                 value = value.split('|').map((name, i) => {
-                  return {name: name, url: urls[i]};
+                  const url = urls[i];
+                  if (url.length) {
+                    return {name: name, url: url};
+                  }
+                  return {name: name};
                 });
                 record[key] = value;
               }

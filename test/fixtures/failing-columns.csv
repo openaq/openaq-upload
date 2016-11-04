@@ -1,0 +1,6 @@
+parameter,value,averagingPeriod/value,averagingPeriod/unit,sourceType,attribution/name,attribution/url,date/utc,mobile,location,country,coordinates/latitude,coordinates/longitude
+pm25,9,1,hours,other,A Corporation|Another Corporation|Yet Another Corporation,https://www.corporation.org/||https://www.yetanothercorporation.org/,2016-03-14T17:30:00-05:00,TRUE,Blagdon Alley,US,38.906197,-77.024224
+pm10,7,1,hours,research,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,FALSE,Blagdon Alley,US,38.906197,-77.024224
+no2,3,23,hours,other,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,FALSE,Blagdon Alley,US,38.906197,-77.024224
+so2,5,3,hours,government,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,TRUE,Blagdon Alley,US,38.906197,-77.024224
+o3,11,3,hours,research,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,FALSE,Blagdon Alley,US,38.906197,-77.024224
