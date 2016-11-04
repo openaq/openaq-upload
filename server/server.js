@@ -18,6 +18,13 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/s3_credentials', function (request, response) {
+  // The following code allows for local access at the expense of security.
+  // Do not use in production.
+  response.header('Access-Control-Allow-Origin', '*');
+  response.header('Access-Control-Allow-Credentials', true);
+  response.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  response.header('Access-Control-Allow-Headers', 'Content-Type');
+  // End insecure code
   if (request.query.filename) {
     var filename =
       crypto.randomBytes(16).toString('hex') +

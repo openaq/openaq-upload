@@ -19,7 +19,7 @@ be hosted by the OpenAQ maintainers, but a development server can be launched lo
 directory of this project. After running `npm install` in the __server__ directory, the server can be launched
 using the command `env S3_ACCESS_KEY=xxx S3_SECRET_KEY=xxx S3_BUCKET=xxx S3_REGION=xxx node server.js`, with
 the credentials to the desired S3 bucket. The bucket will need to have a CORS policy permissive of uploads from
-the localhost port you use for development.
+localhost. The server launches on port 5000, which is used in this development version of the upload form.
 
 ### Getting started
 
@@ -35,5 +35,3 @@ Compile the sass files, javascript... Use this instead of ```npm run serve``` if
 ```
 $ npm run build
 ```
-
-env S3_ACCESS_KEY=xxx S3_SECRET_KEY=xxx S3_BUCKET=xxx S3_REGION=xxx node server.js
