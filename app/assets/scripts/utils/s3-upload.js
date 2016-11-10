@@ -1,9 +1,12 @@
+'use strict';
+
 export const s3Upload = function (file) {
-  fetch(`http://localhost:5000/s3_credentials?filename=${file.name}`, {
+  return fetch(`http://localhost:5000/s3_credentials?filename=${file.name}`, {
     method: 'GET',
+    // Removed for local testing
     headers: {
-      'Accept': 'application/csv',
-      'Content-Type': 'application/csv'
+      // 'Accept': 'application/csv',
+      // 'Content-Type': 'application/csv'
     }
   })
   .then(function (response) {
@@ -26,17 +29,14 @@ export const s3Upload = function (file) {
     data.append('file', file);
 
     // Send the file
-    fetch(s3Data.endpoint_url, {
+    return fetch(s3Data.endpoint_url, {
       method: 'POST',
       body: data
     })
     .then(function (response) {
-      console.log(response.status);
-      console.log(response.statusText);
       return response;
     });
   }).catch(function (err) {
-    console.log('endpoint failed', err);
     return err;
   });
 };
