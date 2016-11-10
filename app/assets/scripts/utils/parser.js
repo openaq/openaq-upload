@@ -1,5 +1,7 @@
 'use strict';
 
+// Not currently used; a version of this script is attached inline to the upload-form component.
+
 import fileReaderStream from 'filereader-stream';
 import validator from 'jsonschema';
 import csv from 'csv-stream';
