@@ -47,8 +47,6 @@ function s3UploadPolicy (config, filename, credential) {
       { key: filename },
       { acl: 'public-read' },
       { success_action_status: '201' },
-      // Optionally control content type and file size
-      // {'Content-Type': 'application/pdf'},
       { 'x-amz-algorithm': 'AWS4-HMAC-SHA256' },
       { 'x-amz-credential': credential },
       { 'x-amz-date': dateString() + 'T000000Z' }
