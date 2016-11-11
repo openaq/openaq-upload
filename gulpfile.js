@@ -1,9 +1,9 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('path');
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var del = require('del');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var watchify = require('watchify');
@@ -78,6 +78,13 @@ gulp.task('serve', ['vendorScripts', 'javascript', 'styles', 'fonts'], function 
   gulp.watch('app/assets/styles/**/*.scss', ['styles']);
   gulp.watch('app/assets/fonts/**/*', ['fonts']);
   gulp.watch('package.json', ['vendorScripts']);
+});
+
+gulp.task('clean', function () {
+  return del(['.tmp', 'dist'])
+    .then(function () {
+      $.cache.clearAll();
+    });
 });
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -201,6 +208,19 @@ gulp.task('html', ['styles'], function () {
     .pipe($.if(/\.(css|js)$/, rev()))
     .pipe(revReplace())
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('images', function () {
+  return gulp.src(['app/assets/graphics/**/*'])
+    .pipe($.cache($.imagemin([
+      $.imagemin.gifsicle({interlaced: true}),
+      $.imagemin.jpegtran({progressive: true}),
+      $.imagemin.optipng({optimizationLevel: 5}),
+      // don't remove IDs from SVGs, they are often used
+      // as hooks for embedding and styling
+      $.imagemin.svgo({plugins: [{cleanupIDs: false}]})
+    ])))
+    .pipe(gulp.dest('dist/assets/graphics'));
 });
 
 gulp.task('fonts', function () {
