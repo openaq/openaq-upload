@@ -32,6 +32,9 @@
   font-size: 1rem;
   line-height: 1.5;
   margin: 0 2/12*100% 1rem 2/12*100%;
+  @include media(medium-down) {
+    margin: 0 1/12*100% 1rem 1/12*100%;
+  }
 
   li > & {
     margin: 0;
@@ -181,14 +184,21 @@
 }
 
 .form__group--token {
+  margin-bottom: 2.5rem;
   width: 10/12*100%;
+  @include media(xsmall-only) {
+    min-width: 19rem;
+  }
 }
 
 .form__group--upload {
+  margin-bottom: 2.5rem;
   width: 5/12*100%;
+  @include media(xsmall-only) {
+    min-width: 19rem;
+  }
 }
 
 .button--verify {
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: .5rem 1.5rem .5rem 1.5rem;
 }
