@@ -14,21 +14,24 @@ var UploadForm = React.createClass({
 
   getInitialState: function () {
     return {
+      metadata: {},
       errors: [],
       formFile: 'Choose File to Upload',
       showModal: false
     };
   },
 
-  logOutput: function (failures) {
+  logOutput: function (failures, metadata) {
     let errorText = '';
     failures.forEach((failure) => {
       errorText += `${failure}\n`;
     });
     this.setState({
       errors: errorText,
+      metadata: metadata,
       showModal: true
     });
+    return;
   },
 
   checkHeader: function (header, failures) {
@@ -46,6 +49,7 @@ var UploadForm = React.createClass({
 
   parseCsv: function () {
     const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
+    let metadata = {};
     let failures = [];
     let line = 0;
     fileReaderStream(this.csvFile).pipe(csvStream)
@@ -58,9 +62,8 @@ var UploadForm = React.createClass({
           failures = ['No data provided'];
           this.logOutput(failures);
         }
-        // Check header on line 1
+        // Check header on first line
         if (line === 0) this.checkHeader(data, failures);
-        line++;
         // Parse CSV
         let record = {};
         Object.keys(data).forEach((key) => {
@@ -121,9 +124,23 @@ var UploadForm = React.createClass({
         v.errors.forEach((e) => {
           failures.push(`Record ${line}: ${e.stack}`);
         });
+        if (line === 0) {
+          // Add static information to metadata on first line
+          metadata.location = record.location;
+          metadata.city = record.city;
+          metadata.country = record.country;
+          metadata.dates = {};
+          metadata.values = {};
+        }
+        // Add array information to metadata
+        metadata.dates[record.date.local] = true;
+        metadata.values[record.value] = true;
+
+        line++;
       })
       .on('end', () => {
-        this.logOutput(failures);
+        metadata.measurements = line;
+        this.logOutput(failures, metadata);
       });
   },
 
@@ -141,7 +158,7 @@ var UploadForm = React.createClass({
         <div className='exhibit'>
           <div className="exhibit__content">
             {showModal ? <FailureModal errors={errors} /> : ''}
-            {showModal ? <SuccessModal visible={showModal} errors={errors} csvFile={this.csvFile} /> : ''}
+            {showModal ? <SuccessModal visible={showModal} metadata={this.state.metadata} errors={errors} csvFile={this.csvFile} /> : ''}
             <div className='inner'>
               <fieldset className='form__fieldset'>
 
@@ -158,7 +175,7 @@ var UploadForm = React.createClass({
                   <p>We only accept CSV files at this time.</p>
                   <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
                   <div className='form__input-group'>
-                    <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'></label></button></span>
+                    <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'>Upload</label></button></span>
                     <input type='text' className='form__control form__control--medium' id='form-input' placeholder={this.state.formFile} />
                   </div>
                 </div>
