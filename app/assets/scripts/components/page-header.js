@@ -10,10 +10,12 @@ var PageHeader = React.createClass({
         <header className='page__header' role='banner'>
           <div className='inner'>
             <div className='page__headline'>
-              <h1 className='page__title'><a href='/' title='Visit homepage'>
-                <img src='assets/graphics/layout/logo.svg' alt='OpenAQ logotype' height='48' />
-                <span>OpenAQ</span>
-              </a></h1>
+              <h1 className='page__title'>
+                <a href='/' title='Visit homepage'>
+                  <img src='assets/graphics/layout/logo.svg' alt='OpenAQ logotype' height='48' />
+                  <span>OpenAQ</span>
+                </a>
+              </h1>
             </div>
           </div>
         </header>

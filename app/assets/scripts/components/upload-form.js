@@ -15,7 +15,7 @@ var UploadForm = React.createClass({
   getInitialState: function () {
     return {
       errors: [],
-      formFile: 'No file chosen',
+      formFile: 'Choose File to Upload',
       showModal: false
     };
   },
@@ -138,41 +138,36 @@ var UploadForm = React.createClass({
     const showModal = this.state.showModal;
     return (
       <section className='fold' id='uploader'>
-        {showModal ? <FailureModal errors={errors} /> : ''}
-        {showModal ? <SuccessModal visible={showModal} errors={errors} csvFile={this.csvFile} /> : ''}
-        <div className='inner'>
-          <header className='fold__header'>
-            <h1 className='fold__title'>OpenAQ Uploader</h1>
-            <div className='fold__introduction prose prose--responsive'>
-              <p>Use this form to upload CSV data to OpenAQ</p>
+        <div className='exhibit'>
+          <div className="exhibit__content">
+            {showModal ? <FailureModal errors={errors} /> : ''}
+            {showModal ? <SuccessModal visible={showModal} errors={errors} csvFile={this.csvFile} /> : ''}
+            <div className='inner'>
+              <fieldset className='form__fieldset'>
+
+                <div className='form__group form__group--token'>
+                  <label className='form__label' htmlFor='form-input'>Please enter you API token</label>
+                  <p><a className='blue' href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
+                  <div className='form__input-group'>
+                    <input type='text' className='form__control form__control--medium' id='form-input' placeholder='Enter Key' />
+                  </div>
+                </div>
+
+                <div className='form__group form__group--upload'>
+                  <label className='form__label' htmlFor='form-input'>Upload Data</label>
+                  <p>We only accept CSV files at this time.</p>
+                  <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
+                  <div className='form__input-group'>
+                    <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'></label></button></span>
+                    <input type='text' className='form__control form__control--medium' id='form-input' placeholder={this.state.formFile} />
+                  </div>
+                </div>
+
+                <button className='button button--primary button--verify' type='button' onClick={this.parseCsv}><span>Verify</span></button>
+
+              </fieldset>
             </div>
-          </header>
-          <div className='fold__body'>
-            The CSV parser is able to recognize the following attribute names and characteristics:
-            (An example schema should be included, potentially as a hidden-by-default accordian list)
           </div>
-
-          <fieldset className='form__fieldset'>
-
-            <div className='form__group'>
-              <label className='form__label' htmlFor='form-input'>Please select a CSV file</label>
-              <input type='file' className='form__control' id='form-file' accept='text/plain' onChange={this.getFile} />
-              <div className='form__input-group'>
-                <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--example-icon'><label htmlFor='form-file'>Choose File</label></button></span>
-                <input type='text' className='form__control form__control--medium' id='form-input' placeholder={this.state.formFile} />
-              </div>
-            </div>
-
-            <div className='form__group'>
-              <label className='form__label' htmlFor='form-input'>Please enter you API token</label>
-              <div className='form__input-group'>
-                <input type='text' className='form__control form__control--medium' id='form-input' placeholder='Please enter your uploader API token' />
-              </div>
-            </div>
-
-            <button className='button button--base' type='button' onClick={this.parseCsv}><span>Validate CSV</span></button>
-
-          </fieldset>
         </div>
       </section>
     );
