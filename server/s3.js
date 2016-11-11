@@ -5,8 +5,12 @@
 // * accessKey
 // * secretKey
 function s3Credentials (config, filename) {
+  var region = config.region;
+  var url = region === 'us-east-1'
+    ? 'https://' + config.bucket + '.s3.amazonaws.com'
+    : 'https://' + config.bucket + '.s3-' + config.region + '.amazonaws.com';
   return {
-    endpoint_url: 'https://' + config.bucket + '.s3-us-west-2.amazonaws.com',
+    endpoint_url: url,
     params: s3Params(config, filename)
   };
 }
