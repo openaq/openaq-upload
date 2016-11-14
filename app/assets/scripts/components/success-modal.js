@@ -3,11 +3,13 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import { s3Upload } from '../utils/s3-upload';
+import { calcDateRange, uniqueValues } from '../utils/calculations';
 
 var SuccessModal = React.createClass({
   displayName: 'SuccessModal',
   propTypes: {
     visible: React.PropTypes.bool,
+    metadata: React.PropTypes.object,
     errors: React.PropTypes.string,
     csvFile: React.PropTypes.object
   },
@@ -17,6 +19,7 @@ var SuccessModal = React.createClass({
       visible: false,
       title: 'Validation Success!',
       message: <div className='modal__body--about'>
+
         <h3>Congratulations, your data passed validation!</h3>
         <p>Click below to upload the CSV file to OpenAQ. New data will typically
         be integrated with the public results within 30 minutes of submission.</p>
@@ -63,21 +66,38 @@ var SuccessModal = React.createClass({
 
   modal: function () {
     if (!this.state.visible) return null;
+    const metadata = this.props.metadata;
+    console.log(metadata)
     return (
-      <section className='modal modal--large modal--about'>
-        <div className='modal__inner'>
-          <header className='modal__header'>
-            <div className='modal__headline'>
-              <h1 className='modal__title'>{this.title}</h1>
-              <button className='modal__button-dismiss' title='Close' onClick={() => this.toggleModal()}><span>Dismiss</span></button>
-            </div>
-          </header>
-          <section className='modal__body'>
-            {this.state.message}
-            {this.state.button}
-          </section>
-        </div>
-      </section>
+      <div className='inner'>
+      <div className='modal__ul'>
+      <ul className='modal__ul--col1'>
+        <li className='modal__li--col1'>Location: {metadata.location}</li>
+        <li className='modal__li--col1'>City: {metadata.city}</li>
+        <li className='modal__li--col1'>Country: {metadata.country}</li>
+        </ul>
+      <ul className='modal__ul--col2'>
+        <li className='modal__li--col2'>Measurements: {metadata.measurements}</li>
+        <li className='modal__li--col2'>Values: {uniqueValues(metadata.values)}</li>
+        <li className='modal__li--col2'>Collection Dates: {calcDateRange(metadata.dates)}</li>
+      </ul>
+      </div>
+      </div>
+
+      // <section className='modal modal--large modal--about'>
+      //   <div className='modal__inner'>
+      //     <header className='modal__header'>
+      //       <div className='modal__headline'>
+      //         <h1 className='modal__title'>{this.title}</h1>
+      //         <button className='modal__button-dismiss' title='Close' onClick={() => this.toggleModal()}><span>Dismiss</span></button>
+      //       </div>
+      //     </header>
+      //     <section className='modal__body'>
+      //       {this.state.message}
+      //       {this.state.button}
+      //     </section>
+      //   </div>
+      // </section>
     );
   },
 

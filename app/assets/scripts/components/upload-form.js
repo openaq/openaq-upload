@@ -6,8 +6,8 @@ import csv from 'csv-stream';
 
 import measurementSchema from '../utils/measurement-schema';
 
-import FailureModal from './failure-modal';
-import SuccessModal from './success-modal';
+import Submit from './submit';
+import Success from './success';
 
 var UploadForm = React.createClass({
   displayName: 'UploadForm',
@@ -17,20 +17,21 @@ var UploadForm = React.createClass({
       metadata: {},
       errors: [],
       formFile: 'Choose File to Upload',
-      showModal: false
+      status: 'initial'
     };
   },
 
   logOutput: function (failures, metadata) {
-    let errorText = '';
-    failures.forEach((failure) => {
-      errorText += `${failure}\n`;
-    });
-    this.setState({
-      errors: errorText,
+    if (failures.length) {
+      this.setState({
+        status: 'verifyErr',
+        metadata: metadata,
+        errors: failures});
+    } else {
+      this.setState({status: 'verifySucc',
       metadata: metadata,
-      showModal: true
-    });
+      errors: failures});
+    }
     return;
   },
 
@@ -134,7 +135,7 @@ var UploadForm = React.createClass({
         }
         // Add array information to metadata
         metadata.dates[record.date.local] = true;
-        metadata.values[record.value] = true;
+        metadata.values[record.parameter] = true;
 
         line++;
       })
@@ -150,40 +151,64 @@ var UploadForm = React.createClass({
     this.setState({formFile: this.csvFile.name});
   },
 
-  render: function () {
+  renderInitial: function () {
     const errors = this.state.errors;
-    const showModal = this.state.showModal;
+    let errorText = '';
+    errors.forEach((error) => {
+      errorText += `${error}\n`;
+    });
+    const errorMsg = errors.length
+      ? <div className='form__group'>
+          <p className='error'><b>{errors.length}</b> errors found in {this.csvFile.name}</p>
+          <textarea className='form__control' id='form-textarea' rows='7' defaultValue={errorText}></textarea>
+        </div>
+      : '';
+    return (
+      <div className='inner'>
+        <fieldset className='form__fieldset'>
+
+          <div className='form__group form__group--token'>
+            <label className='form__label' htmlFor='form-input'>Please enter your API token</label>
+            <p><a className='blue' href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
+            <div className='form__input-group'>
+              <input type='text' className='form__control form__control--medium' id='form-input' placeholder='Enter Key' />
+            </div>
+          </div>
+
+          <div className='form__group form__group--upload'>
+            <label className='form__label' htmlFor='form-input'>Upload Data</label>
+            <p>We only accept CSV files at this time.</p>
+            <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
+            <div className='form__input-group'>
+              <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'>Upload</label></button></span>
+              <input type='text' className='form__control form__control--medium' id='form-input' placeholder={this.state.formFile} />
+            </div>
+          </div>
+          {errorMsg}
+          <button className='button button--primary button--verify' type='button' onClick={this.parseCsv}><span>Verify</span></button>
+
+        </fieldset>
+      </div>
+    );
+  },
+
+  renderVerifySuccess: function () {
+    return <Submit metadata={this.state.metadata} />;
+  },
+
+  renderSuccess: function () {
+    return <Success />;
+  },
+
+  render: function () {
+    let status = this.state.status;
     return (
       <section className='fold' id='uploader'>
         <div className='exhibit'>
           <div className="exhibit__content">
-            {showModal ? <FailureModal errors={errors} /> : ''}
-            {showModal ? <SuccessModal visible={showModal} metadata={this.state.metadata} errors={errors} csvFile={this.csvFile} /> : ''}
-            <div className='inner'>
-              <fieldset className='form__fieldset'>
-
-                <div className='form__group form__group--token'>
-                  <label className='form__label' htmlFor='form-input'>Please enter you API token</label>
-                  <p><a className='blue' href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
-                  <div className='form__input-group'>
-                    <input type='text' className='form__control form__control--medium' id='form-input' placeholder='Enter Key' />
-                  </div>
-                </div>
-
-                <div className='form__group form__group--upload'>
-                  <label className='form__label' htmlFor='form-input'>Upload Data</label>
-                  <p>We only accept CSV files at this time.</p>
-                  <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
-                  <div className='form__input-group'>
-                    <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'>Upload</label></button></span>
-                    <input type='text' className='form__control form__control--medium' id='form-input' placeholder={this.state.formFile} />
-                  </div>
-                </div>
-
-                <button className='button button--primary button--verify' type='button' onClick={this.parseCsv}><span>Verify</span></button>
-
-              </fieldset>
-            </div>
+            {status === 'initial' || status === 'verifyErr' ? this.renderInitial() : null}
+            {status === 'verifySucc' ? this.renderVerifySuccess() : null}
+            {status === 'finished' ? this.renderSuccess() : null}
           </div>
         </div>
       </section>
