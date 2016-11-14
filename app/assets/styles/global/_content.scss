@@ -200,17 +200,28 @@
 }
 
 .button--verify {
+  float: left;
+  // margin: 0.5rem;
+  padding: .5rem 1.5rem .5rem 1.5rem;
+}
+
+.button--submit {
+  float: left;
+  margin: 0.5rem;
   padding: .5rem 1.5rem .5rem 1.5rem;
 }
 
 .modal__ul--col1 {
   float: left;
-  width: 23rem;
+  padding: 1rem 6rem 1rem 1rem;
+  list-style-type: none;
 }
 
 .modal__ul--col2 {
   float: left;
-  width: 23rem;
+  clear: right;
+  padding: 1rem;
+  list-style-type: none;
 }
 
 .error {
@@ -220,4 +231,15 @@
   b {
     font-weight: 800;
   }
+}
+
+.exhibit__content {
+  h2 {
+    text-align: center;
+  }
+}
+
+.form__buttons {
+   clear: both;
+   margin-bottom: 3rem;
 }

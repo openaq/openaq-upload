@@ -8,6 +8,10 @@ var SubmissionForm = React.createClass({
     metadata: React.PropTypes.object
   },
 
+  submit: function () {
+
+  },
+
   render: function () {
     const metadata = this.props.metadata;
     return (
@@ -28,7 +32,10 @@ var SubmissionForm = React.createClass({
           <li className='modal__li--col2'>Values: {uniqueValues(metadata.values)}</li>
           <li className='modal__li--col2'>Collection Dates: {calcDateRange(metadata.dates)}</li>
         </ul>
-          {/* {this.state.button} */}
+        <div className='form__buttons'>
+          <button className='button button--primary button--submit' type='submit'><span>Submit</span></button>
+          <button className='button button--primary-bounded button--submit' type='button'><span>Cancel</span></button>
+        </div>
       </section>
     );
   }

@@ -5,9 +5,7 @@ import validator from 'jsonschema';
 import csv from 'csv-stream';
 
 import measurementSchema from '../utils/measurement-schema';
-
-import Submit from './submit';
-import Success from './success';
+import { calcDateRange, uniqueValues } from '../utils/calculations';
 
 var UploadForm = React.createClass({
   displayName: 'UploadForm',
@@ -192,8 +190,37 @@ var UploadForm = React.createClass({
     );
   },
 
+  submit: function () {
+    this.setState({status: ''});
+  },
+
+  cancel: function () {
+    this.setState({status: 'initial'});
+  },
+
   renderVerifySuccess: function () {
-    return <Submit metadata={this.state.metadata} />;
+    const metadata = this.state.metadata;
+    return (
+      <section className='inner'>
+        <div>
+          <h2>Upload Verification</h2>
+        </div>
+        <ul className='modal__ul--col1'>
+          <li className='modal__li--col1'><b>Location:</b> {metadata.location}</li>
+          <li className='modal__li--col1'><b>City:</b> {metadata.city}</li>
+          <li className='modal__li--col1'><b>Country:</b> {metadata.country}</li>
+          </ul>
+        <ul className='modal__ul--col2'>
+          <li className='modal__li--col2'><b>Measurements:</b> {metadata.measurements}</li>
+          <li className='modal__li--col2'><b>Values:</b> {uniqueValues(metadata.values)}</li>
+          <li className='modal__li--col2'><b>Collection Dates:</b> {calcDateRange(metadata.dates)}</li>
+        </ul>
+        <div className='form__buttons'>
+          <button className='button button--primary button--submit' onClick={(() => this.submit())} type='submit'><span>Submit</span></button>
+          <button className='button button--primary-bounded button--submit' type='button' onClick={(() => this.cancel())}><span>Cancel</span></button>
+        </div>
+      </section>
+    );
   },
 
   renderSuccess: function () {
