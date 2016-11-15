@@ -26,6 +26,7 @@ var UploadForm = React.createClass({
   },
 
   setErrorState: function (failures, metadata) {
+    console.log(failures, failures.length)
     if (failures.length) {
       this.setState({
         status: 'verifyErr',
@@ -40,17 +41,16 @@ var UploadForm = React.createClass({
     return;
   },
 
-  checkHeader: function (header, failures) {
+  checkHeader: function (header) {
     const required = [
       'parameter', 'unit', 'value', 'sourceName', 'sourceType',
       'date/utc', 'date/local', 'mobile', 'location', 'city', 'country'
     ];
+    let failures = [];
     required.forEach((prop) => {
       if (!(prop in header)) failures.push(`Dataset is missing "${prop}" column.`);
     });
-    if (failures.length) {
-      this.setErrorState(failures);
-    }
+    return failures;
   },
 
   parseCsv: function () {
@@ -70,80 +70,85 @@ var UploadForm = React.createClass({
             this.setErrorState(failures);
           }
           // Check header on first line
-          if (line === 0) this.checkHeader(data, failures);
+          if (line === 0 && !failures.length) {
+            failures = failures.concat(this.checkHeader(data));
+            if (failures.length) this.setErrorState(failures);
+          }
           // Parse CSV
-          let record = {};
-          Object.keys(data).forEach((key) => {
-            let value = data[key];
-            // Numeric strings should be converted to numbers
-            if (!isNaN(value)) value = Number(value);
-            // Sub-keys will be indicated by a slash
-            const splitKey = key.split('/');
-            // Treat values attached to primary keys differently than those with subkeys
-            if (splitKey.length === 1) {
-              // The "mobile" attribute should be converted to boolean
-              if (key === 'mobile' && isNaN(value)) {
-                if (value.toLowerCase() === 'true') {
-                  value = true;
-                } else if (value.toLowerCase() === 'false') {
-                  value = false;
-                }
-              }
-              // Save value to record
-              record[key] = value;
-            // Treat values attached to subkeys differently than those attached to primary keys
-            } else {
-              const [key, subkey] = splitKey;
-              // Treat attribution differently, as it is an array of name/url pairs
-              if (key === 'attribution') {
-                if (subkey === 'name' && isNaN(value)) {
-                  // Attribution arrays will be separated by a space-padded pipe character (|) in the csv.
-                  // URL order and number must match name order and number (if a URL isn't paired
-                  // with a name, the user will still need to provide a separator to skip it).
-                  // This is hard to represent in csv; we may be able to find a better way.
-                  const urls = data['attribution/url'].split('|');
-                  value = value.split('|').map((name, i) => {
-                    const url = urls[i];
-                    if (url.length) {
-                      return {name: name, url: url};
-                    }
-                    return {name: name};
-                  });
-                  record[key] = value;
-                }
-              } else {
-                // Add subkeys, if applicable
-                if (key === 'date' && !record['date']) record['date'] = {};
-                if (key === 'averagingPeriod' && !record['averagingPeriod']) record['averagingPeriod'] = {};
-                if (key === 'coordinates' && !record['coordinates']) record['coordinates'] = {};
-                // Dates are not a valid JSON type, so enforcing a particular format would be subjective.
-                // We may change the schema to a regex string validator.
-                if (key === 'date' && subkey === 'utc' && isNaN(value)) {
-                  value = new Date(value);
+          if (!failures.length) {
+            let record = {};
+            Object.keys(data).forEach((key) => {
+              let value = data[key];
+              // Numeric strings should be converted to numbers
+              if (!isNaN(value)) value = Number(value);
+              // Sub-keys will be indicated by a slash
+              const splitKey = key.split('/');
+              // Treat values attached to primary keys differently than those with subkeys
+              if (splitKey.length === 1) {
+                // The "mobile" attribute should be converted to boolean
+                if (key === 'mobile' && isNaN(value)) {
+                  if (value.toLowerCase() === 'true') {
+                    value = true;
+                  } else if (value.toLowerCase() === 'false') {
+                    value = false;
+                  }
                 }
                 // Save value to record
-                record[key][subkey] = value;
+                record[key] = value;
+              // Treat values attached to subkeys differently than those attached to primary keys
+              } else {
+                const [key, subkey] = splitKey;
+                // Treat attribution differently, as it is an array of name/url pairs
+                if (key === 'attribution') {
+                  if (subkey === 'name' && isNaN(value)) {
+                    // Attribution arrays will be separated by a space-padded pipe character (|) in the csv.
+                    // URL order and number must match name order and number (if a URL isn't paired
+                    // with a name, the user will still need to provide a separator to skip it).
+                    // This is hard to represent in csv; we may be able to find a better way.
+                    const urls = data['attribution/url'].split('|');
+                    value = value.split('|').map((name, i) => {
+                      const url = urls[i];
+                      if (url.length) {
+                        return {name: name, url: url};
+                      }
+                      return {name: name};
+                    });
+                    record[key] = value;
+                  }
+                } else {
+                  // Add subkeys, if applicable
+                  if (key === 'date' && !record['date']) record['date'] = {};
+                  if (key === 'averagingPeriod' && !record['averagingPeriod']) record['averagingPeriod'] = {};
+                  if (key === 'coordinates' && !record['coordinates']) record['coordinates'] = {};
+                  // Dates are not a valid JSON type, so enforcing a particular format would be subjective.
+                  // We may change the schema to a regex string validator.
+                  if (key === 'date' && subkey === 'utc' && isNaN(value)) {
+                    value = new Date(value);
+                  }
+                  // Save value to record
+                  record[key][subkey] = value;
+                }
               }
+            });
+            // Perform validation of the compiled object against the JSON schema file
+            let v = validator.validate(record, measurementSchema);
+            v.errors.forEach((e) => {
+              failures.push(`Record ${line}: ${e.stack}`);
+            });
+            if (line === 0) {
+              // Add static information to metadata on first line
+              metadata.location = record.location;
+              metadata.city = record.city;
+              metadata.country = record.country;
+              metadata.dates = {};
+              metadata.values = {};
             }
-          });
-          // Perform validation of the compiled object against the JSON schema file
-          let v = validator.validate(record, measurementSchema);
-          v.errors.forEach((e) => {
-            failures.push(`Record ${line}: ${e.stack}`);
-          });
-          if (line === 0) {
-            // Add static information to metadata on first line
-            metadata.location = record.location;
-            metadata.city = record.city;
-            metadata.country = record.country;
-            metadata.dates = {};
-            metadata.values = {};
-          }
-          // Add array information to metadata
-          metadata.dates[record.date.local] = true;
-          metadata.values[record.parameter] = true;
+            // Add array information to metadata
+            metadata.dates[record.date.local] = true;
+            metadata.values[record.parameter] = true;
 
-          line++;
+            line++;
+          }
         })
         .on('end', () => {
           metadata.measurements = line;
@@ -169,13 +174,14 @@ var UploadForm = React.createClass({
 
   renderInitial: function () {
     const errors = this.state.errors;
+    const errorLength = errors.length;
     let errorText = '';
     errors.forEach((error) => {
       errorText += `${error}\n`;
     });
     const errorMsg = errors.length
       ? <div className='form__group'>
-          <p className='error'><b>{errors.length}</b> errors found in {this.csvFile.name}</p>
+          <p className='error'><b>{errorLength}</b> errors found in {this.csvFile.name}</p>
           <textarea className='form__control' id='form-textarea' rows='7' defaultValue={errorText}></textarea>
         </div>
       : '';
@@ -194,12 +200,15 @@ var UploadForm = React.createClass({
           <div className='form__group form__group--upload'>
             <label className='form__label' htmlFor='file-input'>Upload Data</label>
             <p>We only accept CSV files at this time.</p>
-            <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
+            <input type='file' className='form__control--upload' id='form-file' ref='file' accept='text/plain' onChange={this.getFile} />
             <div className='form__input-group'>
-              <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'>Upload</label></button></span>
-              <input type='text' readOnly className='form__control form__control--medium' id='file-input' placeholder={this.state.formFile} />
+              <span className='form__input-group-button'>
+                <button type='submit' className='button button--base button--text-hidden button--medium button--arrow-up-icon' onClick={() => this.refs.file.click()}></button>
+              </span>
+              <input type='text' readOnly className='form__control form__control--medium' value={this.state.formFile} />
             </div>
           </div>
+
           {errorMsg}
           <button className='button button--primary button--verify' type='button' onClick={this.parseCsv}><span>Verify</span></button>
 
@@ -220,7 +229,7 @@ var UploadForm = React.createClass({
         postambleCRLF: true,
         body: component.csvFile
       }).then((response) => {
-        response.status !== 200
+        response.status === 200
           ? component.setState({status: 'finished'})
           : component.setState({
             status: 'serverErr',
