@@ -183,18 +183,20 @@
   }
 }
 
-.success {
+.success, .failure {
   text-align: center;
   margin: 20%;
   padding: 4em 0;
   button {
     float: none;
+    margin-top: 1rem;
   }
-  .success__message {
+  .result__message {
     font-size: 1.1rem;
   }
-  .success__email {
+  .result__message--small {
     font-weight: 300;
     font-size: 0.9rem;
+    margin: .25rem;
   }
 }

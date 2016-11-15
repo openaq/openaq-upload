@@ -13,11 +13,15 @@ var UploadForm = React.createClass({
 
   getInitialState: function () {
     return {
+      status: 'initial',
+      token: '',
+      formFile: 'Choose File to Upload',
       metadata: {},
       errors: [],
-      formFile: 'Choose File to Upload',
-      token: '',
-      status: 'initial'
+      response: {
+        code: '',
+        text: ''
+      }
     };
   },
 
@@ -216,9 +220,15 @@ var UploadForm = React.createClass({
         postambleCRLF: true,
         body: component.csvFile
       }).then((response) => {
-        response.status === 200
+        response.status !== 200
           ? component.setState({status: 'finished'})
-          : component.setState({status: 'finished'});
+          : component.setState({
+            status: 'serverErr',
+            response: {
+              code: response.status,
+              text: response.statusText
+            }
+          });
       });
     });
   },
@@ -255,10 +265,26 @@ var UploadForm = React.createClass({
   renderSuccess: function () {
     return (
       <section className='inner success'>
-          <h2>Thanks for contributing data to OpenAQ.</h2>
-          <p className='success__message'>Please check your email for confirmation. This could take up to 15 minutes.</p>
-          <p className='success__email'>Didn’t get an email? <a href='mailto:info@openaq.org'>Contact Us.</a></p>
-          <button className='button button--primary button--submit' onClick={(() => this.cancel())} type='submit'><span>Submit Another Dataset</span></button>
+        <h2>Thanks for contributing data to OpenAQ.</h2>
+        <p className='result__message'>Please check your email for confirmation. This could take up to 15 minutes.</p>
+        <p className='result__message--small'>Didn’t get an email? <a href='mailto:info@openaq.org'>Contact Us.</a></p>
+        <button className='button button--primary button--submit' onClick={(() => this.cancel())} type='submit'><span>Submit Another Dataset</span></button>
+      </section>
+    );
+  },
+
+  renderServerErr: function () {
+    const err = this.state.response;
+    return (
+      <section className='inner failure'>
+        <h2>Uploader Error</h2>
+        <p className='result__message'>Your data passed validation, but was rejected by the server.</p>
+        <p className='result__message--small'>The server responded with error code {err.code}: {err.text}.</p>
+        <p className='result__message--small'>Please <a href='mailto:info@openaq.org'>Contact Us</a> to report the issue.</p>
+        <div className='form__buttons'>
+          <button className='button button--primary button--submit' onClick={(() => this.submit())} type='submit'><span>Try Again</span></button>
+          <button className='button button--primary-bounded button--submit' type='button' onClick={(() => this.cancel())}><span>Cancel</span></button>
+        </div>
       </section>
     );
   },
@@ -271,7 +297,7 @@ var UploadForm = React.createClass({
           <div className="exhibit__content">
             {status === 'initial' || status === 'verifyErr' ? this.renderInitial() : null}
             {status === 'verifySucc' ? this.renderVerifySuccess() : null}
-            {status === 'verifyServeErr' ? this.renderVerifySuccess() : null}
+            {status === 'serverErr' ? this.renderServerErr() : null}
             {status === 'finished' ? this.renderSuccess() : null}
           </div>
         </div>
