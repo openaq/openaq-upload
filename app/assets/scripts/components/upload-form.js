@@ -151,7 +151,12 @@ var UploadForm = React.createClass({
   getFile: function (event) {
     // Store file reference
     this.csvFile = event.target.files[0];
-    this.setState({formFile: this.csvFile.name});
+    this.setState({
+      formFile: this.csvFile.name,
+      status: 'initial',
+      metadata: {},
+      errors: []
+    });
   },
 
   setToken: function (event) {
