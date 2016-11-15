@@ -21,16 +21,17 @@ var UploadForm = React.createClass({
     };
   },
 
-  logOutput: function (failures, metadata) {
+  setErrorState: function (failures, metadata) {
     if (failures.length) {
       this.setState({
         status: 'verifyErr',
         metadata: metadata,
         errors: failures});
     } else {
-      this.setState({status: 'verifySucc',
-      metadata: metadata,
-      errors: failures});
+      this.setState({
+        status: 'verifySucc',
+        metadata: metadata,
+        errors: failures});
     }
     return;
   },
@@ -44,7 +45,7 @@ var UploadForm = React.createClass({
       if (!(prop in header)) failures.push(`Dataset is missing "${prop}" column.`);
     });
     if (failures.length) {
-      this.logOutput(failures);
+      this.setErrorState(failures);
     }
   },
 
@@ -62,7 +63,7 @@ var UploadForm = React.createClass({
           // Check for data;
           if (!data || data === {}) {
             failures = ['No data provided'];
-            this.logOutput(failures);
+            this.setErrorState(failures);
           }
           // Check header on first line
           if (line === 0) this.checkHeader(data, failures);
@@ -142,7 +143,7 @@ var UploadForm = React.createClass({
         })
         .on('end', () => {
           metadata.measurements = line;
-          this.logOutput(failures, metadata);
+          this.setErrorState(failures, metadata);
         });
     }
   },
@@ -187,7 +188,7 @@ var UploadForm = React.createClass({
             <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
             <div className='form__input-group'>
               <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'>Upload</label></button></span>
-              <input type='text' className='form__control form__control--medium' id='file-input' placeholder={this.state.formFile} />
+              <input type='text' readOnly className='form__control form__control--medium' id='file-input' placeholder={this.state.formFile} />
             </div>
           </div>
           {errorMsg}
@@ -227,15 +228,15 @@ var UploadForm = React.createClass({
         <div>
           <h2>Upload Verification</h2>
         </div>
-        <ul className='modal__ul--col1'>
-          <li className='modal__li--col1'><b>Location:</b> {metadata.location}</li>
-          <li className='modal__li--col1'><b>City:</b> {metadata.city}</li>
-          <li className='modal__li--col1'><b>Country:</b> {metadata.country}</li>
+        <ul className='form__ul--col1'>
+          <li><b>Location:</b> {metadata.location}</li>
+          <li><b>City:</b> {metadata.city}</li>
+          <li><b>Country:</b> {metadata.country}</li>
           </ul>
-        <ul className='modal__ul--col2'>
-          <li className='modal__li--col2'><b>Measurements:</b> {metadata.measurements}</li>
-          <li className='modal__li--col2'><b>Values:</b> {uniqueValues(metadata.values)}</li>
-          <li className='modal__li--col2'><b>Collection Dates:</b> {calcDateRange(metadata.dates)}</li>
+        <ul className='form__ul--col2'>
+          <li><b>Measurements:</b> {metadata.measurements}</li>
+          <li><b>Values:</b> {uniqueValues(metadata.values)}</li>
+          <li><b>Collection Dates:</b> {calcDateRange(metadata.dates)}</li>
         </ul>
         <div className='form__buttons'>
           <button className='button button--primary button--submit' onClick={(() => this.submit())} type='submit'><span>Submit</span></button>

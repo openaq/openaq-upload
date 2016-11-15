@@ -8,22 +8,6 @@
   }
 }
 
-.showcase {
-  @include media(medium-up) {
-    @include col(9/12);
-    @include shift(1.5/12);
-  }
-
-  @include media(large-up) {
-    @include col(8/12);
-    @include shift(2/12);
-  }
-}
-
-
-/* Exhibit
-   ========================================================================== */
-
 .exhibit {
   @extend .clearfix;
   box-shadow: 0 0 0 2px $base-alpha-color;
@@ -109,61 +93,6 @@
   @extend %openaq-ds-icon-arrow-up;
 }
 
-.drop__menu-item--example-icon:before {
-  @extend %openaq-ds-icon-arrow-up;
-}
-
-.exhibit__content {
-  > .button,
-  > .button-group,
-  [data-hook="react:drops"] .button {
-    margin: 0 0.5rem 0.5rem 0;
-  }
-
-  > .card {
-    margin: 0 0 2rem 0;
-  }
-
-  > .drop {
-    float: left;
-    margin: 0 1.5rem 1.5rem 0;
-
-    .drop__toggle {
-      float: left;
-    }
-
-    .drop__content {
-      position: relative;
-      float: left;
-      clear: left;
-    }
-  }
-
-  .panel {
-    position: static;
-  }
-
-  .alert--popover {
-    position: relative;
-    bottom: initial;
-    right: initial;
-    margin-bottom: 1rem;
-  }
-}
-
-.exhibit--modal {
-  overflow: hidden;
-
-  .exhibit__content {
-    padding: 0;
-  }
-
-  .modal {
-    position: relative;
-    z-index: 0;
-  }
-}
-
 .form__group {
   input[type="file"] {
     display: none;
@@ -209,13 +138,13 @@
   padding: .5rem 1.5rem .5rem 1.5rem;
 }
 
-.modal__ul--col1 {
+.form__ul--col1 {
   float: left;
   padding: 1rem 6rem 1rem 1rem;
   list-style-type: none;
 }
 
-.modal__ul--col2 {
+.form__ul--col2 {
   float: left;
   clear: right;
   padding: 1rem;
@@ -242,8 +171,14 @@
    margin-bottom: 3rem;
 }
 
-.form__group {
-  a {
-
+.page__footer {
+  .copyright {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .heart::before {
+    @extend %openaq-ds-icon-heart-full;
+    opacity: 0.8;
+    vertical-align: middle;
   }
 }
