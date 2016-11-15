@@ -62,19 +62,6 @@
   @include media(medium-up) {
     padding: $global-spacing * 1.5;
   }
-
-  a.blue {
-    color: $base-font-color;
-    text-decoration: underline;
-    -o-transition: .25s;
-    -ms-transition: .25s;
-   -moz-transition: .25s;
-   -webkit-transition: .25s;
-   transition:.25s;
-  }
-  &a:hover {
-    color: $info-color;
-  }
 }
 
 .exhibit__content {
@@ -181,6 +168,18 @@
   input[type="file"] {
     display: none;
   }
+  a {
+    color: $base-font-color;
+    text-decoration: underline;
+    -o-transition: .25s;
+    -ms-transition: .25s;
+    -moz-transition: .25s;
+    -webkit-transition: .25s;
+    transition:.25s;
+  }
+  &a:hover {
+    color: $info-color;
+  }
 }
 
 .form__group--token {
@@ -224,7 +223,7 @@
 }
 
 .error {
-  color: #bc0000;
+  color: #ee0000;
   margin: 0;
   font-size: 1rem;
   b {
@@ -241,4 +240,10 @@
 .form__buttons {
    clear: both;
    margin-bottom: 3rem;
+}
+
+.form__group {
+  a {
+
+  }
 }

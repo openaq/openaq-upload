@@ -175,9 +175,9 @@ var UploadForm = React.createClass({
 
           <div className='form__group form__group--token'>
             <label className='form__label' htmlFor='form-input'>Please enter your API token</label>
-            <p><a className='blue' href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
+            <p><a href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
             <div className='form__input-group'>
-              <input type='text' className='form__control form__control--medium' id='form-input' placeholder='Enter Key' onChange={((e) => this.setToken(e))} />
+              <input type='text' required className='form__control form__control--medium' id='key-input' placeholder='Enter Key' onChange={((e) => this.setToken(e))} />
             </div>
           </div>
 
@@ -187,7 +187,7 @@ var UploadForm = React.createClass({
             <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
             <div className='form__input-group'>
               <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--arrow-up-icon'><label htmlFor='form-file'>Upload</label></button></span>
-              <input type='text' className='form__control form__control--medium' id='form-input' placeholder={this.state.formFile} />
+              <input type='text' className='form__control form__control--medium' id='file-input' placeholder={this.state.formFile} />
             </div>
           </div>
           {errorMsg}
@@ -205,10 +205,11 @@ var UploadForm = React.createClass({
       console.log(url);
       fetch(url, {
         method: 'PUT',
+        headers: {'Content-Type': 'text/csv'},
         preambleCRLF: true,
         postambleCRLF: true,
         body: component.csvFile
-      }).then(function (response) {
+      }).then((response) => {
         console.log(response);
         component.setState({status: 'finished'});
       });

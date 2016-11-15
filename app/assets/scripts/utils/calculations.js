@@ -1,7 +1,5 @@
 export const calcDateRange = (dates) => {
-  const orderedDates = Object.keys(dates).sort(function (a, b) {
-    return Date.parse(a) > Date.parse(b);
-  });
+  const orderedDates = Object.keys(dates).sort((a, b) => Date.parse(a) > Date.parse(b));
   const early = new Date(orderedDates[0]);
   const late = new Date(orderedDates[orderedDates.length - 1]);
   return `${early.getFullYear()}/${early.getMonth() + 1}/${early.getDate()} - ${late.getFullYear()}/${late.getMonth() + 1}/${late.getDate()}`;
