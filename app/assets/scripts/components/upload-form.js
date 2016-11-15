@@ -211,7 +211,7 @@ var UploadForm = React.createClass({
   submit: function () {
     const component = this;
     getSignedUrl(component.state.formFile, component.state.token).then(function (credentials) {
-      const url = credentials.results.presignedURL;
+      let url = credentials.results.presignedURL;
       console.log(url);
       fetch(url, {
         method: 'PUT',
