@@ -182,3 +182,19 @@
     vertical-align: middle;
   }
 }
+
+.success {
+  text-align: center;
+  margin: 20%;
+  padding: 4em 0;
+  button {
+    float: none;
+  }
+  .success__message {
+    font-size: 1.1rem;
+  }
+  .success__email {
+    font-weight: 300;
+    font-size: 0.9rem;
+  }
+}

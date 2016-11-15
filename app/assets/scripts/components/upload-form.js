@@ -175,7 +175,7 @@ var UploadForm = React.createClass({
         <fieldset className='form__fieldset'>
 
           <div className='form__group form__group--token'>
-            <label className='form__label' htmlFor='form-input'>Please enter your API token</label>
+            <label className='form__label' htmlFor='key-input'>Please enter your API token</label>
             <p><a href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
             <div className='form__input-group'>
               <input type='text' required className='form__control form__control--medium' id='key-input' placeholder='Enter Key' onChange={((e) => this.setToken(e))} />
@@ -183,7 +183,7 @@ var UploadForm = React.createClass({
           </div>
 
           <div className='form__group form__group--upload'>
-            <label className='form__label' htmlFor='form-input'>Upload Data</label>
+            <label className='form__label' htmlFor='file-input'>Upload Data</label>
             <p>We only accept CSV files at this time.</p>
             <input type='file' className='form__control--upload' id='form-file' accept='text/plain' onChange={this.getFile} />
             <div className='form__input-group'>
@@ -211,8 +211,9 @@ var UploadForm = React.createClass({
         postambleCRLF: true,
         body: component.csvFile
       }).then((response) => {
-        console.log(response);
-        component.setState({status: 'finished'});
+        response.status === 200
+          ? component.setState({status: 'finished'})
+          : component.setState({status: 'finished'});
       });
     });
   },
@@ -247,7 +248,14 @@ var UploadForm = React.createClass({
   },
 
   renderSuccess: function () {
-    // return <Success />;
+    return (
+      <section className='inner success'>
+          <h2>Thanks for contributing data to OpenAQ.</h2>
+          <p className='success__message'>Please check your email for confirmation. This could take up to 15 minutes.</p>
+          <p className='success__email'>Didn’t get an email? <a href='mailto:info@openaq.org'>Contact Us.</a></p>
+          <button className='button button--primary button--submit' onClick={(() => this.cancel())} type='submit'><span>Submit Another Dataset</span></button>
+      </section>
+    );
   },
 
   render: function () {
@@ -258,6 +266,7 @@ var UploadForm = React.createClass({
           <div className="exhibit__content">
             {status === 'initial' || status === 'verifyErr' ? this.renderInitial() : null}
             {status === 'verifySucc' ? this.renderVerifySuccess() : null}
+            {status === 'verifyServeErr' ? this.renderVerifySuccess() : null}
             {status === 'finished' ? this.renderSuccess() : null}
           </div>
         </div>
