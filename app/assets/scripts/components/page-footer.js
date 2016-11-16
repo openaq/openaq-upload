@@ -10,10 +10,13 @@ var PageFooter = React.createClass({
     };
   },
 
-  render: function () {
+  componentDidMount: function () {
     fetch('https://api.openaq.org/v1/measurements?limit=0')
     .then((response) => response.json())
     .then((json) => this.setState({measurements: json.meta.found.toLocaleString()}));
+  },
+
+  render: function () {
     return (
       <footer className='page__footer' role='contentinfo'>
         <p className='copyright'>
