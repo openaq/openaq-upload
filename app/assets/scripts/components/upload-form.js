@@ -6,7 +6,7 @@ import csv from 'csv-stream';
 
 import measurementSchema from '../utils/measurement-schema';
 import { getSignedUrl } from '../utils/s3-upload';
-import { calcDateRange, uniqueValues } from '../utils/calculations';
+import { calcDateRange, uniqueValues, mostFrequentString } from '../utils/calculations';
 
 var UploadForm = React.createClass({
   displayName: 'UploadForm',
@@ -26,7 +26,6 @@ var UploadForm = React.createClass({
   },
 
   setErrorState: function (failures, metadata) {
-    console.log(failures, failures.length)
     if (failures.length) {
       this.setState({
         status: 'verifyErr',
@@ -136,14 +135,17 @@ var UploadForm = React.createClass({
               failures.push(`Record ${line}: ${e.stack}`);
             });
             if (line === 0) {
-              // Add static information to metadata on first line
-              metadata.location = record.location;
-              metadata.city = record.city;
-              metadata.country = record.country;
+              // Initialize metadata object on first line
+              metadata.location = [];
+              metadata.city = [];
+              metadata.country = [];
               metadata.dates = {};
               metadata.values = {};
             }
             // Add array information to metadata
+            metadata.location.push(record.location);
+            metadata.city.push(record.city);
+            metadata.country.push(record.country);
             metadata.dates[record.date.local] = true;
             metadata.values[record.parameter] = true;
 
@@ -174,14 +176,13 @@ var UploadForm = React.createClass({
 
   renderInitial: function () {
     const errors = this.state.errors;
-    const errorLength = errors.length;
     let errorText = '';
     errors.forEach((error) => {
       errorText += `${error}\n`;
     });
     const errorMsg = errors.length
       ? <div className='form__group'>
-          <p className='error'><b>{errorLength}</b> errors found in {this.csvFile.name}</p>
+          <p className='error'><b>{errors.length}</b> errors found in {this.csvFile.name}</p>
           <textarea className='form__control' id='form-textarea' rows='7' defaultValue={errorText}></textarea>
         </div>
       : '';
@@ -254,9 +255,9 @@ var UploadForm = React.createClass({
           <h2>Upload Verification</h2>
         </div>
         <ul className='form__ul--col1'>
-          <li><b>Location:</b> {metadata.location}</li>
-          <li><b>City:</b> {metadata.city}</li>
-          <li><b>Country:</b> {metadata.country}</li>
+          <li><b>Location:</b> {mostFrequentString(metadata.location)}</li>
+          <li><b>City:</b> {mostFrequentString(metadata.city)}</li>
+          <li><b>Country:</b> {mostFrequentString(metadata.country)}</li>
           </ul>
         <ul className='form__ul--col2'>
           <li><b>Measurements:</b> {metadata.measurements}</li>
