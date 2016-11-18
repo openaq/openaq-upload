@@ -21,7 +21,9 @@ var UploadForm = React.createClass({
       response: {
         code: '',
         text: ''
-      }
+      },
+      tokenWarning: false,
+      fileWarning: false
     };
   },
 
@@ -174,6 +176,20 @@ var UploadForm = React.createClass({
     this.setState({token: event.target.value});
   },
 
+  handleTokenField: function () {
+    this.state.token.length ? this.setState({tokenWarning: false}) : this.setState({tokenWarning: true});
+  },
+
+  handleFileField: function () {
+    this.csvFile ? this.setState({fileWarning: false}) : this.setState({fileWarning: true});
+  },
+
+  handleVerifyClick: function () {
+    this.handleTokenField();
+    this.handleFileField();
+    if (this.csvFile && this.state.token.length) this.parseCsv();
+  },
+
   renderInitial: function () {
     const errors = this.state.errors;
     let errorText = '';
@@ -194,24 +210,26 @@ var UploadForm = React.createClass({
             <label className='form__label' htmlFor='key-input'>Please enter your API token</label>
             <p><a href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
             <div className='form__input-group'>
-              <input type='text' required className='form__control form__control--medium' id='key-input' placeholder='Enter Key' onChange={((e) => this.setToken(e))} />
+              <input type='text' required className={`form__control form__control--medium ${this.state.tokenWarning ? ' error' : ''}`} id='key-input' placeholder='Enter Key' onChange={((e) => { this.handleTokenField(e); this.setToken(e); })} />
+              <label className={`form__label form__label-warning ${this.state.tokenWarning ? ' error' : ''}`} htmlFor='key-input'>Cannot leave field blank</label>
             </div>
           </div>
 
           <div className='form__group form__group--upload'>
             <label className='form__label' htmlFor='file-input'>Upload Data</label>
             <p>We only accept CSV files at this time.</p>
-            <input type='file' className='form__control--upload' id='form-file' ref='file' accept='text/plain' onChange={this.getFile} />
+            <input type='file' className='form__control--upload' id='form-file' ref='file' accept='text/plain' onChange={(e) => this.getFile(e)} />
             <div className='form__input-group'>
               <span className='form__input-group-button'>
                 <button type='submit' className='button button--base button--text-hidden button--medium button--arrow-up-icon' onClick={() => this.refs.file.click()}></button>
               </span>
-              <input type='text' readOnly className='form__control form__control--medium' value={this.state.formFile} />
+              <input type='text' readOnly className={`form__control form__control--medium ${this.state.fileWarning ? ' error' : ''}`} value={this.state.formFile} onChange={((e) => this.handleFileField(e))} />
             </div>
+            <label className={`form__label form__label-warning ${this.state.fileWarning ? ' error' : ''}`} htmlFor='file-input'>You must choose a file.</label>
           </div>
 
           {errorMsg}
-          <button className='button button--primary button--verify' type='button' onClick={this.parseCsv}><span>Verify</span></button>
+          <button className='button button--primary button--verify' type='button' onClick={this.handleVerifyClick}><span>Verify</span></button>
 
         </fieldset>
       </div>

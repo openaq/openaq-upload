@@ -100,7 +100,7 @@
 }
 
 .form__group--token {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   width: 10/12*100%;
   @include media(xsmall-only) {
     min-width: 19rem;
@@ -108,7 +108,7 @@
 }
 
 .form__group--upload {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   width: 8/12*100%;
   @include media(xsmall-only) {
     min-width: 19rem;
@@ -139,14 +139,24 @@
   list-style-type: none;
 }
 
-.error {
-  color: #ee0000;
-  margin: 0;
-  font-size: 1rem;
-  b {
-    font-weight: 800;
+.form__label-warning{
+  opacity: 0;
+  font-size: 0.75rem;
+  font-weight: 200;
+  margin: 0.1rem;
+    &.error {
+    opacity: 1;
+    color: #ee0000;
   }
 }
+.form__input-group, .form__control {
+  opacity: 1;
+    &.error {
+      color: #ee0000;
+      background-color: #ffe8e8;
+      border: 2px solid #ee0000;
+    }
+  }
 
 .exhibit__content {
   h2 {
