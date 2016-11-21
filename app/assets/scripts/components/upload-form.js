@@ -217,7 +217,7 @@ var UploadForm = React.createClass({
 
           <div className='form__group form__group--upload'>
             <label className='form__label' htmlFor='file-input'>Upload Data</label>
-            <p>We only accept CSV files at this time.</p>
+            <p>We only accept text/csv files at this time.</p>
             <input type='file' className='form__control--upload' id='form-file' ref='file' accept='text/plain' onChange={(e) => this.getFile(e)} />
             <div className='form__input-group'>
               <span className='form__input-group-button'>
