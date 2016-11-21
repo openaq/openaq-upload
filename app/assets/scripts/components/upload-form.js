@@ -11,14 +11,11 @@ import SuccessModal from './success-modal';
 
 var UploadForm = React.createClass({
   displayName: 'UploadForm',
-  propTypes: {
-    errors: React.PropTypes.array,
-    showModal: React.PropTypes.bool
-  },
 
   getInitialState: function () {
     return {
       errors: [],
+      formFile: 'No file chosen',
       showModal: false
     };
   },
@@ -48,11 +45,10 @@ var UploadForm = React.createClass({
   },
 
   parseCsv: function () {
-    const csvData = this.csvData;
     const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
     let failures = [];
     let line = 0;
-    fileReaderStream(csvData).pipe(csvStream)
+    fileReaderStream(this.csvFile).pipe(csvStream)
       .on('error', (failure) => {
         failures.push(failure);
       })
@@ -131,8 +127,10 @@ var UploadForm = React.createClass({
       });
   },
 
-  storeCsv: function (event) {
-    this.csvData = event.target.files[0];
+  getFile: function (event) {
+    // Store file reference
+    this.csvFile = event.target.files[0];
+    this.setState({formFile: this.csvFile.name});
   },
 
   render: function () {
@@ -140,11 +138,8 @@ var UploadForm = React.createClass({
     const showModal = this.state.showModal;
     return (
       <section className='fold' id='uploader'>
-        {showModal
-          ? <FailureModal errors={errors} /> : ''}
-        {showModal
-          ? <SuccessModal visible={showModal} errors={errors} />
-          : ''}
+        {showModal ? <FailureModal errors={errors} /> : ''}
+        {showModal ? <SuccessModal visible={showModal} errors={errors} csvFile={this.csvFile} /> : ''}
         <div className='inner'>
           <header className='fold__header'>
             <h1 className='fold__title'>OpenAQ Uploader</h1>
@@ -161,10 +156,10 @@ var UploadForm = React.createClass({
 
             <div className='form__group'>
               <label className='form__label' htmlFor='form-input'>Please select a CSV file</label>
-              <input type='file' className='form__control' id='form-file' accept='text/plain' onChange={this.storeCsv} />
+              <input type='file' className='form__control' id='form-file' accept='text/plain' onChange={this.getFile} />
               <div className='form__input-group'>
                 <span className='form__input-group-button'><button type='submit' className='button button--base button--medium button--example-icon'><label htmlFor='form-file'>Choose File</label></button></span>
-                <input type='text' className='form__control form__control--medium' id='form-input' placeholder='No file chosen' />
+                <input type='text' className='form__control form__control--medium' id='form-input' placeholder={this.state.formFile} />
               </div>
             </div>
 
