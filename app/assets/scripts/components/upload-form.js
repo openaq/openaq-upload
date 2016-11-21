@@ -169,7 +169,8 @@ var UploadForm = React.createClass({
       formFile: this.csvFile.name,
       status: 'initial',
       metadata: {},
-      errors: []
+      errors: [],
+      fileWarning: false
     });
   },
 
@@ -211,7 +212,7 @@ var UploadForm = React.createClass({
             <label className='form__label' htmlFor='key-input'>Please enter your API token</label>
             <p><a href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
             <div className='form__input-group'>
-              <input type='text' required className={`form__control form__control--medium ${this.state.tokenWarning ? ' error' : ''}`} id='key-input' placeholder='Enter Key' onChange={((e) => { this.handleTokenField(e); this.setToken(e); })} />
+              <input type='text' required className={`form__control form__control--medium ${this.state.tokenWarning ? ' error' : ''}`} id='key-input' placeholder='Enter Key' onBlur={((e) => this.handleTokenField(e))} onChange={((e) => { this.setToken(e); })} />
               <label className={`form__label form__label-warning ${this.state.tokenWarning ? ' error' : ''}`} htmlFor='key-input'>Cannot leave field blank</label>
             </div>
           </div>
