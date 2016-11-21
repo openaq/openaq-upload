@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import fetch from 'isomorphic-fetch';
+import config from '../config';
 
 var PageFooter = React.createClass({
   displayName: 'PageFooter',
@@ -12,7 +13,7 @@ var PageFooter = React.createClass({
   },
 
   componentDidMount: function () {
-    fetch('https://api.openaq.org/v1/measurements?limit=0')
+    fetch(`${config.api}/measurements?limit=0`)
     .then((response) => response.json())
     .then((json) => this.setState({measurements: json.meta.found.toLocaleString()}));
   },
