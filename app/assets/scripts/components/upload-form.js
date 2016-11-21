@@ -2,6 +2,7 @@
 import React from 'react';
 import fileReaderStream from 'filereader-stream';
 import validator from 'jsonschema';
+import fetch from 'isomorphic-fetch';
 import csv from 'csv-stream';
 
 import measurementSchema from '../utils/measurement-schema';

@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import fetch from 'isomorphic-fetch';
 
 var PageFooter = React.createClass({
   displayName: 'PageFooter',
