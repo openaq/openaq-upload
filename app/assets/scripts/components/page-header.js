@@ -25,8 +25,7 @@ var PageHeader = React.createClass({
                 <h1 className='inpage__title'>Upload Data</h1>
               </div>
               <div className='inpage__introduction'>
-                <p>We're building the world's first open platform that provides programmatic
-                real-time and historical access to air quality data from around the globe.</p>
+                <p>Have data to contribute to the platform? Reach out to us to get a key and you can share your government-level or research-grade data with the world.</p>
               </div>
             </div>
           </header>
