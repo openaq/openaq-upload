@@ -202,7 +202,8 @@ var UploadForm = React.createClass({
   },
 
   handleEmailField: function () {
-    this.state.email.length ? this.setState({emailWarning: false}) : this.setState({emailWarning: true});
+    const filter = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    filter.test(this.state.email) ? this.setState({emailWarning: false}) : this.setState({emailWarning: true});
   },
 
   handleTokenField: function () {
@@ -240,7 +241,7 @@ var UploadForm = React.createClass({
             <label className='form__label' htmlFor='email-input'>Please enter your email address</label>
             <div className='form__input-group'>
               <input type='text' required className={`form__control form__control--medium ${this.state.emailWarning ? ' error' : ''}`} id='email-input' placeholder='Enter Email Address' onBlur={((e) => this.handleEmailField(e))} onChange={((e) => { this.setEmail(e); })} />
-              <label className={`form__label form__label-warning ${this.state.emailWarning ? ' error' : ''}`} htmlFor='email-input'>Cannot leave field blank</label>
+              <label className={`form__label form__label-warning ${this.state.emailWarning ? ' error' : ''}`} htmlFor='email-input'>Must be a valid email address</label>
             </div>
           </div>
 
