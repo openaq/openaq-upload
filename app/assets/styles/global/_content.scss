@@ -99,7 +99,7 @@
   }
 }
 
-.form__group--token {
+.form__group--token, .form__group--email {
   margin-bottom: 1rem;
   width: 10/12*100%;
   @include media(xsmall-only) {

@@ -16,6 +16,7 @@ var UploadForm = React.createClass({
     return {
       status: 'initial',
       token: '',
+      email: '',
       formFile: 'Choose File to Upload',
       metadata: {},
       errors: [],
@@ -23,6 +24,7 @@ var UploadForm = React.createClass({
         code: '',
         text: ''
       },
+      emailWarning: false,
       tokenWarning: false,
       fileWarning: false
     };
@@ -65,7 +67,7 @@ var UploadForm = React.createClass({
   parseCsv: function () {
     if (this.csvFile) {
       const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
-      const email = 'example@gmail.com';
+      const email = this.state.email;
       let records = [];
       let metadata = {};
       let failures = [];
@@ -195,6 +197,14 @@ var UploadForm = React.createClass({
     this.setState({token: event.target.value});
   },
 
+  setEmail: function (event) {
+    this.setState({email: event.target.value});
+  },
+
+  handleEmailField: function () {
+    this.state.email.length ? this.setState({emailWarning: false}) : this.setState({emailWarning: true});
+  },
+
   handleTokenField: function () {
     this.state.token.length ? this.setState({tokenWarning: false}) : this.setState({tokenWarning: true});
   },
@@ -204,9 +214,10 @@ var UploadForm = React.createClass({
   },
 
   handleVerifyClick: function () {
+    this.handleEmailField();
     this.handleTokenField();
     this.handleFileField();
-    if (this.csvFile && this.state.token.length) this.parseCsv();
+    if (this.csvFile && this.state.email.length && this.state.token.length) this.parseCsv();
   },
 
   renderInitial: function () {
@@ -224,6 +235,14 @@ var UploadForm = React.createClass({
     return (
       <div className='inner'>
         <fieldset className='form__fieldset'>
+
+          <div className='form__group form__group--email'>
+            <label className='form__label' htmlFor='email-input'>Please enter your email address</label>
+            <div className='form__input-group'>
+              <input type='text' required className={`form__control form__control--medium ${this.state.emailWarning ? ' error' : ''}`} id='email-input' placeholder='Enter Email Address' onBlur={((e) => this.handleEmailField(e))} onChange={((e) => { this.setEmail(e); })} />
+              <label className={`form__label form__label-warning ${this.state.emailWarning ? ' error' : ''}`} htmlFor='email-input'>Cannot leave field blank</label>
+            </div>
+          </div>
 
           <div className='form__group form__group--token'>
             <label className='form__label' htmlFor='key-input'>Please enter your API token</label>
