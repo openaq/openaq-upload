@@ -2,8 +2,8 @@
 import React from 'react';
 import fileReaderStream from 'filereader-stream';
 import validator from 'jsonschema';
-import fetch from 'isomorphic-fetch';
 import csv from 'csv-stream';
+import request from 'request';
 
 import measurementSchema from '../utils/measurement-schema';
 import { getSignedUrl } from '../utils/s3-upload';
@@ -55,9 +55,18 @@ var UploadForm = React.createClass({
     return failures;
   },
 
+  writeCsvHeader: function (data) {
+    let csvHeader = '';
+    Object.keys(data).forEach((column) => {
+      csvHeader += `${column},`;
+    });
+    return csvHeader + 'email\n';
+  },
+
   parseCsv: function () {
     if (this.csvFile) {
       const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
+      this.csvOutput = '';
       let metadata = {};
       let failures = [];
       let line = 0;
@@ -66,15 +75,18 @@ var UploadForm = React.createClass({
           failures.push(failure);
         })
         .on('data', (data) => {
+          console.log(data);
           // Check for data;
           if (!data || data === {}) {
             failures = ['No data provided'];
             this.setErrorState(failures);
           }
-          // Check header on first line
           if (line === 0 && !failures.length) {
+            // Check header on first line
             failures = failures.concat(this.checkHeader(data));
             if (failures.length) this.setErrorState(failures);
+            // Write header on first line
+            this.csvOutput = this.writeCsvHeader(data);
           }
           // Parse CSV
           if (!failures.length) {
@@ -242,15 +254,16 @@ var UploadForm = React.createClass({
     const component = this;
     getSignedUrl(component.state.formFile, component.state.token).then(function (credentials) {
       let url = credentials.results.presignedURL;
-      console.log(url);
-      fetch(url, {
-        method: 'PUT',
+      request({
         headers: {'Content-Type': 'text/csv'},
+        method: 'PUT',
         preambleCRLF: true,
         postambleCRLF: true,
-        body: component.csvFile
-      }).then((response) => {
-        response.status === 200
+        uri: url,
+        body: 'Example'
+      },
+      (error, response, body) => {
+        !error
           ? component.setState({status: 'finished'})
           : component.setState({
             status: 'serverErr',
