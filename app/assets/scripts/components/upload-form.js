@@ -65,6 +65,7 @@ var UploadForm = React.createClass({
   parseCsv: function () {
     if (this.csvFile) {
       const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
+      const email = 'example@gmail.com';
       let records = [];
       let metadata = {};
       let failures = [];
@@ -160,6 +161,8 @@ var UploadForm = React.createClass({
             metadata.dates[record.date.local] = true;
             metadata.values[record.parameter] = true;
 
+            // Add email to record
+            data['email'] = email;
             // Add record to array
             records.push(data);
             line++;
@@ -169,8 +172,8 @@ var UploadForm = React.createClass({
           metadata.measurements = line;
           this.setErrorState(failures, metadata);
           if (!failures.length) {
+            // If no failures, convert record array to CSV
             this.csvOutput = this.writeCsv(records);
-            console.log(this.csvOutput);
           }
         });
     }
@@ -262,7 +265,7 @@ var UploadForm = React.createClass({
         preambleCRLF: true,
         postambleCRLF: true,
         uri: url,
-        body: 'Example'
+        body: component.csvOutput
       },
       (error, response, body) => {
         !error
