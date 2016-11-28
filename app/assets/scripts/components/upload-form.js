@@ -55,18 +55,17 @@ var UploadForm = React.createClass({
     return failures;
   },
 
-  writeCsvHeader: function (data) {
-    let csvHeader = '';
-    Object.keys(data).forEach((column) => {
-      csvHeader += `${column},`;
-    });
-    return csvHeader + 'email\n';
+  writeCsv: function (records) {
+    const header = Object.keys(records[0]);
+    let csv = records.map(row => header.map(fieldName => JSON.stringify(row[fieldName])).join(','));
+    csv.unshift(header.join(','));
+    return csv.join('\r\n');
   },
 
   parseCsv: function () {
     if (this.csvFile) {
       const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
-      this.csvOutput = '';
+      let records = [];
       let metadata = {};
       let failures = [];
       let line = 0;
@@ -75,7 +74,6 @@ var UploadForm = React.createClass({
           failures.push(failure);
         })
         .on('data', (data) => {
-          console.log(data);
           // Check for data;
           if (!data || data === {}) {
             failures = ['No data provided'];
@@ -85,8 +83,6 @@ var UploadForm = React.createClass({
             // Check header on first line
             failures = failures.concat(this.checkHeader(data));
             if (failures.length) this.setErrorState(failures);
-            // Write header on first line
-            this.csvOutput = this.writeCsvHeader(data);
           }
           // Parse CSV
           if (!failures.length) {
@@ -164,12 +160,18 @@ var UploadForm = React.createClass({
             metadata.dates[record.date.local] = true;
             metadata.values[record.parameter] = true;
 
+            // Add record to array
+            records.push(data);
             line++;
           }
         })
         .on('end', () => {
           metadata.measurements = line;
           this.setErrorState(failures, metadata);
+          if (!failures.length) {
+            this.csvOutput = this.writeCsv(records);
+            console.log(this.csvOutput);
+          }
         });
     }
   },
