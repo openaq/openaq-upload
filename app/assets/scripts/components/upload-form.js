@@ -241,7 +241,7 @@ var UploadForm = React.createClass({
             <label className='form__label' htmlFor='email-input'>Please enter your email address</label>
             <div className='form__input-group'>
               <input type='text' required className={`form__control form__control--medium ${this.state.emailWarning ? ' error' : ''}`} id='email-input' placeholder='Enter Email Address' onBlur={((e) => this.handleEmailField(e))} onChange={((e) => { this.setEmail(e); })} />
-              <label className={`form__label form__label-warning ${this.state.emailWarning ? ' error' : ''}`} htmlFor='email-input'>Must be a valid email address</label>
+              <label className={`form__label form__label-warning ${this.state.emailWarning ? ' error' : ''}`} htmlFor='email-input'>Must be a valid address</label>
             </div>
           </div>
 
