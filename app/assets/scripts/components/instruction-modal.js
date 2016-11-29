@@ -1,25 +1,49 @@
 'use strict';
 import React from 'react';
+import OpenAQ from 'openaq-design-system';
+var { Modal, ModalHeader, ModalBody, ModalFooter } = OpenAQ.Modal;
 
 var InstructionModal = React.createClass({
   displayName: 'InstructionModal',
+  propTypes: {
+    open: React.PropTypes.bool
+  },
+
+  getInitialState: function () {
+    return {
+      open: false
+    };
+  },
+
+  closeModal: function () {
+    this.setState({open: false});
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    this.setState({open: nextProps.open});
+  },
 
   render: function () {
     return (
-      <section className='modal modal--medium'>
-        <div className='modal__inner'>
-          <header className='modal__header'>
+      <div>
+        <Modal
+          id='instruction-modal'
+          className='modal modal--medium'
+          onCloseClick={this.closeModal}
+          revealed={this.state.open} >
+
+          <ModalHeader>
             <div className='modal__headline'>
               <p className='modal__subtitle'>Submission Guidelines</p>
               <h1 className='modal__title'>OpenAQ CSV Schema</h1>
             </div>
-          </header>
-          <div className='modal__body'>
+          </ModalHeader>
+          <ModalBody>
             <div className='prose'>
             <p>The OpenAQ uploader tool provides an ingestion point for bulk air quality sensor readings in Comma-Separated-Values (CSV) format.
-            In order to pass validation and enter the system, the data must adhere to the specific schema described below.</p>
-            <p>We'll try to tell you where things went wrong in the event that a submission doesn't pass validation, but please don't hesitate to
-            <a href='mailto:info@openaq.org'>contact us</a> for help if there is still confusion.</p>
+            In order to pass validation and enter the system, the submitted data must adhere to the specific schema described below.</p>
+            <p>We'll try to tell you where things went wrong in the event that a submission doesn't pass validation, but please don't hesitate
+            to <a href='mailto:info@openaq.org'>contact us</a> for help if there are still questions.</p>
             <p>Thanks for sharing!</p>
               <h3 className='heading-deco'>Required Columns</h3>
               <dl>
@@ -62,12 +86,12 @@ var InstructionModal = React.createClass({
                 <dd>A number between -180 and 180 representing the longitude of the measurement's location</dd>
               </dl>
             </div>
-          </div>
-          <footer className='modal__footer'>
-            <a className='button button--primary button--large' role='button'><span>Dismiss</span></a>
-          </footer>
-        </div><button className='modal__button-dismiss' title='Close'><span>Dismiss</span></button>
-      </section>
+          </ModalBody>
+          <ModalFooter>
+            <a className='button button--primary button--large' role='button' onClick={this.closeModal}><span>Dismiss</span></a>
+          </ModalFooter>
+        </Modal>
+      </div>
     );
   }
 });
