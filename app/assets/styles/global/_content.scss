@@ -1,0 +1,212 @@
+/* ==========================================================================
+   Homepage: Content
+   ========================================================================== */
+
+.page--homepage {
+  .inpage__header {
+    background-image: url(../graphics/content/page-hero-default.png);
+  }
+}
+
+.exhibit {
+  @extend .clearfix;
+  box-shadow: 0 0 0 2px $base-alpha-color;
+  border-radius: $base-border-radius;
+  background: #fff;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 2/12*100% 1rem 2/12*100%;
+  @include media(medium-down) {
+    margin: 0 1/12*100% 1rem 1/12*100%;
+  }
+
+  li > & {
+    margin: 0;
+  }
+
+  &--clipped {
+    overflow: hidden;
+  }
+}
+
+.exhibit__content,
+.exhibit__caption,
+.prose .exhibit__caption {
+  padding: $global-spacing;
+  clear: both;
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @include media(medium-up) {
+    padding: $global-spacing * 1.5;
+  }
+}
+
+.exhibit__content {
+  &--dark {
+    @extend .antialiased;
+    background: $base-color;
+    color: #fff;
+  }
+}
+
+.exhibit__caption {
+  background: rgba($base-color, 0.04);
+  box-shadow: inset 0 1px 0 $base-alpha-color;
+
+  pre {
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+  }
+
+  .highlight pre,
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.exhibit__captitle {
+  @extend .heading-alt;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.exhibit__details {
+  dd {
+    margin-bottom: 0;
+  }
+}
+
+
+/* Exhibit: Misc
+   ========================================================================== */
+
+.button--arrow-up-icon:before {
+  @extend %openaq-ds-icon-arrow-up;
+}
+
+.form__group {
+  input[type="file"] {
+    display: none;
+  }
+}
+
+.form__group--token, .form__group--email {
+  margin-bottom: 1rem;
+  width: 10/12*100%;
+  @include media(xsmall-only) {
+    min-width: 19rem;
+  }
+}
+
+.form__group--upload {
+  margin-bottom: 1rem;
+  width: 8/12*100%;
+  @include media(xsmall-only) {
+    min-width: 19rem;
+  }
+}
+
+.button--verify {
+  float: left;
+  padding: .5rem 1.5rem .5rem 1.5rem;
+}
+
+.button--submit {
+  float: left;
+  margin: 0.5rem;
+  padding: .5rem 1.5rem .5rem 1.5rem;
+}
+
+.form__ul--col1 {
+  float: left;
+  padding: 1rem 6rem 1rem 1rem;
+  list-style-type: none;
+}
+
+.form__ul--col2 {
+  float: left;
+  clear: right;
+  padding: 1rem;
+  list-style-type: none;
+}
+
+.form__label-warning{
+  opacity: 0;
+  font-size: 0.75rem;
+  font-weight: 200;
+  margin: 0.1rem;
+    &.error {
+    opacity: 1;
+    color: #ee0000;
+  }
+}
+.form__input-group, .form__control {
+  opacity: 1;
+    &.error {
+      color: #ee0000;
+      background-color: #ffe8e8;
+      border: 2px solid #ee0000;
+    }
+  }
+
+.exhibit__content {
+  h2 {
+    text-align: center;
+  }
+  a {
+    color: $base-font-color;
+    text-decoration: underline;
+    -o-transition: .25s;
+    -ms-transition: .25s;
+    -moz-transition: .25s;
+    -webkit-transition: .25s;
+    transition:.25s;
+  }
+  &a:hover {
+    color: $info-color;
+  }
+}
+
+.form__buttons {
+   clear: both;
+   margin-bottom: 3rem;
+}
+
+.page__footer {
+  .copyright {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .heart::before {
+    @extend %openaq-ds-icon-heart-full;
+    opacity: 0.8;
+    vertical-align: middle;
+  }
+}
+
+.success, .failure {
+  text-align: center;
+  margin: 20%;
+  padding: 4em 0;
+  button {
+    float: none;
+    margin-top: 1rem;
+  }
+  .result__message {
+    font-size: 1.1rem;
+  }
+  .result__message--small {
+    font-weight: 300;
+    font-size: 0.9rem;
+    margin: .25rem;
+  }
+}
