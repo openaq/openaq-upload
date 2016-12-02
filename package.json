@@ -82,6 +82,7 @@
     "filereader-stream": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "jsonschema": "^1.1.0",
+    "lodash": "^4.17.2",
     "openaq-design-system": "git+https://github.com/openaq/openaq-design-system#v2.0.0",
     "react": "^15.2.1",
     "react-addons-css-transition-group": "^15.4.1",
