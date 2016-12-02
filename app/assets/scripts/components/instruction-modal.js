@@ -6,21 +6,8 @@ var { Modal, ModalHeader, ModalBody, ModalFooter } = OpenAQ.Modal;
 var InstructionModal = React.createClass({
   displayName: 'InstructionModal',
   propTypes: {
-    open: React.PropTypes.bool
-  },
-
-  getInitialState: function () {
-    return {
-      open: false
-    };
-  },
-
-  closeModal: function () {
-    this.setState({open: false});
-  },
-
-  componentWillReceiveProps: function (nextProps) {
-    this.setState({open: nextProps.open});
+    open: React.PropTypes.bool,
+    closeModal: React.PropTypes.func
   },
 
   render: function () {
@@ -29,8 +16,8 @@ var InstructionModal = React.createClass({
         <Modal
           id='instruction-modal'
           className='modal modal--medium'
-          onCloseClick={this.closeModal}
-          revealed={this.state.open} >
+          onCloseClick={this.props.closeModal}
+          revealed={this.props.open} >
 
           <ModalHeader>
             <div className='modal__headline'>
@@ -88,7 +75,7 @@ var InstructionModal = React.createClass({
             </div>
           </ModalBody>
           <ModalFooter>
-            <a className='button button--primary button--large' role='button' onClick={this.closeModal}><span>Dismiss</span></a>
+            <a className='button button--primary button--large' role='button' onClick={this.props.closeModal}><span>Dismiss</span></a>
           </ModalFooter>
         </Modal>
       </div>

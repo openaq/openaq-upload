@@ -15,6 +15,10 @@ var PageHeader = React.createClass({
     this.setState({open: true});
   },
 
+  closeModal: function () {
+    this.setState({open: false});
+  },
+
   render: function () {
     return (
       <div>
@@ -42,7 +46,7 @@ var PageHeader = React.createClass({
               <a className='button button--primary button--large' role='button' onClick={this.openModal}><span>View Instructions</span></a>
             </div>
           </header>
-          <InstructionModal open={this.state.open} />
+          <InstructionModal open={this.state.open} closeModal={this.closeModal}/>
         </div>
     );
   }
