@@ -14,9 +14,6 @@ var s3Config = {
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
-
-app.use(express.static(path.join(__dirname, '/public')));
-
 app.get('/s3_credentials', function (request, response) {
   // The following code allows for local access at the expense of security.
   // Do not use in production.
