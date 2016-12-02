@@ -1,8 +1,23 @@
 'use strict';
 import React from 'react';
+import InstructionModal from './instruction-modal';
 
 var PageHeader = React.createClass({
   displayName: 'PageHeader',
+
+  getInitialState: function () {
+    return {
+      open: false
+    };
+  },
+
+  openModal: function () {
+    this.setState({open: true});
+  },
+
+  closeModal: function () {
+    this.setState({open: false});
+  },
 
   render: function () {
     return (
@@ -28,8 +43,10 @@ var PageHeader = React.createClass({
                 <p>We're building the world's first open platform that provides programmatic
                 real-time and historical access to air quality data from around the globe.</p>
               </div>
+              <a className='button button--primary button--large' role='button' onClick={this.openModal}><span>View Instructions</span></a>
             </div>
           </header>
+          <InstructionModal open={this.state.open} closeModal={this.closeModal}/>
         </div>
     );
   }

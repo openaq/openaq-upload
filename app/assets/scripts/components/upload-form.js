@@ -2,8 +2,8 @@
 import React from 'react';
 import fileReaderStream from 'filereader-stream';
 import validator from 'jsonschema';
-import fetch from 'isomorphic-fetch';
 import csv from 'csv-stream';
+import request from 'request';
 
 import measurementSchema from '../utils/measurement-schema';
 import { getSignedUrl } from '../utils/s3-upload';
@@ -16,6 +16,7 @@ var UploadForm = React.createClass({
     return {
       status: 'initial',
       token: '',
+      email: '',
       formFile: 'Choose File to Upload',
       metadata: {},
       errors: [],
@@ -23,6 +24,7 @@ var UploadForm = React.createClass({
         code: '',
         text: ''
       },
+      emailWarning: false,
       tokenWarning: false,
       fileWarning: false
     };
@@ -55,9 +57,18 @@ var UploadForm = React.createClass({
     return failures;
   },
 
+  writeCsv: function (records) {
+    const header = Object.keys(records[0]);
+    let csv = records.map(row => header.map(fieldName => JSON.stringify(row[fieldName])).join(','));
+    csv.unshift(header.join(','));
+    return csv.join('\r\n');
+  },
+
   parseCsv: function () {
     if (this.csvFile) {
       const csvStream = csv.createStream({delimiter: ',', endLine: '\n'});
+      const email = this.state.email;
+      let records = [];
       let metadata = {};
       let failures = [];
       let line = 0;
@@ -71,8 +82,8 @@ var UploadForm = React.createClass({
             failures = ['No data provided'];
             this.setErrorState(failures);
           }
-          // Check header on first line
           if (line === 0 && !failures.length) {
+            // Check header on first line
             failures = failures.concat(this.checkHeader(data));
             if (failures.length) this.setErrorState(failures);
           }
@@ -152,12 +163,20 @@ var UploadForm = React.createClass({
             metadata.dates[record.date.local] = true;
             metadata.values[record.parameter] = true;
 
+            // Add email to record
+            data['email'] = email;
+            // Add record to array
+            records.push(data);
             line++;
           }
         })
         .on('end', () => {
           metadata.measurements = line;
           this.setErrorState(failures, metadata);
+          if (!failures.length) {
+            // If no failures, convert record array to CSV
+            this.csvOutput = this.writeCsv(records);
+          }
         });
     }
   },
@@ -169,12 +188,22 @@ var UploadForm = React.createClass({
       formFile: this.csvFile.name,
       status: 'initial',
       metadata: {},
-      errors: []
+      errors: [],
+      fileWarning: false
     });
   },
 
   setToken: function (event) {
     this.setState({token: event.target.value});
+  },
+
+  setEmail: function (event) {
+    this.setState({email: event.target.value});
+  },
+
+  handleEmailField: function () {
+    const filter = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    filter.test(this.state.email) ? this.setState({emailWarning: false}) : this.setState({emailWarning: true});
   },
 
   handleTokenField: function () {
@@ -186,9 +215,10 @@ var UploadForm = React.createClass({
   },
 
   handleVerifyClick: function () {
+    this.handleEmailField();
     this.handleTokenField();
     this.handleFileField();
-    if (this.csvFile && this.state.token.length) this.parseCsv();
+    if (this.csvFile && this.state.email.length && this.state.token.length) this.parseCsv();
   },
 
   renderInitial: function () {
@@ -207,17 +237,25 @@ var UploadForm = React.createClass({
       <div className='inner'>
         <fieldset className='form__fieldset'>
 
+          <div className='form__group form__group--email'>
+            <label className='form__label' htmlFor='email-input'>Please enter your email address</label>
+            <div className='form__input-group'>
+              <input type='text' required className={`form__control form__control--medium ${this.state.emailWarning ? ' error' : ''}`} id='email-input' placeholder='Enter Email Address' onBlur={((e) => this.handleEmailField(e))} onChange={((e) => { this.setEmail(e); })} />
+              <label className={`form__label form__label-warning ${this.state.emailWarning ? ' error' : ''}`} htmlFor='email-input'>Must be a valid address</label>
+            </div>
+          </div>
+
           <div className='form__group form__group--token'>
             <label className='form__label' htmlFor='key-input'>Please enter your API token</label>
             <p><a href='mailto:info@openaq.org'>Don't have a key? Email us to request one.</a></p>
             <div className='form__input-group'>
-              <input type='text' required className={`form__control form__control--medium ${this.state.tokenWarning ? ' error' : ''}`} id='key-input' placeholder='Enter Key' onChange={((e) => { this.handleTokenField(e); this.setToken(e); })} />
+              <input type='text' required className={`form__control form__control--medium ${this.state.tokenWarning ? ' error' : ''}`} id='key-input' placeholder='Enter Key' onBlur={((e) => this.handleTokenField(e))} onChange={((e) => { this.setToken(e); })} />
               <label className={`form__label form__label-warning ${this.state.tokenWarning ? ' error' : ''}`} htmlFor='key-input'>Cannot leave field blank</label>
             </div>
           </div>
 
           <div className='form__group form__group--upload'>
-            <label className='form__label' htmlFor='file-input'>Upload Data</label>
+            <label className='form__label' htmlFor='file-input'>Upload data</label>
             <p>We only accept text/csv files at this time.</p>
             <input type='file' className='form__control--upload' id='form-file' ref='file' accept='text/plain' onChange={(e) => this.getFile(e)} />
             <div className='form__input-group'>
@@ -241,15 +279,16 @@ var UploadForm = React.createClass({
     const component = this;
     getSignedUrl(component.state.formFile, component.state.token).then(function (credentials) {
       let url = credentials.results.presignedURL;
-      console.log(url);
-      fetch(url, {
-        method: 'PUT',
+      request({
         headers: {'Content-Type': 'text/csv'},
+        method: 'PUT',
         preambleCRLF: true,
         postambleCRLF: true,
-        body: component.csvFile
-      }).then((response) => {
-        response.status === 200
+        uri: url,
+        body: component.csvOutput
+      },
+      (error, response, body) => {
+        !error
           ? component.setState({status: 'finished'})
           : component.setState({
             status: 'serverErr',
