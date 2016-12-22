@@ -278,26 +278,36 @@ var UploadForm = React.createClass({
   submit: function () {
     const component = this;
     getSignedUrl(component.state.formFile, component.state.token).then(function (credentials) {
-      let url = credentials.results.presignedURL;
-      request({
-        headers: {'Content-Type': 'text/csv'},
-        method: 'PUT',
-        preambleCRLF: true,
-        postambleCRLF: true,
-        uri: url,
-        body: component.csvOutput
-      },
-      (error, response, body) => {
-        !error
-          ? component.setState({status: 'finished'})
-          : component.setState({
-            status: 'serverErr',
-            response: {
-              code: response.status,
-              text: response.statusText
-            }
-          });
-      });
+      if (credentials.statusCode !== 200) {
+        component.setState({
+          status: 'serverErr',
+          response: {
+            code: credentials.statusCode,
+            text: credentials.error
+          }
+        });
+      } else {
+        let url = credentials.results.presignedURL;
+        request({
+          headers: {'Content-Type': 'text/csv'},
+          method: 'PUT',
+          preambleCRLF: true,
+          postambleCRLF: true,
+          uri: url,
+          body: component.csvOutput
+        },
+        (error, response, body) => {
+          !error
+            ? component.setState({status: 'finished'})
+            : component.setState({
+              status: 'serverErr',
+              response: {
+                code: response.status,
+                text: response.statusText
+              }
+            });
+        });
+      }
     });
   },
 
