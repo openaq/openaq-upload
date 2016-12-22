@@ -312,7 +312,19 @@ var UploadForm = React.createClass({
   },
 
   cancel: function () {
-    this.setState({status: 'initial'});
+    this.csvFile = {};
+    this.setState({
+      email: '',
+      token: '',
+      formFile: 'Choose File to Upload',
+      metadata: {},
+      errors: [],
+      response: {
+        code: '',
+        text: ''
+      },
+      status: 'initial'
+    });
   },
 
   renderVerifySuccess: function () {
