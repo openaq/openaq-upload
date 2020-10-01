@@ -2,35 +2,64 @@
    Main
    ========================================================================== */
 
-/* Third-party
+/**
+ * Following Necolas' Principles of writing consistent, idiomatic CSS:
+ * https://github.com/necolas/idiomatic-css
+ */
+
+/* Charset */
+
+@charset "UTF-8";
+
+
+/* Libraries
    ========================================================================== */
 
 /**
- * Bourbon for extended SASS functionality:
+ * Using Bourbon for extended SASS functionality:
  * http://bourbon.io/
  */
 
 @import "bourbon";
 
+/* Reboot
+   ========================================================================== */
+
+@import "normalize";
+@import "reset";
+
 /**
- * Jeet, a grid system designed for humans:
- * http://jeet.gs/
+ * Using Kenneth Ormandy's OpenType features—ligatures, kerning, and
+ * more—to Normalize.css:
+ * https://github.com/kennethormandy/normalize-opentype.css
  */
 
-@import "jeet/index";
+@import "normalize-opentype";
 
+/* Collecticons
+   ========================================================================== */
 
-/* OpenAQ Design System
+@import "collecticons";
+
+/* OpenAQ styles
    ========================================================================== */
 
 @import "openaq-design-system";
 
-
-/* Global
+/* Settings
    ========================================================================== */
 
+
+/* Main
+   ========================================================================== */
+
+<<<<<<< HEAD
 @import "global/pages";
 @import "global/inpages";
 @import "global/folds";
 @import "global/footer";
 @import "global/upload-form";
+=======
+@import "base";
+@import "upload"
+>>>>>>> 764de64... updates to upload tool

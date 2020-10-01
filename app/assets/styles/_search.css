@@ -1,0 +1,15 @@
+.search input {
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.search button {
+  border: 0;
+  background-color: transparent;
+  margin-left: -35px;
+}
+
+.search span {
+  vertical-align: top;
+}

@@ -1,0 +1,1121 @@
+[
+  {
+    "id": "8",
+    "name": "sint v",
+    "instruments": [
+      {
+        "type": "magna qui voluptate consequat",
+        "serialNumber": "eu",
+        "pollutants": [
+          "so2",
+          "no2",
+          "o3"
+        ],
+        "manufacturer": "amet",
+        "modelName": "sit veniam consectetur laboris velit",
+        "rawFrequency": -9992386,
+        "reportingFrequency": 89613525,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "anim laboris id dolore voluptate",
+        "inletHeight": -98064653,
+        "activationDate": "Sun Jan 27 2019 02:36:29 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Fri Mar 01 2019 02:02:34 GMT-0500 (Eastern Standard Time)",
+        "active": true,
+        "notes": "velit sed Excepteur elit nulla"
+      },
+      {
+        "type": "in consectetur deserunt est",
+        "serialNumber": "laboris amet incididunt ",
+        "pollutants": [
+          "bc"
+        ],
+        "manufacturer": "commodo nulla id Duis",
+        "modelName": "deserunt ad pari",
+        "rawFrequency": -81433596,
+        "reportingFrequency": 68705082,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "Ut cillum",
+        "inletHeight": 38951583,
+        "activationDate": "Sat Mar 16 2019 18:39:54 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Wed Nov 21 2018 18:37:41 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "aliqua"
+      },
+      {
+        "type": "dolore consectetur in dolor",
+        "serialNumber": "sunt cupidatat n",
+        "pollutants": [
+          "no2"
+        ],
+        "manufacturer": "non",
+        "modelName": "voluptate dolor est Lorem",
+        "rawFrequency": -57088128,
+        "reportingFrequency": -5801823,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "velit Duis ea pariatur",
+        "inletHeight": -86048610,
+        "activationDate": "Mon Nov 19 2018 12:39:14 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Thu Apr 25 2019 21:56:38 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "laboris consectetur Duis"
+      }
+    ],
+    "pollutants": [
+      "co",
+      "pm25",
+      "pm10",
+      "co",
+      "pm25"
+    ],
+    "city": "Kihnmouth",
+    "country": "SH",
+    "elevation": 264,
+    "siteType": "other",
+    "sourceType": "government",
+    "coordinates": {
+      "latitude": 43.8404,
+      "longitude": -48.1094
+    },
+    "activationDate": "Sat Feb 16 2019 20:26:05 GMT-0500 (Eastern Standard Time)",
+    "deactivationDate": "Fri Dec 07 2018 05:31:57 GMT-0500 (Eastern Standard Time)",
+    "active": true,
+    "notes": "irure",
+    "attribution": [
+      {
+        "name": "consectetur et dolore laborum",
+        "url": "non voluptate d"
+      },
+      {
+        "name": "elit ut am",
+        "url": "adipisicing Duis nulla"
+      },
+      {
+        "name": "amet ex fugiat ullamco",
+        "url": "pariatur eiusmod officia laborum nulla"
+      },
+      {
+        "name": "eu cillum nostrud dolor",
+        "url": "minim commodo deserunt ipsum enim"
+      },
+      {
+        "name": "sed elit proident dolor in",
+        "url": "ut fugiat"
+      }
+    ]
+  },
+  {
+    "id": "p",
+    "name": "fugiat sint deserunt elit ut",
+    "instruments": [
+      {
+        "type": "adipisicing",
+        "serialNumber": "incididunt nulla id et tempor",
+        "pollutants": [
+          "pm25",
+          "so2",
+          "no2"
+        ],
+        "manufacturer": "Lorem elit dolor nostrud",
+        "modelName": "sed nulla",
+        "rawFrequency": 39418294,
+        "reportingFrequency": 22298077,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "qui in in",
+        "inletHeight": -10005283,
+        "activationDate": "Sat May 12 2018 14:42:52 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Mon May 21 2018 00:27:25 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "aute non dolore"
+      },
+      {
+        "type": "mollit ea",
+        "serialNumber": "Lorem exercitation ea in",
+        "pollutants": [
+          "pm25",
+          "no2",
+          "pm25"
+        ],
+        "manufacturer": "tempor adipisicing",
+        "modelName": "minim dolor aliqua Excepteur sed",
+        "rawFrequency": -84010825,
+        "reportingFrequency": -4510452,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "Ut nulla cillum reprehenderit",
+        "inletHeight": 25009967,
+        "activationDate": "Fri Feb 15 2019 09:51:52 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Sat Sep 01 2018 17:49:28 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "in sed"
+      },
+      {
+        "type": "adipisicing aliquip aute cillum",
+        "serialNumber": "cillum eu do voluptate",
+        "pollutants": [
+          "pm25",
+          "pm10",
+          "co",
+          "pm25"
+        ],
+        "manufacturer": "deserunt labore et",
+        "modelName": "minim veli",
+        "rawFrequency": 64496783,
+        "reportingFrequency": -71737829,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "occaecat sunt",
+        "inletHeight": -89639910,
+        "activationDate": "Fri Mar 01 2019 11:33:21 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Fri May 18 2018 05:09:52 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "adipisicing"
+      },
+      {
+        "type": "sint commodo",
+        "serialNumber": "adipisicing",
+        "pollutants": [
+          "so2"
+        ],
+        "manufacturer": "Lorem occaecat",
+        "modelName": "de",
+        "rawFrequency": -43726370,
+        "reportingFrequency": -69077230,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "ipsum est sunt eu in",
+        "inletHeight": 91905693,
+        "activationDate": "Wed Jul 04 2018 23:09:20 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Sun Jul 01 2018 12:55:38 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "au"
+      },
+      {
+        "type": "occaecat laboris",
+        "serialNumber": "reprehenderit aliquip sit anim",
+        "pollutants": [
+          "o3",
+          "co",
+          "pm25",
+          "o3",
+          "o3"
+        ],
+        "manufacturer": "magna in cillum sunt",
+        "modelName": "aliqua ex aliquip deserunt",
+        "rawFrequency": 82519042,
+        "reportingFrequency": 44437264,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "Ut anim sint ullamco",
+        "inletHeight": 16346659,
+        "activationDate": "Sat Jun 30 2018 19:56:31 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Thu Sep 27 2018 05:31:29 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "qui elit proident consectetur"
+      }
+    ],
+    "pollutants": [
+      "o3"
+    ],
+    "city": "Lake Caraburgh",
+    "country": "SK",
+    "elevation": 3015,
+    "siteType": "other",
+    "sourceType": "other",
+    "coordinates": {
+      "latitude": -85.5781,
+      "longitude": -44.7546
+    },
+    "activationDate": "Tue Jan 29 2019 16:46:35 GMT-0500 (Eastern Standard Time)",
+    "deactivationDate": "Thu Jun 07 2018 23:25:43 GMT-0400 (Eastern Daylight Time)",
+    "active": false,
+    "notes": "reprehenderit exercitation cupidatat ut",
+    "attribution": [
+      {
+        "name": "sed ut",
+        "url": "fugiat Duis consequat sit"
+      },
+      {
+        "name": "ipsum incididunt dolor eiusmod",
+        "url": "incididunt proident"
+      },
+      {
+        "name": "incididunt dolor",
+        "url": "anim tempor ut veniam ad"
+      }
+    ]
+  },
+  {
+    "id": "d",
+    "name": "sed aliquip in sunt",
+    "instruments": [
+      {
+        "type": "fugiat",
+        "serialNumber": "consectetur eu",
+        "pollutants": [
+          "bc",
+          "co",
+          "o3",
+          "bc",
+          "pm25"
+        ],
+        "manufacturer": "in voluptate",
+        "modelName": "non",
+        "rawFrequency": 56239378,
+        "reportingFrequency": -91738472,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "culpa",
+        "inletHeight": 32604330,
+        "activationDate": "Wed Nov 28 2018 23:01:15 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Sat Nov 17 2018 15:03:04 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "velit"
+      },
+      {
+        "type": "adipisicing",
+        "serialNumber": "pariatur nostrud reprehenderit temp",
+        "pollutants": [
+          "pm25",
+          "co",
+          "co",
+          "so2"
+        ],
+        "manufacturer": "sint nisi",
+        "modelName": "pariatur tempor amet proident",
+        "rawFrequency": 40300384,
+        "reportingFrequency": -67089509,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "pariatur deserunt quis Ut",
+        "inletHeight": -13793947,
+        "activationDate": "Sat Feb 16 2019 16:06:52 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Fri Apr 12 2019 09:41:01 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "esse mollit enim sed"
+      },
+      {
+        "type": "cupidatat non Excepteur a",
+        "serialNumber": "do eu cupidatat et",
+        "pollutants": [
+          "so2",
+          "bc",
+          "o3",
+          "no2"
+        ],
+        "manufacturer": "cupidatat et ut in",
+        "modelName": "nulla elit cillum",
+        "rawFrequency": 78290760,
+        "reportingFrequency": -11008600,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "sint nisi deserunt fugiat ad",
+        "inletHeight": 61378605,
+        "activationDate": "Mon Apr 15 2019 13:28:28 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Sun Mar 24 2019 00:56:28 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "ad culpa proident quis"
+      },
+      {
+        "type": "adipisicing consectetu",
+        "serialNumber": "aliqua Lorem mini",
+        "pollutants": [
+          "o3",
+          "no2",
+          "bc"
+        ],
+        "manufacturer": "irure proident consequat",
+        "modelName": "cillum amet aliquip",
+        "rawFrequency": 24031491,
+        "reportingFrequency": 48692721,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "dolore nostrud dolore ullamco reprehenderit",
+        "inletHeight": -86930739,
+        "activationDate": "Wed Feb 27 2019 03:54:44 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Wed Aug 08 2018 18:31:25 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "Duis eiusmod officia"
+      },
+      {
+        "type": "aliqua",
+        "serialNumber": "ullamco amet enim",
+        "pollutants": [
+          "co",
+          "bc",
+          "no2",
+          "o3",
+          "no2"
+        ],
+        "manufacturer": "qui ipsum",
+        "modelName": "ex do laboris dolore velit",
+        "rawFrequency": 8153732,
+        "reportingFrequency": 69082255,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "aliquip aliqua",
+        "inletHeight": 78209420,
+        "activationDate": "Fri Apr 19 2019 12:38:16 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Sat Oct 27 2018 00:04:06 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "pariatur Duis voluptate elit"
+      }
+    ],
+    "pollutants": [
+      "bc",
+      "co",
+      "no2",
+      "pm10"
+    ],
+    "city": "Lake Maureenberg",
+    "country": "TF",
+    "elevation": 3614,
+    "siteType": "other",
+    "sourceType": "government",
+    "coordinates": {
+      "latitude": -34.262,
+      "longitude": -163.8296
+    },
+    "activationDate": "Mon Oct 08 2018 03:14:33 GMT-0400 (Eastern Daylight Time)",
+    "deactivationDate": "Sun Oct 14 2018 10:27:15 GMT-0400 (Eastern Daylight Time)",
+    "active": true,
+    "notes": "occaecat ut ea ex",
+    "attribution": [
+      {
+        "name": "adipisicing non eu",
+        "url": "id minim ex amet irure"
+      },
+      {
+        "name": "nulla cillum fugiat Duis nisi",
+        "url": "eu labore Lorem dolor pariatur"
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Excepteur",
+    "instruments": [
+      {
+        "type": "sit velit magna ad",
+        "serialNumber": "amet enim commodo in",
+        "pollutants": [
+          "co"
+        ],
+        "manufacturer": "non officia",
+        "modelName": "officia",
+        "rawFrequency": 72887387,
+        "reportingFrequency": -40392564,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "amet aliquip dolor reprehenderit",
+        "inletHeight": 35750444,
+        "activationDate": "Fri Mar 29 2019 02:53:43 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Fri Apr 12 2019 17:16:54 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "deserunt eiusmod proident occaecat aute"
+      },
+      {
+        "type": "veniam",
+        "serialNumber": "consequat ut",
+        "pollutants": [
+          "no2",
+          "bc"
+        ],
+        "manufacturer": "officia ",
+        "modelName": "consequat cupidatat velit",
+        "rawFrequency": -79414492,
+        "reportingFrequency": -10993982,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "anim ut",
+        "inletHeight": -62550494,
+        "activationDate": "Sat Nov 10 2018 23:07:45 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Tue Jul 17 2018 06:15:05 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "labore dolor eu Ut"
+      },
+      {
+        "type": "velit",
+        "serialNumber": "velit quis",
+        "pollutants": [
+          "co",
+          "o3",
+          "pm25"
+        ],
+        "manufacturer": "quis",
+        "modelName": "ipsum quis",
+        "rawFrequency": -90683996,
+        "reportingFrequency": 28075405,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "dolor sed in ea irure",
+        "inletHeight": 69073829,
+        "activationDate": "Thu Dec 27 2018 19:03:48 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Sun Dec 23 2018 07:00:48 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "proident fugiat"
+      },
+      {
+        "type": "ea veniam",
+        "serialNumber": "cupidatat ipsum non sint",
+        "pollutants": [
+          "co",
+          "o3",
+          "o3",
+          "pm25"
+        ],
+        "manufacturer": "culpa",
+        "modelName": "in in velit adipisicing",
+        "rawFrequency": -15457763,
+        "reportingFrequency": 58042134,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "consectetur",
+        "inletHeight": 89235760,
+        "activationDate": "Sun Sep 23 2018 15:06:00 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Wed Jan 30 2019 12:58:42 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "cillum ad de"
+      },
+      {
+        "type": "quis Excepteur commodo nisi",
+        "serialNumber": "dolore incididunt",
+        "pollutants": [
+          "no2",
+          "pm10",
+          "o3",
+          "pm10"
+        ],
+        "manufacturer": "dolor exercitation ut magna",
+        "modelName": "commodo ut Ut do",
+        "rawFrequency": -76894011,
+        "reportingFrequency": 31032443,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "laboris",
+        "inletHeight": -91901319,
+        "activationDate": "Thu Mar 14 2019 08:32:23 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Mon Mar 11 2019 20:02:08 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "aliqua dolor amet"
+      }
+    ],
+    "pollutants": [
+      "o3",
+      "no2",
+      "co"
+    ],
+    "city": "Port Alda",
+    "country": "HU",
+    "elevation": 1884,
+    "siteType": "other",
+    "sourceType": "research",
+    "coordinates": {
+      "latitude": -84.5927,
+      "longitude": 110.3195
+    },
+    "activationDate": "Wed Aug 08 2018 19:33:52 GMT-0400 (Eastern Daylight Time)",
+    "deactivationDate": "Mon Apr 29 2019 08:02:28 GMT-0400 (Eastern Daylight Time)",
+    "active": true,
+    "notes": "anim dolor commodo",
+    "attribution": [
+      {
+        "name": "nisi nostrud Lorem in ipsum",
+        "url": "voluptate in dolore"
+      },
+      {
+        "name": "Lorem dolor cillum culpa",
+        "url": "adipisicing in"
+      },
+      {
+        "name": "laborum anim sed",
+        "url": "ut"
+      }
+    ]
+  },
+  {
+    "id": "y",
+    "name": "anim elit ullamco ex dolore",
+    "instruments": [
+      {
+        "type": "n",
+        "serialNumber": "nostrud voluptate cupidatat aliqua fugiat",
+        "pollutants": [
+          "pm10",
+          "co",
+          "pm10",
+          "so2"
+        ],
+        "manufacturer": "est ut nulla adipisicing in",
+        "modelName": "aliqua nulla mollit",
+        "rawFrequency": 48027101,
+        "reportingFrequency": -22398253,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "cillum ullamco do",
+        "inletHeight": -30261065,
+        "activationDate": "Tue Dec 11 2018 07:38:32 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Fri May 18 2018 08:40:08 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "eiusmod ut dolore consectetur exercitation"
+      },
+      {
+        "type": "et",
+        "serialNumber": "aliqua Ut mollit velit",
+        "pollutants": [
+          "pm25",
+          "so2",
+          "bc"
+        ],
+        "manufacturer": "aliqua tempor sunt aute et",
+        "modelName": "incididunt ut elit",
+        "rawFrequency": -81313664,
+        "reportingFrequency": 92440551,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "laborum ad aute",
+        "inletHeight": 42208549,
+        "activationDate": "Sun Sep 16 2018 03:22:00 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Wed Mar 27 2019 21:25:48 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "sint aliqua"
+      },
+      {
+        "type": "incididunt",
+        "serialNumber": "ipsum reprehenderit ullamco",
+        "pollutants": [
+          "no2",
+          "so2"
+        ],
+        "manufacturer": "cillum velit",
+        "modelName": "aute",
+        "rawFrequency": 46009499,
+        "reportingFrequency": -27684108,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "magna minim occaecat ullamco",
+        "inletHeight": 58827540,
+        "activationDate": "Fri Aug 17 2018 22:59:23 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Sat Nov 17 2018 06:17:30 GMT-0500 (Eastern Standard Time)",
+        "active": true,
+        "notes": "aliquip eiusm"
+      },
+      {
+        "type": "consequat sint",
+        "serialNumber": "esse",
+        "pollutants": [
+          "co",
+          "so2",
+          "pm10"
+        ],
+        "manufacturer": "dolore",
+        "modelName": "aliquip amet velit ut magna",
+        "rawFrequency": 89321481,
+        "reportingFrequency": -82153147,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "et minim cillum pariatur",
+        "inletHeight": 37267583,
+        "activationDate": "Thu Aug 02 2018 10:14:20 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Fri Apr 12 2019 01:16:55 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "aute"
+      },
+      {
+        "type": "pariatur commodo",
+        "serialNumber": "consectetur",
+        "pollutants": [
+          "bc"
+        ],
+        "manufacturer": "nulla Excepteur id eiusmod velit",
+        "modelName": "eu velit sit labore ut",
+        "rawFrequency": -77292427,
+        "reportingFrequency": 45863886,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "Duis Ut cupidatat",
+        "inletHeight": -13713400,
+        "activationDate": "Tue Sep 18 2018 05:59:44 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Tue Jan 22 2019 18:01:09 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "incididunt occaecat dolore in anim"
+      }
+    ],
+    "pollutants": [
+      "so2",
+      "o3",
+      "co",
+      "o3"
+    ],
+    "city": "South Freddytown",
+    "country": "DM",
+    "elevation": 659,
+    "siteType": "urban",
+    "sourceType": "other",
+    "coordinates": {
+      "latitude": -44.3803,
+      "longitude": -72.3967
+    },
+    "activationDate": "Sun Mar 17 2019 21:20:03 GMT-0400 (Eastern Daylight Time)",
+    "deactivationDate": "Wed Feb 13 2019 07:14:59 GMT-0500 (Eastern Standard Time)",
+    "active": false,
+    "notes": "enim magna veniam",
+    "attribution": [
+      {
+        "name": "nostrud eni",
+        "url": "ex sed commodo anim "
+      },
+      {
+        "name": "non dolor do est id",
+        "url": "dolo"
+      },
+      {
+        "name": "reprehenderit sit id non",
+        "url": "Excepteur et commodo enim adipisicing"
+      },
+      {
+        "name": "amet aliqua",
+        "url": "in commodo"
+      },
+      {
+        "name": "in elit mollit nostrud",
+        "url": "pariatur enim adipisicing"
+      }
+    ]
+  },
+  {
+    "id": "m",
+    "name": "sit ut cupidatat",
+    "instruments": [
+      {
+        "type": "nostrud tempor do voluptate quis",
+        "serialNumber": "magna eiusmod sunt reprehenderit",
+        "pollutants": [
+          "so2",
+          "pm25",
+          "so2"
+        ],
+        "manufacturer": "laboris",
+        "modelName": "ali",
+        "rawFrequency": -38128924,
+        "reportingFrequency": -215941,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "ad",
+        "inletHeight": -88724889,
+        "activationDate": "Tue Jan 15 2019 19:14:42 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Mon Feb 25 2019 15:16:35 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "magna"
+      }
+    ],
+    "pollutants": [
+      "no2",
+      "o3",
+      "co",
+      "pm10"
+    ],
+    "city": "Bernhardville",
+    "country": "CV",
+    "elevation": 2840,
+    "siteType": "other",
+    "sourceType": "research",
+    "coordinates": {
+      "latitude": -57.8686,
+      "longitude": -91.5675
+    },
+    "activationDate": "Tue Sep 11 2018 21:07:32 GMT-0400 (Eastern Daylight Time)",
+    "deactivationDate": "Fri Jul 06 2018 05:08:09 GMT-0400 (Eastern Daylight Time)",
+    "active": false,
+    "notes": "Lorem",
+    "attribution": [
+      {
+        "name": "anim ut",
+        "url": "Lorem amet non dolore ad"
+      },
+      {
+        "name": "est cillum",
+        "url": "cupidatat nisi aute incididunt"
+      },
+      {
+        "name": "labore sint mollit",
+        "url": "qui in ad nulla reprehenderit"
+      },
+      {
+        "name": "laborum aliquip elit velit adipisicing",
+        "url": "nostrud Duis sit esse"
+      },
+      {
+        "name": "Duis reprehenderit",
+        "url": "ex Excepteur"
+      }
+    ]
+  },
+  {
+    "id": "i",
+    "name": "do id",
+    "instruments": [
+      {
+        "type": "Du",
+        "serialNumber": "deserunt nisi cupidatat",
+        "pollutants": [
+          "so2",
+          "no2"
+        ],
+        "manufacturer": "dolor",
+        "modelName": "sed cupidatat ut",
+        "rawFrequency": 55819892,
+        "reportingFrequency": -69299688,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "do cillum",
+        "inletHeight": -12188963,
+        "activationDate": "Tue Jun 05 2018 22:13:17 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Fri Aug 03 2018 03:08:49 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "esse amet cillum con"
+      },
+      {
+        "type": "proident adipisicin",
+        "serialNumber": "nostrud",
+        "pollutants": [
+          "co",
+          "pm10"
+        ],
+        "manufacturer": "consequat Ut",
+        "modelName": "eiusmod officia laborum",
+        "rawFrequency": 2617453,
+        "reportingFrequency": 5107115,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "fugiat est",
+        "inletHeight": 73730774,
+        "activationDate": "Thu Apr 18 2019 09:55:51 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Mon Jul 23 2018 06:49:44 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "eiusmod labor"
+      }
+    ],
+    "pollutants": [
+      "pm25",
+      "co",
+      "co",
+      "no2"
+    ],
+    "city": "Rogahnfurt",
+    "country": "GY",
+    "elevation": 2385,
+    "siteType": "other",
+    "sourceType": "government",
+    "coordinates": {
+      "latitude": -68.6952,
+      "longitude": -91.2686
+    },
+    "activationDate": "Mon Aug 13 2018 11:11:52 GMT-0400 (Eastern Daylight Time)",
+    "deactivationDate": "Tue Oct 23 2018 04:36:13 GMT-0400 (Eastern Daylight Time)",
+    "active": false,
+    "notes": "qui aliquip ut",
+    "attribution": [
+      {
+        "name": "fugiat commodo sed",
+        "url": ""
+      },
+      {
+        "name": "minim",
+        "url": "mollit occaecat dolore"
+      },
+      {
+        "name": "nisi eu aliquip sit magna",
+        "url": "dolor labore id velit pariatur"
+      },
+      {
+        "name": "esse aute",
+        "url": "irure id"
+      }
+    ]
+  },
+  {
+    "id": "h",
+    "name": "ex tempor enim occaecat ullamco",
+    "instruments": [
+      {
+        "type": "reprehenderit et laboris in velit",
+        "serialNumber": "labore",
+        "pollutants": [
+          "no2",
+          "pm10",
+          "bc",
+          "o3"
+        ],
+        "manufacturer": "officia nisi do et elit",
+        "modelName": "veniam id eu pr",
+        "rawFrequency": -15973341,
+        "reportingFrequency": 79675718,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "nostrud in ea",
+        "inletHeight": -73781192,
+        "activationDate": "Tue Apr 02 2019 04:49:39 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Tue Sep 11 2018 12:23:53 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "amet ut velit pariatur"
+      }
+    ],
+    "pollutants": [
+      "bc",
+      "pm25",
+      "pm10",
+      "so2",
+      "bc"
+    ],
+    "city": "Bartolettiberg",
+    "country": "AT",
+    "elevation": 1054,
+    "siteType": "suburban",
+    "sourceType": "other",
+    "coordinates": {
+      "latitude": -62.1478,
+      "longitude": 110.0944
+    },
+    "activationDate": "Thu Oct 18 2018 10:29:21 GMT-0400 (Eastern Daylight Time)",
+    "deactivationDate": "Thu Oct 18 2018 21:45:54 GMT-0400 (Eastern Daylight Time)",
+    "active": false,
+    "notes": "Lorem in in ut",
+    "attribution": [
+      {
+        "name": "nisi elit velit",
+        "url": "dolore"
+      }
+    ]
+  },
+  {
+    "id": "k",
+    "name": "aliqua ut sed",
+    "instruments": [
+      {
+        "type": "nulla sunt",
+        "serialNumber": "commodo Ut",
+        "pollutants": [
+          "so2",
+          "co",
+          "no2",
+          "pm10",
+          "no2"
+        ],
+        "manufacturer": "in adipisicing do occaecat Lorem",
+        "modelName": "commo",
+        "rawFrequency": -13899970,
+        "reportingFrequency": 24739279,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "dolore ul",
+        "inletHeight": -65797553,
+        "activationDate": "Tue Oct 02 2018 21:36:28 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Mon Oct 22 2018 11:46:07 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "in"
+      },
+      {
+        "type": "ullamco voluptate adipisicing",
+        "serialNumber": "magna exercitation nulla veniam",
+        "pollutants": [
+          "co",
+          "pm10",
+          "so2"
+        ],
+        "manufacturer": "elit cillum ex consectetur ullamco",
+        "modelName": "fugiat officia enim amet cupidatat",
+        "rawFrequency": 67606083,
+        "reportingFrequency": 86671655,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "aute nostrud aliqua sint ad",
+        "inletHeight": 32833578,
+        "activationDate": "Mon Dec 31 2018 09:50:08 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Sun Jul 29 2018 18:22:13 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "nostrud eu ea laboris"
+      },
+      {
+        "type": "enim aliqua do exercitation",
+        "serialNumber": "nulla",
+        "pollutants": [
+          "pm10",
+          "pm25",
+          "co",
+          "co"
+        ],
+        "manufacturer": "aute",
+        "modelName": "ut nisi do dolor irure",
+        "rawFrequency": 30401135,
+        "reportingFrequency": -25329997,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "Duis officia fugiat culpa",
+        "inletHeight": 67987050,
+        "activationDate": "Fri Jul 20 2018 18:07:42 GMT-0400 (Eastern Daylight Time)",
+        "deactivationDate": "Fri Mar 22 2019 19:05:36 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "minim e"
+      },
+      {
+        "type": "est velit",
+        "serialNumber": "ad aliquip quis",
+        "pollutants": [
+          "co",
+          "pm10"
+        ],
+        "manufacturer": "ut",
+        "modelName": "ullamco proident",
+        "rawFrequency": -75176532,
+        "reportingFrequency": 77215677,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "dolor fugiat exercitation sunt sit",
+        "inletHeight": -15392162,
+        "activationDate": "Tue Nov 13 2018 20:46:36 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Sat May 19 2018 06:04:01 GMT-0400 (Eastern Daylight Time)",
+        "active": true,
+        "notes": "dolor sunt labore incididunt "
+      },
+      {
+        "type": "ex",
+        "serialNumber": "cillum officia",
+        "pollutants": [
+          "pm25",
+          "co",
+          "so2"
+        ],
+        "manufacturer": "laboris proident et do",
+        "modelName": "magna consectetur Lorem",
+        "rawFrequency": 48455183,
+        "reportingFrequency": -68042090,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "cillum in commodo laboris",
+        "inletHeight": 62577940,
+        "activationDate": "Thu Nov 08 2018 01:46:15 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Tue Oct 16 2018 05:10:07 GMT-0400 (Eastern Daylight Time)",
+        "active": false,
+        "notes": "eu consectetur proident veniam qui"
+      }
+    ],
+    "pollutants": [
+      "pm25"
+    ],
+    "city": "New Dawson",
+    "country": "EG",
+    "elevation": 3862,
+    "siteType": "other",
+    "sourceType": "other",
+    "coordinates": {
+      "latitude": 53.2827,
+      "longitude": -137.9505
+    },
+    "activationDate": "Wed Aug 29 2018 11:28:40 GMT-0400 (Eastern Daylight Time)",
+    "deactivationDate": "Sat Dec 01 2018 22:35:07 GMT-0500 (Eastern Standard Time)",
+    "active": false,
+    "notes": "in voluptate ut",
+    "attribution": [
+      {
+        "name": "commod",
+        "url": "ipsum Duis"
+      },
+      {
+        "name": "fugiat in incididunt esse dolore",
+        "url": "et dolore velit voluptate"
+      },
+      {
+        "name": "voluptate exercitation sint quis",
+        "url": "tempor non in sunt"
+      },
+      {
+        "name": "cupidatat labore ",
+        "url": "dolor"
+      },
+      {
+        "name": "in proident laboris",
+        "url": "occaecat aute cupidatat ea"
+      }
+    ]
+  },
+  {
+    "id": "0",
+    "name": "irure velit nisi enim quis",
+    "instruments": [
+      {
+        "type": "quis mollit s",
+        "serialNumber": "aliqua mi",
+        "pollutants": [
+          "bc",
+          "o3",
+          "co",
+          "pm10",
+          "co"
+        ],
+        "manufacturer": "aliqua sint sit",
+        "modelName": "culp",
+        "rawFrequency": -63395844,
+        "reportingFrequency": 47457309,
+        "measurementStyle": "manual",
+        "calibrationProcedures": "esse Duis consequat fugiat occaecat",
+        "inletHeight": 96151493,
+        "activationDate": "Tue Feb 19 2019 18:52:14 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Mon Dec 17 2018 01:53:50 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "ea irure sint"
+      },
+      {
+        "type": "ea",
+        "serialNumber": "occaecat deserunt",
+        "pollutants": [
+          "no2",
+          "bc",
+          "no2",
+          "pm25",
+          "pm10"
+        ],
+        "manufacturer": "quis dolor laboris deserunt",
+        "modelName": "re",
+        "rawFrequency": 58045865,
+        "reportingFrequency": 39205458,
+        "measurementStyle": "automated",
+        "calibrationProcedures": "cupidatat labore sit",
+        "inletHeight": 11645168,
+        "activationDate": "Sat Jan 12 2019 05:54:34 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Wed Feb 06 2019 19:27:54 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "aute Lorem eu dolor ullamco"
+      },
+      {
+        "type": "et aute Lorem enim ullamco",
+        "serialNumber": "sint ullamco cillum dolore labore",
+        "pollutants": [
+          "so2",
+          "pm25"
+        ],
+        "manufacturer": "do",
+        "modelName": "est ex nisi",
+        "rawFrequency": 68929944,
+        "reportingFrequency": 87566362,
+        "measurementStyle": "unknown",
+        "calibrationProcedures": "adipisicing exercitation ",
+        "inletHeight": -17444139,
+        "activationDate": "Fri Dec 28 2018 18:21:25 GMT-0500 (Eastern Standard Time)",
+        "deactivationDate": "Wed Nov 14 2018 10:01:49 GMT-0500 (Eastern Standard Time)",
+        "active": false,
+        "notes": "cillum Ut commodo officia quis"
+      }
+    ],
+    "pollutants": [
+      "pm10",
+      "pm25"
+    ],
+    "city": "East Enola",
+    "country": "SO",
+    "elevation": 1168,
+    "siteType": "other",
+    "sourceType": "research",
+    "coordinates": {
+      "latitude": -54.2948,
+      "longitude": -53.8267
+    },
+    "activationDate": "Tue Dec 18 2018 07:10:19 GMT-0500 (Eastern Standard Time)",
+    "deactivationDate": "Tue Jun 05 2018 13:27:34 GMT-0400 (Eastern Daylight Time)",
+    "active": false,
+    "notes": "eu",
+    "attribution": [
+      {
+        "name": "ullamco irure occaecat laboris",
+        "url": "veniam dolore"
+      },
+      {
+        "name": "Excepteur aute dolore",
+        "url": "elit nulla"
+      },
+      {
+        "name": "enim elit sed",
+        "url": "minim nisi"
+      },
+      {
+        "name": "qui enim",
+        "url": "eu sint est ut cillum"
+      },
+      {
+        "name": "magna aliqua qui Ut",
+        "url": "dolo"
+      }
+    ]
+  }
+]

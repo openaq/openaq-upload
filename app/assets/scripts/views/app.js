@@ -1,36 +1,31 @@
-'use strict';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-import PageHeader from '../components/page-header';
-import PageFooter from '../components/page-footer';
+import auth from '../services/auth';
 
-import UploadForm from '../components/upload-form';
-import FailureModal from '../components/failure-modal';
-import SuccessModal from '../components/success-modal';
+class App extends React.Component {
+  componentDidUpdate (prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      window.scrollTo(0, 0);
+    }
+  }
 
-var App = React.createClass({
-  displayName: 'App',
+  componentDidMount () {
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      // In case there is any error, on next load the user will be logged out.
+      localStorage.setItem('isLoggedIn', 'false');
+      // Once the session is renewed, the flag will be set again.
+      auth.renewSession();
+    }
+  }
 
-  render: function () {
+  render () {
     return (
-      <div className='page'>
-        <PageHeader />
-        <main className='page__body' role='main'>
-          <div className='inpage__body'>
-
-            <UploadForm />
-            <FailureModal />
-            <SuccessModal />
-
-          </div>
-        </main>
-        <PageFooter />
+      <div className='app-container'>
+        {this.props.children}
       </div>
     );
   }
-});
+}
 
-// /////////////////////////////////////////////////////////////////// //
-// Connect functions
-
-module.exports = App;
+export default withRouter(App);

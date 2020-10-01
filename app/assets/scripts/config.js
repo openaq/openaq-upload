@@ -1,5 +1,5 @@
 'use strict';
-var defaultsDeep = require('lodash').defaultsDeep;
+import defaultsDeep from 'lodash.defaultsdeep';
 /*
  * App configuration.
  *
@@ -19,12 +19,16 @@ var defaultsDeep = require('lodash').defaultsDeep;
  *      polluting the repo.
  */
 
-var configurations = require('./config/*.js', {mode: 'hash'});
-var config = configurations.local || {};
+var configurations = require('./config/*.js', { mode: 'hash' });
+var config = configurations.production || {};
 
-if (process.env.DS_ENV === 'staging') {
-  defaultsDeep(config, configurations.staging);
+if (process.env.NODE_ENV === 'staging') {
+  config = defaultsDeep(configurations.staging, config);
 }
-defaultsDeep(config, configurations.production);
+if (process.env.NODE_ENV !== 'staging' && process.env.NODE_ENV !== 'production') {
+  config = defaultsDeep(configurations.local || {}, config);
+}
 
-module.exports = config;
+// The require doesn't play super well with es6 imports. It creates an internal
+// 'default' property. Export that.
+module.exports = config.default;

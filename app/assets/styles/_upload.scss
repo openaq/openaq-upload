@@ -1,0 +1,93 @@
+.header-wrapper, .form-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.section-wrapper {
+    margin: 2rem auto 1rem;
+}
+
+.form-content {
+  padding: 32px;
+}
+
+.upload-status {
+    padding: 1.5rem 1.5rem 0.8rem;
+    margin: 1rem 0;
+    border-radius: 6px;
+}
+
+.upload-status-error {
+    background: #FFFBD2;
+}
+
+.upload-status-success {
+    background: #E8FFE6;
+}
+
+.upload-drop-area {
+    cursor: pointer;
+    text-align: center;
+    padding: 3rem 2rem;
+    margin: 1rem 0 2rem;
+    border-width: 2px;
+    border-radius: 2px;
+    border-color: #eeeeee;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #496A90;
+    p {
+        margin: 0;
+    }
+}
+
+.button--arrow-up-icon:before {
+    @extend %openaq-ds-icon-arrow-up;
+  }
+  
+  .form__group {
+    input[type="file"] {
+      display: none;
+    }
+  }
+  
+  .form__group--token, .form__group--email {
+    margin-bottom: 1rem;
+    width: 10/12*100%;
+    @include media(xsmall-only) {
+      min-width: 19rem;
+    }
+  }
+  
+  .form__group--upload {
+    margin-bottom: 1rem;
+    width: 8/12*100%;
+    @include media(xsmall-only) {
+      min-width: 19rem;
+    }
+  }
+  
+  .button--verify {
+    float: left;
+    padding: .5rem 1.5rem .5rem 1.5rem;
+    &:disabled {
+        background-color: #aaa;
+    }
+  }
+  
+  input:read-only, textarea:read-only {
+      color: initial;
+  }
+
+  .page__footer {
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .heart::before {
+      @extend %openaq-ds-icon-heart-full;
+      opacity: 0.8;
+      vertical-align: middle;
+    }
+  }

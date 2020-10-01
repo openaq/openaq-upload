@@ -1,12 +1,17 @@
 'use strict';
-var logo = require('./logo');
-/*
- * App config for production.
- */
-module.exports = {
-  environment: 'production',
-  consoleMessage: logo,
-  api: 'https://api.openaq.org/v1',
-  apiDocs: 'https://docs.openaq.org'
-};
 
+export default {
+  environment: 'production',
+  mapbox: {
+    token: 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q',
+    baseStyle: 'mapbox://styles/devseed/ciqs29d060000clnr9222bg5x'
+  },
+  uploadUrl: 'https://msvubagbu9.execute-api.us-west-2.amazonaws.com/dev/api/private',
+  apiUrl: 'https://api.openaq.org',
+  auth: {
+    domain: 'openaq-prod.auth0.com',
+    clientID: '2NfSLaCPOGHAfYkkbv4m9A4EFxZ54hHt',
+    callbackUrl: 'https://metadata.openaq.org/callback',
+    audience: 'https://openaq-prod.auth0.com/api/v2/'
+  }
+};

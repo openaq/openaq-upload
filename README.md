@@ -1,31 +1,20 @@
-# OpenAQ Uploader Page
-A page used to upload CSV data to the OpenAQ project, which checks the data against rules in a JSON schema and delivers helpful error messages in cases of nonconformance.
+# openaq-upload-tool
 
-## Development environment
-To set up the development environment for this website, you'll need to install the following on your system:
+A tool to upload research-grade data to the OpenAQ platform
 
-- Node (v4.2.x) & Npm ([nvm](https://github.com/creationix/nvm) usage is advised)
+## Dev dependencies 
 
-> The versions mentioned are the ones used during development. It could work with newer ones.
+- [gulp](https://github.com/gulpjs/gulp)
+- [nvm](https://github.com/nvm-sh/nvm#install-script)
 
-After these basic requirements are met, run the following commands in the website's folder:
-```
-$ npm install
-```
+## Getting started
 
-## Development environment (server)
-This site depends on the server to acquire credentials for uploading to S3. In production, this server will
-be hosted by the OpenAQ maintainers, but a development server can be launched locally from the __server__
-directory of this project. After running `npm install` in the __server__ directory, the server can be launched
-using the command `env S3_ACCESS_KEY=xxx S3_SECRET_KEY=xxx S3_BUCKET=xxx S3_REGION=xxx node server.js`, with
-the credentials to the desired S3 bucket. The bucket will need to have a CORS policy permissive of uploads from
-localhost. The server launches on port 5000, which is used in this development version of the upload form.
+1. Install [nvm](https://github.com/nvm-sh/nvm#install-script) 
+2. Run `nvm use` and `nvm install` to install the correct version of node for the project
+3. Run `npm install` to install node modules 
+4. Install gulp globally `npm install -g gulp`
+5. Run `npm run serve` to start project
 
-### Getting started
-
-```
-$ npm run serve
-```
 Compiles the sass files, javascript, and launches the server making the site available at `http://localhost:3000/`
 The system will watch files and execute tasks whenever one of them changes.
 The site will automatically refresh since it is bundled with livereload.
@@ -35,3 +24,10 @@ Compile the sass files, javascript... Use this instead of ```npm run serve``` if
 ```
 $ npm run build
 ```
+
+### Troubleshooting: 
+
+- If you run into issues running `npm run serve`, you may not have the correct version of node or gulp. Please make sure you follow the steps using `nvm` above in "Getting started"
+
+- If you follow the steps above and `npm run serve` is still not running, try tunning `npm rebuild node-sass
+`. More info on this solution [here](https://stackoverflow.com/questions/55921442/how-to-fix-referenceerror-primordials-is-not-defined-in-node/58022933#58022933)
