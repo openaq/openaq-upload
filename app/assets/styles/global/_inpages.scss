@@ -9,6 +9,7 @@ $page-header-y: $global-spacing * 5;
     background-image: url(../graphics/content/page-hero-default.png);
     position: relative;
     color: $base-font-color;
+    text-align: center;
     padding: {
       top: ($global-spacing * 2) + $page-header-y;
       right: 0;
@@ -79,7 +80,7 @@ $page-header-y: $global-spacing * 5;
 
   &__title {
     @extend .heading, .heading--medium;
-    @include col(8/12);
+    font-size: 2rem;
   }
 
   &__subtitle {
@@ -104,12 +105,13 @@ $page-header-y: $global-spacing * 5;
     line-height: 1.75rem;
     margin-bottom: 1rem;
     clear: both;
+    text-align: center;
     > *:last-child {
       margin-bottom: 0;
     }
 
     @include media(medium-up) {
-      max-width: 8/12*100%;
+      margin: 0 2/12*100% 1rem 2/12*100%;
       font-size: 1.25rem;
       line-height: 2rem;
     }

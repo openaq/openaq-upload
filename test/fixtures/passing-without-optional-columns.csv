@@ -1,6 +1,6 @@
 parameter,unit,value,sourceName,sourceType,attribution/name,attribution/url,date/utc,date/local,mobile,location,city,country
 pm25,ppm,9,A Corporation,other,A Corporation|Another Corporation|Yet Another Corporation,https://www.corporation.org/||https://www.yetanothercorporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,TRUE,Blagdon Alley,Washington,US
-pm10,ug/m^3,7,A Corporation,research,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,FALSE,Blagdon Alley,Washington,US
-no2,ppm,3,A Corporation,other,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,FALSE,Blagdon Alley,Washington,US
-so2,ug/m^3,5,A Corporation,government,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,TRUE,Blagdon Alley,Washington,US
-o3,ug/m^3,11,A Corporation,research,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,FALSE,Blagdon Alley,Washington,US
+pm10,ug/m^3,7,A Corporation,research,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,FALSE,Dupont Circle,Washington,BB
+no2,ppm,3,A Corporation,other,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,FALSE,Penn Quarter,Philadelphia,BB
+so2,ug/m^3,5,A Corporation,government,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,TRUE,Dupont Circle,Washington,GN
+o3,ug/m^3,11,A Corporation,research,A Corporation,https://www.corporation.org/,2016-03-14T17:30:00-05:00,2016-03-14T17:30:00-05:00,FALSE,Blagdon Alley,Washington,BB

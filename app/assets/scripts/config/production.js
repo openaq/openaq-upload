@@ -9,4 +9,3 @@ module.exports = {
   api: 'https://api.openaq.org/v1',
   apiDocs: 'https://docs.openaq.org'
 };
-

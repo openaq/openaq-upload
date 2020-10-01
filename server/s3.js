@@ -5,8 +5,12 @@
 // * accessKey
 // * secretKey
 function s3Credentials (config, filename) {
+  var region = config.region;
+  var url = region === 'us-east-1'
+    ? 'https://' + config.bucket + '.s3.amazonaws.com'
+    : 'https://' + config.bucket + '.s3-' + config.region + '.amazonaws.com';
   return {
-    endpoint_url: 'https://' + config.bucket + '.s3-us-west-2.amazonaws.com',
+    endpoint_url: url,
     params: s3Params(config, filename)
   };
 }
@@ -47,9 +51,6 @@ function s3UploadPolicy (config, filename, credential) {
       { key: filename },
       { acl: 'public-read' },
       { success_action_status: '201' },
-      // Optionally control content type and file size
-      // {'Content-Type': 'application/pdf'},
-      ['content-length-range', 0, 1000],
       { 'x-amz-algorithm': 'AWS4-HMAC-SHA256' },
       { 'x-amz-credential': credential },
       { 'x-amz-date': dateString() + 'T000000Z' }
