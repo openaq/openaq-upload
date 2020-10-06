@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": ["location", "country", "parameter", "unit", "value", "date_utc", "date_local", "sourceName", "sourceType", "mobile", "coordinates_latitude", "coordinates_longitude", "attribution_name","attribution_url","averagingPeriod_value","averagingPeriod_unit"],
+    "required": ["location", "country", "parameter", "unit", "value", "date_utc", "date_local", "sourceName", "sourceType", "mobile", "coordinates_latitude", "coordinates_longitude", "attribution_name", "attribution_url" ,"averagingPeriod_value","averagingPeriod_unit"],
     "properties": {
         "location": {
             "type": "string",
@@ -26,24 +26,6 @@
                 "enum": ["hours"]
             }
         },
-        "attribution": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "required": ["name"],
-                "additionalProperties": false,
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "minLength": 1
-                    },
-                    "url": {
-                        "type": "string",
-                        "pattern": "^(https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?"
-                    }
-                }
-            }
-        },
         "attribution_name": {
             "type": "string",
             "minLength": 1
@@ -52,7 +34,9 @@
             "type": "string",
             "pattern": "^(https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?"
         },
-
+        "attribution": {
+            "type": "string"
+        },
         "coordinates_latitude": {
             "type": "number",
             "minimum": -90,

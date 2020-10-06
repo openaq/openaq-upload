@@ -1,5 +1,6 @@
 
 import uploadSchema from '../schemas/upload-schema.json';
+import attributionSchema from '../schemas/attribution-schema.json';
 
 import validator from 'jsonschema';
 import fileReaderStream from 'filereader-stream';
@@ -16,11 +17,22 @@ function checkHeader(header) {
     const required = [
         'location', 'country', 'parameter', 'unit', 'value', 'date_utc', 'date_local'
         , 'sourceName', 'sourceType', 'mobile', 'coordinates_latitude', 'coordinates_longitude'
-        , 'attribution_name','attribution_url','averagingPeriod_value','averagingPeriod_unit']
+        ,'averagingPeriod_value','averagingPeriod_unit']
     let failures = [];
-    console.log(header)
     required.forEach((prop) => {
-        if (!(prop in header)) failures.push(`Dataset is missing "${prop}" column.`);
+        if (!(prop in header)) {
+            failures.push(`Dataset is missing "${prop}" column.`);
+        } 
+    });
+    // check attribution headers
+    const attributionHeader = ['attribution_name','attribution_url']
+    attributionHeader.forEach((prop) => {
+        if (!(prop in header)) {
+            // check alternative method of adding attribution
+            if (!('attribution' in header)) {
+                failures.push(`Dataset is missing "attribution_name" and "attribution_url" or "attribution" column.`);
+            }
+        }
     });
     return failures;
 }
@@ -67,8 +79,8 @@ export function parseCsv(csvFile) {
                     }
                 }
 
+                let record = {};
                 if (!failures.length) {
-                    let record = {};
                     Object.keys(data).forEach((key) => {
                         let value = data[key];
                         if (!isNaN(value)) {
@@ -76,11 +88,35 @@ export function parseCsv(csvFile) {
                         }
                         record[key] = value
                     })
+                    // convert attribution 
+                    // if('attribution_name' in data && 'attribution_url' in data) {
+                    //     record['attribution'] = '\"[{\"\"url\"\":\"\"' + data['attribution_url'] + '\"\",\"\"name\"\":\"\"' + data['attribution_name'] + '\"\"}]\"'
+                    //     console.log(record['attribution'])
+                    // } else if ('attribution' in data) {
+                    //     record['attribution'] = data['attribution']
+                    // } 
+                }
+                
+                // if (!failures.length) {
+                //     try {
+                //         const attribution = record['attribution']
+                //         console.log(attribution)
+                //         const attributionJSON = JSON.parse(attribution)
+                //         let v = validator.validate(attributionJSON, attributionSchema)
+                //         v.errors.forEach((e) => {
+                //             console.log(e)
+                //             failures.push(`Record ${line}: ${e.property.replace(e.property, '')} ${e.message}`);
+                //         });
+                //     } catch (e) {
+                //         failures.push(`Record ${line}: Could not parse "attribution" column. Please check JSON format`)
+                //     }
+                // }
 
-
+                if (!failures.length) {
                     let v = validator.validate(record, uploadSchema);
                     v.errors.forEach((e) => {
-                        failures.push(`Record ${line}: ${e.property.replace('instance.', '')} (${e.instance}) ${e.message}`);
+                        console.log(e)
+                        failures.push(`Record ${line}: ${e.property.replace('instance.', '')} ${e.message}`);
                     });
                     records.push(record)
                     line++;

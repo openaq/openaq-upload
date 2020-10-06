@@ -2,7 +2,13 @@
 
 A tool to upload research-grade data to the OpenAQ platform
 
-## Dev dependencies 
+## Overview
+
+The frontend of the project is a react app that lives in the `app` directory. The backend is a [serverless](https://www.serverless.com/) application which lives in the `backend` directory. 
+
+To setup the frontend, follow directions below. To setup and deploy backend, follow directions in the [README.md](./backend/README.md) in the `backend` directory.  
+
+## Front-end dev dependencies 
 
 - [gulp](https://github.com/gulpjs/gulp)
 - [nvm](https://github.com/nvm-sh/nvm#install-script)
@@ -18,6 +24,16 @@ A tool to upload research-grade data to the OpenAQ platform
 Compiles the sass files, javascript, and launches the server making the site available at `http://localhost:3000/`
 The system will watch files and execute tasks whenever one of them changes.
 The site will automatically refresh since it is bundled with livereload.
+
+## Deploying 
+
+- TODO: setup github actions or create deploy script.
+
+1. Run `NODE_ENV=<environment> gulp build` to build a production version of the app 
+2. Deploy using AWS CLI: `aws s3 sync <root>/<to>/openaq-upload/dist/ s3://<deployment bucket>`
+3. Set up Cloudfront to handle routing to work with the React app 
+4. TODO: document guide for setting up Cloudfront 
+
 
 ### Other commands
 Compile the sass files, javascript... Use this instead of ```npm run serve``` if you don't want to watch.

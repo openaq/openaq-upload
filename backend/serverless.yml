@@ -1,11 +1,10 @@
-
 service: openaq-upload-tool
 
 plugins:
   - serverless-offline
 
 custom:
-  bucket: upload-tool-bucket-${self:provider.stage}
+  bucket: upload-tool-bucket-${opt:stage, 'dev'}
 
 provider:
   name: aws
@@ -18,21 +17,23 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - s3:PutObject
-        - s3:PutObjectAcl
-      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
+        - 's3:*'
+      Resource:
+        - "arn:aws:s3:::${self:custom.bucket}/*"
 
 functions:
   auth:
     handler: handler.auth
-  privateEndpoint:
-    handler: handler.privateEndpoint
+  uploadData:
+    handler: handler.uploadData
     events:
       - http:
           path: api/private
           method: post
           authorizer: auth
           cors: true
+  clearS3Bucket: 
+    handler: handler.clearS3Bucket
 
 resources:
   Resources:

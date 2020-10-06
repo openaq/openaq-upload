@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": ["location", "country", "city", "parameter", "unit", "value", "date", "sourceName", "sourceType", "mobile"],
+    "required": ["location", "country", "city", "parameter", "unit", "value", "attribution", "date", "sourceName", "sourceType", "mobile"],
     "properties": {
         "location": {
             "type": "string",

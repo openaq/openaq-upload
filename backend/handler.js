@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const AWS = require('aws-sdk'); 
+const AWS = require('aws-sdk');
+const moment = require('moment');
 const s3 = new AWS.S3();
 
 // Set in `environment` of serverless.yml
@@ -62,13 +63,12 @@ module.exports.auth = (event, context, callback) => {
 };
 
 // Private API
-module.exports.privateEndpoint = (event, context, callback) => {
+module.exports.uploadData = (event, context, callback) => {
   const dateString = new Date().toISOString()
   const body = JSON.parse(event.body)
-    
   s3.putObject(
     {
-      Bucket: 'upload-tool-bucket-dev',
+      Bucket: UPLOAD_BUCKET,
       Key: `uploaded_${dateString}.csv`,
       Body: body.data,
       ContentType: "application/octet-stream"
@@ -79,10 +79,10 @@ module.exports.privateEndpoint = (event, context, callback) => {
       } else {
         callback(null, {
           statusCode: 200,
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Credentials': true,
-            },
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+          },
           body: JSON.stringify({
             message: 'Uploaded!'
           }),
@@ -90,4 +90,49 @@ module.exports.privateEndpoint = (event, context, callback) => {
       }
     }
   );
+}
+
+module.exports.clearS3Bucket = (event, context, callback) => {
+  var deletePromises = [];
+  const TTL = 24 * 60 * 60 * 1000 // 24 hours 
+  const now = moment(new Date())
+  let clearedCount = 0;
+  s3.listObjects({
+    Bucket: UPLOAD_BUCKET,
+    Delimiter: '/'
+  }, async function (e, data) {
+    if (e) {
+      callback(e)
+    }
+    const isoPattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/
+    console.log(data.Contents)
+    for (let i = 0; i < data.Contents.length; i++) {
+      const key = data.Contents[i].Key
+      deletePromises.push(((data, key) => {
+        try {
+          if (key.match(isoPattern) !== null) {
+            const created = moment(key.match(isoPattern)[0])
+            const difference = moment.duration(now.diff(created));
+            if (difference > TTL) {
+              s3.deleteObject({
+                Bucket: UPLOAD_BUCKET,
+                Key: key
+              }, function (err, data) {
+                if (err) {
+                  console.log(err, err.stack);
+                } else {
+                  console.log('Successfully deleted', key);
+                  clearedCount++
+                }
+              });
+            }
+          }
+        } catch (e) {
+          callback(`Error reading ${data.Contents[i].key}: ${e}`)
+        }
+      }).promise)
+    }
+    await Promise.all(deletePromises);
+    callback(null, 'done')
+  })
 }
