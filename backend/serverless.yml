@@ -9,7 +9,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  region: us-west-2
+  region: us-east-1
   environment:
     AUTH0_CLIENT_ID: ${file(./secrets.json):AUTH0_CLIENT_ID}
     AUTH0_CLIENT_PUBLIC_KEY: ${file(./public_key)}
@@ -20,6 +20,7 @@ provider:
         - 's3:*'
       Resource:
         - "arn:aws:s3:::${self:custom.bucket}/*"
+        - "arn:aws:s3:::${self:custom.bucket}"
 
 functions:
   auth:
@@ -34,13 +35,11 @@ functions:
           cors: true
   clearS3Bucket: 
     handler: handler.clearS3Bucket
+    events:
+      - schedule: rate(2 days)
 
 resources:
   Resources:
-    UploadToolBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.bucket}
     # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
     GatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'

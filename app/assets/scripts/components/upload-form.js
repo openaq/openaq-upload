@@ -114,7 +114,7 @@ class UploadForm extends React.Component {
                             this.state.menuState === 0 ?
                                 <section className="section-wrapper">
                                     <h2>Validate your data</h2>
-                                    <p>Guide for formatting your data <Link to={{pathname: '/format'}}>here</Link>. Download a <a target="_blank"  href={gist.sampleCSV}>sample CSV</a> or <a target="_blank" href={gist.templateCSV}>template CSV</a>. We only accept csv files at this time.</p>
+                                    <p>View the <Link to={{pathname: '/format'}}>guide for formatting your data</Link>. Or view a <a target="_blank"  href={gist.sampleCSV}>sample CSV</a> or <a target="_blank" href={gist.templateCSV}>template CSV</a>. Note: we only accept csv files at this time.</p>
                                     <fieldset className='form__fieldset'>
                                         <Dropzone
                                             accept='text/*, application/vnd.ms-excel,'
@@ -169,7 +169,7 @@ class UploadForm extends React.Component {
                                                     : this.props.uploadSuccess ?
                                                         <div className="upload-status upload-status-success">
                                                             <h5>Status: Data Uploaded succesfully!</h5>
-                                                            <p>View below to see your report. Your data will appear in the OpenAQ databases in the next <strong>15 minutes.</strong></p>
+                                                            <p>Your data will appear in the OpenAQ databases in the next <strong>15 minutes.</strong></p>
                                                         </div>
                                                     : this.props.uploadFailed ?
                                                         <div className="upload-status upload-status-success">
@@ -180,7 +180,12 @@ class UploadForm extends React.Component {
                                                     <div className="upload-status upload-status-success">
                                                         <h5>Status: Data formatted correctly!</h5>
                                                         <p>You can review your data below to make changes, or you can continue uploading your data.</p>
-                                                        <p><strong>Note:</strong> you will need to <Link to={{pathname: '/account'}}>apply for an account</Link> to upload data.</p>
+                                                        {
+                                                            this.props.userProfile ?
+                                                            <div></div>
+                                                            :
+                                                            <p><strong>Note:</strong> you will need to <Link to={{pathname: '/account'}}>apply for an account</Link> to upload data.</p>
+                                                        }
                                                     </div>
                                             }
                                             <p>File processed: <strong>{this.csvFile.name}</strong></p>
@@ -195,7 +200,7 @@ class UploadForm extends React.Component {
                                                         <div></div>
                                                 }
                                                 <button className='button button--primary button--verify' type='button' onClick={() => { this.setState({ menuState: 0 }) }}>
-                                                    <span>{this.props.uploadSuccess ? 'Upload another file' : 'Update file'}</span>
+                                                    <span>{this.props.uploadSuccess ? 'Upload another file' : 'Change file'}</span>
                                                 </button>
                                             </fieldset>
                                             {

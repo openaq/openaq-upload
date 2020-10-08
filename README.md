@@ -34,6 +34,73 @@ The site will automatically refresh since it is bundled with livereload.
 3. Set up Cloudfront to handle routing to work with the React app 
 4. TODO: document guide for setting up Cloudfront 
 
+## Setting correct permissions on S3 upload bucket
+
+It is **crucial** to make sure the S3 upload bucket is set up correctly for this application will work. Save yourself a lot of time to check the following. **Note** The upload bucket is where the data live, this is a different bucket than the front-end deployment bucket.
+
+- The S3 bucket is created, and shared the name with the `BUCKET` env variable created. Typically this will be `upload-tool-bucket-<STAGE>`
+- The S3 bucket will need to be public for reading. This allows the fetch adapter to have access to ingest the JSON data that is added.
+- The S3 bucket must have the serverless IAM role be a principle
+
+An example policy to attach to the **front-end bucket**
+
+```
+{
+   "Version":"2012-10-17",
+   "Id":"policy",
+   "Statement":[
+      {
+         "Effect":"Allow",
+         "Principal":"*",
+         "Action":[
+            "s3:List*",
+            "s3:Get*"
+         ],
+         "Resource":[
+            "arn:aws:s3:::bucket-name/*",
+            "arn:aws:s3:::bucket-name"
+         ]
+      }
+   ]
+}
+```
+
+An example policy to attach to the **upload S3 bucket**
+
+```
+{
+   "Version":"2012-10-17",
+   "Id":"policy",
+   "Statement":[
+       {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:List*",
+                "s3:Get*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::upload-tool-bucket-<STAGE>/*",
+                "arn:aws:s3:::upload-tool-bucket-<STAGE>"
+            ]
+        },
+        {
+            "Action": [
+                "s3:*"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::upload-tool-bucket-<STAGE>/*"
+            ],
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::337884027122:role/openaq-upload-tool-<STAGE>-us-east-1-lambdaRole"
+                ]
+            }
+        }
+   ]
+}
+```
 
 ### Other commands
 Compile the sass files, javascript... Use this instead of ```npm run serve``` if you don't want to watch.

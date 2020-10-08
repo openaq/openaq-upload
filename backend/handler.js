@@ -75,7 +75,7 @@ module.exports.uploadData = (event, context, callback) => {
     },
     function (err, data) {
       if (err) {
-        callback('Unauthorized, please log in')
+        callback(`Unauthorized, please log in ${JSON.stringify(err)}`)
       } else {
         callback(null, {
           statusCode: 200,

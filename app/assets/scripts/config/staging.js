@@ -3,7 +3,7 @@
 export default {
   environment: 'staging',
   apiUrl: 'https://api.openaq.org',
-  uploadUrl: 'https://msvubagbu9.execute-api.us-west-2.amazonaws.com/dev/api/private',
+  uploadUrl: 'https://qsk7g5tyh3.execute-api.us-west-2.amazonaws.com/dev3/api/private',
   gist: {
     sampleCSV: 'https://gist.githubusercontent.com/dqgorelick/2812154e78816b7246fd3ee336048232/raw/5e48bc60b76c1f60dd89e91959ada6e630fa7719/openaq_upload_tool_sample_csv.csv',
     templateCSV: 'https://gist.githubusercontent.com/dqgorelick/07104a91fc92705f6e5f67d75de8d3fc/raw/aa5f39137bb366b9f423bdfc8f7de91f91ef5fbb/openaq_upload_tool_csv_template.csv',
@@ -12,7 +12,7 @@ export default {
   auth: {
     domain: 'dev-59haz2pg.auth0.com',
     clientID: '18Xb6jZ8il6wqjzI6eJwFW6NO4ey8j5i',
-    callbackUrl: 'http://d8vr8088dbn3x.cloudfront.net/callback',
+    callbackUrl: 'http://localhost:3000/callback',
     audience: 'https://dev-59haz2pg.auth0.com/api/v2/'
   }
 };
