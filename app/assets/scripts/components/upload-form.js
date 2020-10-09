@@ -97,7 +97,7 @@ class UploadForm extends React.Component {
         const errors = this.state.errors;
         let errorText = '';
         errors.forEach((error) => {
-            errorText += `${error}\n`;
+            errorText += `${error.details ? error.details : ''}\n`;
         });
         const errorMsg = errors.length
             ? <div className='form__group'>
@@ -193,7 +193,7 @@ class UploadForm extends React.Component {
                                                 {
                                                     this.state.errors.length > 0 ?
                                                         <div>
-                                                            <p>Summary: <strong>{failureTypes[this.state.failureType]}</strong></p>
+                                                            <p>Summary: <strong>{this.state.errors[0].text}</strong></p>
                                                             {errorMsg}
                                                         </div>
                                                         :
