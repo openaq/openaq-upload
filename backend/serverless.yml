@@ -11,8 +11,8 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   environment:
-    AUTH0_CLIENT_ID: ${file(./secrets.json):AUTH0_CLIENT_ID}
-    AUTH0_CLIENT_PUBLIC_KEY: ${file(./public_key)}
+    AUTH0_CLIENT_ID: ${file(./secrets_${opt:stage, 'dev'}.json):AUTH0_CLIENT_ID}
+    AUTH0_CLIENT_PUBLIC_KEY: ${file(./public_key_${opt:stage, 'dev'})}
     BUCKET: ${self:custom.bucket}
   iamRoleStatements:
     - Effect: Allow

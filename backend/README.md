@@ -10,9 +10,9 @@ This is an example of how to protect API endpoints with [auth0](https://auth0.co
 
 2. Log into [auth0 application](https://auth0.com/docs/applications) for the project.
 
-3. Get the `Client ID` (under `applications->${YOUR_APP_NAME}->settings`) and plugin your `AUTH0_CLIENT_ID` in a new file called `secrets.json` (based on `secrets.example.json`).
+3. Get the `Client ID` (under `applications->${YOUR_APP_NAME}->settings`) and plugin your `AUTH0_CLIENT_ID` in a new file called `secrets_<STAGE>.json` (based on `secrets.example.json`).
 
-4. Get the `public key` (under `applications->${YOUR_APP_NAME}->settings->Show Advanced Settings->Certificates->DOWNLOAD CERTIFICATE`). Download it as `PEM` format and save it as a new file called `public_key`
+4. Get the `public key` (under `applications->${YOUR_APP_NAME}->settings->Show Advanced Settings->Certificates->DOWNLOAD CERTIFICATE`). Download it as `PEM` format and save it as a new file called `public_key_<STAGE>`
 
 ## Deployment
 
