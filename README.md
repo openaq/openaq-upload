@@ -1,4 +1,4 @@
-# openaq-upload-tool
+# OpenAQ Upload Tool
 
 A tool to upload research-grade data to the OpenAQ platform
 
