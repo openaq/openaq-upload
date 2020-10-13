@@ -9,11 +9,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount() {
-    console.log('hello')
-  }
-
+  
   render() {
     return (
       <div className='page page--homepage'>

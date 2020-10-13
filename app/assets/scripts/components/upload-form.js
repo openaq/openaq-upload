@@ -13,7 +13,10 @@ import Loader from './loader';
 import Dropzone from 'react-dropzone';
 import measurementSchema from '../schemas/measurement-schema.json';
 
-import { failureTypes, parseCsv } from '../services/verify'
+import fileReaderStream from 'filereader-stream';
+import verifyCsv from '../services/verify'
+
+import failureType from '../constants'
 
 
 class UploadForm extends React.Component {
@@ -57,27 +60,30 @@ class UploadForm extends React.Component {
     }
 
     handleUploadClick() {
-        console.log('uploading data')
-        console.log(this.csvOutput)
-        this.props.uploadData(this.state.csvOutput)
+        const profile = auth.getProfile()
+        this.props.uploadData({
+            csvFile: this.state.csvOutput,
+            profile: profile.name
+        })
     }
 
     handleVerifyClick() {
         if (this.csvFile) {
-            parseCsv(this.csvFile).then(data => {
-                this.setState({
-                    csvOutput: data.csvOutput,
-                    errors: data.failures,
-                    menuState: 1
-                });
-            }).catch(err => {
-                this.setState({
-                    errors: err.failures,
-                    failureType: err.failureType,
-                    menuState: 1
-                });
-                console.log('error', err)
-            });
+            verifyCsv(fileReaderStream(this.csvFile))
+                .then(data => {
+                    this.setState({
+                        csvOutput: data.csvOutput,
+                        errors: data.failures,
+                        menuState: 1
+                    });
+                }) 
+                .catch (error => {
+                    this.setState({
+                        errors: error.failures,
+                        failureType: error.failureType,
+                        menuState: 1
+                    });
+                })
         } else {
             console.log('please upload CSV file')
         }
@@ -119,7 +125,6 @@ class UploadForm extends React.Component {
                                         <Dropzone
                                             accept='text/*, application/vnd.ms-excel,'
                                             onDropAccepted={acceptedFile => {
-                                                console.log(acceptedFile)
                                                 this.getFile(acceptedFile)
                                             }}
                                             onDropRejected={rejectedFile => {

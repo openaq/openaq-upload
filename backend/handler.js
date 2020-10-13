@@ -1,12 +1,16 @@
 const jwt = require('jsonwebtoken');
 const AWS = require('aws-sdk');
 const moment = require('moment');
-const s3 = new AWS.S3();
 
 // Set in `environment` of serverless.yml
 const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
 const AUTH0_CLIENT_PUBLIC_KEY = process.env.AUTH0_CLIENT_PUBLIC_KEY;
+const DB_REGION = process.env.DB_REGION;
 const UPLOAD_BUCKET = process.env.BUCKET;
+const LOGGING_TABLE = process.env.TABLE;
+
+const s3 = new AWS.S3();
+const ddb = new AWS.DynamoDB({region: DB_REGION});
 
 // Policy helper function
 const generatePolicy = (principalId, effect, resource) => {
@@ -28,7 +32,6 @@ const generatePolicy = (principalId, effect, resource) => {
 
 // Reusable Authorizer function, set on `authorizer` field in serverless.yml
 module.exports.auth = (event, context, callback) => {
-  console.log('event', event);
   if (!event.authorizationToken) {
     return callback('Unauthorized');
   }
@@ -47,17 +50,13 @@ module.exports.auth = (event, context, callback) => {
   try {
     jwt.verify(tokenValue, AUTH0_CLIENT_PUBLIC_KEY, options, (verifyError, decoded) => {
       if (verifyError) {
-        console.log('verifyError', verifyError);
         // 401 Unauthorized
-        console.log(`Token invalid. ${verifyError}`);
         return callback('Unauthorized');
       }
       // is custom authorizer function
-      console.log('valid from customAuthorizer', decoded);
       return callback(null, generatePolicy(decoded.sub, 'Allow', event.methodArn));
     });
   } catch (err) {
-    console.log('catch error. Invalid token', err);
     return callback('Unauthorized');
   }
 };
@@ -77,19 +76,36 @@ module.exports.uploadData = (event, context, callback) => {
       if (err) {
         callback(`Unauthorized, please log in ${JSON.stringify(err)}`)
       } else {
-        callback(null, {
-          statusCode: 200,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-          },
-          body: JSON.stringify({
-            message: 'Uploaded!'
-          }),
+        // upload entry to logging DB 
+        var tableParams = {
+          TableName: LOGGING_TABLE,
+          Item: {
+            'PROFILE' : {S: body.profile},
+            'TIMESTAMP' : {S: dateString},
+            'id': {S: dateString}
+          }
+        };
+        // Call DynamoDB to add the item to the table
+        ddb.putItem(tableParams, function(err, data) {
+          if (err) {
+            callback(`Error logging upload ${JSON.stringify(err)}`)
+          } else {
+            callback(null, {
+              statusCode: 200,
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+              },
+              body: JSON.stringify({
+                message: 'Uploaded!'
+              }),
+            });
+          }
         });
       }
     }
   );
+
 }
 
 module.exports.clearS3Bucket = (event, context, callback) => {
@@ -105,7 +121,6 @@ module.exports.clearS3Bucket = (event, context, callback) => {
       callback(e)
     }
     const isoPattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/
-    console.log(data.Contents)
     for (let i = 0; i < data.Contents.length; i++) {
       const key = data.Contents[i].Key
       deletePromises.push(((data, key) => {
@@ -119,9 +134,7 @@ module.exports.clearS3Bucket = (event, context, callback) => {
                 Key: key
               }, function (err, data) {
                 if (err) {
-                  console.log(err, err.stack);
                 } else {
-                  console.log('Successfully deleted', key);
                   clearedCount++
                 }
               });

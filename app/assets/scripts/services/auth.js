@@ -21,8 +21,6 @@ class Auth {
       scope: 'openid profile'
     });
 
-    console.log('auth config:', config)
-
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
@@ -47,7 +45,6 @@ class Auth {
         // navigate to the home route
         history.replace('/');
       } else if (err) {
-        console.log(err);
         store.dispatch(loginUserError(err));
         history.replace('/');
       }
@@ -69,7 +66,6 @@ class Auth {
   setSession (authResult) {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
-    console.log(authResult)
     // Set the time that the access token will expire at
     let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
     this.accessToken = authResult.accessToken;

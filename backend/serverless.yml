@@ -4,7 +4,8 @@ plugins:
   - serverless-offline
 
 custom:
-  bucket: upload-tool-bucket-${opt:stage, 'dev'}
+  bucket: ${file(./secrets_${opt:stage, 'dev'}.json):BUCKET_NAME}
+  dynamotable: ${file(./secrets_${opt:stage, 'dev'}.json):TABLE_NAME}
 
 provider:
   name: aws
@@ -13,7 +14,9 @@ provider:
   environment:
     AUTH0_CLIENT_ID: ${file(./secrets_${opt:stage, 'dev'}.json):AUTH0_CLIENT_ID}
     AUTH0_CLIENT_PUBLIC_KEY: ${file(./public_key_${opt:stage, 'dev'})}
-    BUCKET: ${self:custom.bucket}
+    BUCKET: ${file(./secrets_${opt:stage, 'dev'}.json):BUCKET_NAME}
+    TABLE: ${file(./secrets_${opt:stage, 'dev'}.json):TABLE_NAME}
+    DB_REGION: ${opt:region, self:provider.region}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -21,6 +24,12 @@ provider:
       Resource:
         - "arn:aws:s3:::${self:custom.bucket}/*"
         - "arn:aws:s3:::${self:custom.bucket}"
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource: 
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.TABLE}"
+        
 
 functions:
   auth:
@@ -40,6 +49,27 @@ functions:
 
 resources:
   Resources:
+    # # Uncomment below to S3 create bucket – remember you will need to add a policy (see README.md)
+    # UploadToolBucket:
+    #   Type: AWS::S3::Bucket
+    #   Properties:
+    #     BucketName: ${self:custom.bucket}
+    LoggingDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.dynamotable}
     # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
     GatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'
@@ -61,3 +91,4 @@ resources:
         RestApiId:
           Ref: 'ApiGatewayRestApi'
         StatusCode: '401'
+

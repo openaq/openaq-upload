@@ -49,7 +49,8 @@ function getTotalMeasurements () {
 
 function putUploadToolData (data) {
   return request('POST', uploadUrl, {
-    data: data
+    data: data.csvFile,
+    profile: data.profile
   })
 }
 

@@ -1,44 +1,14 @@
+const uploadSchema = require('../schemas/upload-schema.json');
 
-import uploadSchema from '../schemas/upload-schema.json';
-import attributionSchema from '../schemas/attribution-schema.json';
-
-import validator from 'jsonschema';
-import fileReaderStream from 'filereader-stream';
-
-import csv from 'csv-parser'
-
-
-export const failureType = {
-    0: {
-        code: 0, 
-        text: 'It looks like there was an error parsing the file you uploaded. Please make sure you have a valid CSV file.', 
-    },
-    1: {
-        code: 1,
-        text: 'It looks like there are no rows of data in your dataset, or we are unable to parse your data.'
-    },
-    2: {
-        code: 2,
-        text: 'It looks like you are missing one or more of the required headers (columns). See full details below.',
-        details: false
-    },
-    3: {
-        code: 3,
-        text: `There is an issue adding additional attributions with "attribution_name_<number>" and "attribution_url_<number>"`,
-        details: false
-    },
-    4: {
-        code: 4,
-        text: "There was an error with the format of one or more rows of data. View details below",
-        details: false
-    }
-}
+const validator = require('jsonschema');
+const csv = require('csv-parser');
+const failureType = require('../constants');
 
 function checkHeader(header) {
     const required = [
         'location', 'country', 'parameter', 'unit', 'value', 'date_utc', 'date_local'
-        , 'sourceName', 'sourceType', 'mobile', 'coordinates_latitude', 'coordinates_longitude'
-        ,'averagingPeriod_value','averagingPeriod_unit','attribution_name','attribution_url']
+        , 'sourceType', 'mobile', 'coordinates_latitude', 'coordinates_longitude'
+        , 'averagingPeriod_value', 'averagingPeriod_unit', 'attribution_name', 'attribution_url']
     let failures = [];
     required.forEach((prop) => {
         if (!(prop in header)) {
@@ -46,7 +16,7 @@ function checkHeader(header) {
                 ...failureType[2],
                 details: `Dataset is missing "${prop}" column.`
             });
-        } 
+        }
     });
     return failures
 }
@@ -58,19 +28,15 @@ function writeCsv(records) {
     return csv.join('\r\n');
 }
 
-export function parseCsv(csvFile) {
+function verifyCsv(filestream) {
     return new Promise((resolve, reject) => {
-
         let records = [];
         let failures = [];
         let line = 0;
-
-        fileReaderStream(csvFile).pipe(csv())
-            .on('error', (failure) => {
+        filestream.pipe(csv())
+            .on('error', () => {
                 failures.push(failureType[0]);
-                reject({
-                    failures: failures,
-                })
+                reject({failures})
             })
             .on('data', (data) => {
                 // Check for data;
@@ -100,31 +66,30 @@ export function parseCsv(csvFile) {
                         record[key] = value
                     })
                 }
-                
+
                 try {
                     // look for additional attribution columns. 
                     const rowKeys = Object.keys(record);
-                    let searchingAttributions = true;
-                    let attributionIndex = 2;
-                    if ('attribution_name_1' in rowKeys || 'attribution_url_1' in rowKeys) {
+                    if (rowKeys.indexOf('attribution_name_1') !== -1 || rowKeys.indexOf('attribution_url_1') !== -1) {
                         failures.push({
                             ...failureType[3],
-                            details: `Additional attributions start at "attribution_name_2" and "attribution_url_2"`
+                            details: `Found "attribution_name_1" or "attribution_url_1". Note that additional attributions start at "attribution_name_2" and "attribution_url_2"`
                         })
-                        reject({failures})
-                    } 
-                    while(searchingAttributions) {
-                        if (`attribution_name_${attributionIndex}` in rowKeys) {
-                            console.log(`found attribution ${attributionIndex}`)
-                            if (`attribution_url_${attributionIndex}` in rowKeys) {
-                                console.log('found attributions', attributionIndex)
+                        reject({ failures })
+                    }
+                    let searchingAttributions = true;
+                    let attributionIndex = 2;
+                    while (searchingAttributions) {
+                        if (rowKeys.indexOf(`attribution_name_${attributionIndex}`) !== -1) {
+                            if (rowKeys.indexOf(`attribution_url_${attributionIndex}`) !== -1) {
+                                attributionIndex++;
                                 continue
-                            } 
+                            }
                             failures.push({
                                 ...failureType[3],
                                 details: `Record ${line}: found "attribution_name_${attributionIndex}", but not "attribution_url_${attributionIndex}"`
                             })
-                        } else if (`attribution_url_${attributionIndex}` in rowKeys) {
+                        } else if (rowKeys.indexOf(`attribution_url_${attributionIndex}`) !== -1) {
                             failures.push({
                                 ...failureType[3],
                                 details: `Record ${line}: found "attribution_url_${attributionIndex}", but not "attribution_name_${attributionIndex}"`
@@ -142,7 +107,6 @@ export function parseCsv(csvFile) {
                 if (!failures.length) {
                     let v = validator.validate(record, uploadSchema);
                     v.errors.forEach((e) => {
-                        console.log(e)
                         failures.push({
                             ...failureType[4],
                             details: `Record ${line}: ${e.property.replace('instance.', '')} ${e.message}`
@@ -154,15 +118,21 @@ export function parseCsv(csvFile) {
             })
             .on('end', () => {
                 if (!failures.length) {
-                    // If no failures, convert record array to CSV
-                    resolve({
-                        failures: failures,
-                        csvOutput: writeCsv(records)
-                    })
-                }
-                reject({
-                    failures: failures
-                })
+                    if (records.length === 0) {
+                        failures.push(failureType[0]);
+                        reject({failures})
+                    }   else {
+                        // If no failures, convert record array to CSV
+                        resolve({
+                            failures: failures,
+                            csvOutput: writeCsv(records)
+                        })
+                    }
+                } 
+                reject({ failures })
             });
     })
 }
+
+
+module.exports = verifyCsv

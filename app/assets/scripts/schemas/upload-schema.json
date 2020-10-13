@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
-    "required": ["location", "country", "parameter", "unit", "value", "date_utc", "date_local", "sourceName", "sourceType", "mobile", "coordinates_latitude", "coordinates_longitude", "attribution_name", "attribution_url" ,"averagingPeriod_value","averagingPeriod_unit"],
+    "required": ["location", "country", "parameter", "unit", "value", "date_utc", "date_local", "sourceType", "mobile", "coordinates_latitude", "coordinates_longitude", "attribution_name", "attribution_url" ,"averagingPeriod_value","averagingPeriod_unit"],
     "patternProperties": {
         "^attribution_name_\\d{1,}$": {
             "type": "string",
@@ -70,7 +70,8 @@
         },
         "sourceName": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "enum": ["Upload Tool"]
         },
         "sourceType": {
             "type": "string",

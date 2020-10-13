@@ -16,7 +16,7 @@ This is an example of how to protect API endpoints with [auth0](https://auth0.co
 
 ## Deployment
 
-1. Check that the upload S3 bucket for the project exists in the AWS account. By default this will be named `upload-tool-bucket-<stage>`. 
+1. Check that the upload S3 bucket for the project exists in the AWS account. By default this will be named `upload-tool-bucket-<stage>`. View details on bucket creation in main [README.md]('../README.md')
 
 2. Deploy the service with `serverless deploy --stage <stage-name>` and grab the public and private endpoints. By default it will deploy to the `dev` stage.
 
