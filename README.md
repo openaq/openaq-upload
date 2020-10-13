@@ -27,12 +27,15 @@ The site will automatically refresh since it is bundled with livereload.
 
 ## Deploying 
 
-- TODO: setup github actions or create deploy script.
-
 1. Run `NODE_ENV=<environment> gulp build` to build a production version of the app 
 2. Deploy using AWS CLI: `aws s3 sync <root>/<to>/openaq-upload/dist/ s3://<deployment bucket>`
 3. Set up Cloudfront to handle routing to work with the React app 
-4. TODO: document guide for setting up Cloudfront 
+
+
+## Gists 
+
+- This project uses react-gist to display the markdown format document for the upload tool. This is currently set to [this link](https://gist.github.com/dqgorelick/c98a8721d2ec59d6242d714018e2a0e7), but can be changed, and added to the files in `app/assets/scripts/config`. This gist should reflect what exists in the [openAQ data format](https://github.com/openaq/openaq-data-format) repository, under `upload`. 
+
 
 ## Setting correct permissions on S3 upload bucket
 
