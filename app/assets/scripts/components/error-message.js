@@ -9,7 +9,7 @@ const ErrorMessage = props => {
           type='button'
           className='button button--primary-bounded message-button'
           onClick={(e) => props.retry()}>
-              Retry
+          Retry
         </button>
       ) : null}
     </div>

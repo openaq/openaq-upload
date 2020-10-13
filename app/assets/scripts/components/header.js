@@ -3,7 +3,7 @@ import React from 'react';
 import UserAuth from './user-auth';
 
 class Header extends React.Component {
-  render () {
+  render() {
     return (
       <header className='page__header' role='banner'>
         <div className='inner'>

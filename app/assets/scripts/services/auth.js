@@ -6,7 +6,7 @@ import store from '../state';
 import { loginUser, loginUserError } from '../state/user/actions';
 
 class Auth {
-  constructor () {
+  constructor() {
     this.accessToken = null;
     this.idToken = null;
     this.userProfile = null;
@@ -34,11 +34,11 @@ class Auth {
     this.scheduleRenewal();
   }
 
-  login () {
+  login() {
     this.auth0.authorize();
   }
 
-  handleAuthentication () {
+  handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
@@ -51,19 +51,19 @@ class Auth {
     });
   }
 
-  getAccessToken () {
+  getAccessToken() {
     return this.accessToken;
   }
 
-  getIdToken () {
+  getIdToken() {
     return this.idToken;
   }
 
-  getProfile () {
+  getProfile() {
     return this.userProfile;
   }
 
-  setSession (authResult) {
+  setSession(authResult) {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
     // Set the time that the access token will expire at
@@ -84,7 +84,7 @@ class Auth {
     }));
   }
 
-  renewSession () {
+  renewSession() {
     this.auth0.checkSession({}, (err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
@@ -96,7 +96,7 @@ class Auth {
     });
   }
 
-  logout () {
+  logout() {
     // Remove tokens and expiry time
     this.accessToken = null;
     this.idToken = null;
@@ -119,14 +119,14 @@ class Auth {
     history.replace('/');
   }
 
-  isAuthenticated () {
+  isAuthenticated() {
     // Check whether the current time is past the
     // access token's expiry time
     let expiresAt = this.expiresAt;
     return new Date().getTime() < expiresAt;
   }
 
-  scheduleRenewal () {
+  scheduleRenewal() {
     let expiresAt = this.expiresAt;
     const timeout = expiresAt - Date.now();
     if (timeout > 0) {
@@ -136,7 +136,7 @@ class Auth {
     }
   }
 
-  getExpiryDate () {
+  getExpiryDate() {
     return JSON.stringify(new Date(this.expiresAt));
   }
 }

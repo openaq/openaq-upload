@@ -2,25 +2,20 @@ import React from 'react';
 
 import Gist from 'react-gist';
 
+import { Link } from 'react-router-dom'
+
 import { gist } from '../config'
 
 import Header from '../components/header';
 import PageFooter from '../components/page-footer';
 
+import { exampleCsv, templateCsv } from '../templates/csvs'
+import { downloadFile } from '../services/download-link'
+
 class Format extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  downloadFile() {
-    const url = window.URL.createObjectURL(new Blob(['hello']));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'template.csv');
-    document.body.appendChild(link);
-    link.click();
-  }
-
 
   render() {
     return (
@@ -31,14 +26,18 @@ class Format extends React.Component {
             <p>This is the following format for uploading your CSV data.</p>
             <p>Please email us at <b>info@openaq.org</b> if you have any questions.</p>
           </div>
-        </Header>        
+        </Header>
         <div className="inner">
-                <div className="form-content">
-                    <div className="form-wrapper">
-                        <p>View a <a target="_blank" href={gist.sampleCSV}>sample CSV</a> or <a onClick={() => {this.downloadFile()}}>template CSV</a>.</p>
-                        <Gist id={gist.formatId}/>
-                    </div>
-                </div>
+          <div className="form-content">
+            <div className="form-wrapper">
+              <p>View a <a onClick={() => { downloadFile('openaq_upload_tool_sample.csv', exampleCsv) }}>sample CSV</a> or <a onClick={() => { downloadFile('openaq_upload_tool_template.csv', templateCsv) }}>template CSV</a>.
+                <br />
+                <br />
+                <Link to={{ pathname: '/' }}>Upload page</Link>
+              </p>
+              <Gist id={gist} />
+            </div>
+          </div>
         </div>
         <PageFooter></PageFooter>
       </div>

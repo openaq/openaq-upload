@@ -9,7 +9,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       <div className='page page--homepage'>
@@ -17,7 +17,7 @@ class Home extends React.Component {
           <div className='header-wrapper'>
             <h1 className='page__title'>OpenAQ Upload Tool</h1>
             <p>Have data to contribute to the platform? Apply for an account to share your government-level or research-grade data with the world.</p>
-            <p><Link to={{pathname: '/account'}}>Apply for an account</Link> or test your data below</p>
+            <p><Link to={{ pathname: '/account' }}>Apply for an account</Link> or test your data below</p>
           </div>
         </Header>
         <UploadForm></UploadForm>

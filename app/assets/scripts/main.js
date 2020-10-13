@@ -62,7 +62,7 @@ const PrivateRoute = connect(
 });
 
 class Root extends Component {
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <Router history={history}>

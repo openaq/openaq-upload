@@ -4,7 +4,7 @@ import qs from 'query-string';
 import { apiUrl, uploadUrl } from '../config';
 import auth from './auth';
 
-function request (method, url, params = {}) {
+function request(method, url, params = {}) {
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${auth.getAccessToken()}`
@@ -36,18 +36,18 @@ function request (method, url, params = {}) {
     })
     .then(res => res.json())
     .catch(error => {
-      return { 
+      return {
         message: `${error}`,
         error: true
       }
     })
 }
 
-function getTotalMeasurements () {
-  return request('GET', `${apiUrl}/v1/measurements`, {limit: 0})
+function getTotalMeasurements() {
+  return request('GET', `${apiUrl}/v1/measurements`, { limit: 0 })
 }
 
-function putUploadToolData (data) {
+function putUploadToolData(data) {
   return request('POST', uploadUrl, {
     data: data.csvFile,
     profile: data.profile

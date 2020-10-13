@@ -65,6 +65,9 @@ module.exports.auth = (event, context, callback) => {
 module.exports.uploadData = (event, context, callback) => {
   const dateString = new Date().toISOString()
   const body = JSON.parse(event.body)
+
+
+
   s3.putObject(
     {
       Bucket: UPLOAD_BUCKET,
