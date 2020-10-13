@@ -2,7 +2,7 @@ name: Build and test Upload Tool
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, uploader-2020 ]
   pull_request:
     types: [ submitted ]
 
