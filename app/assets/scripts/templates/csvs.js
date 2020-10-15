@@ -1,4 +1,4 @@
-export const templateCsv = `parameter,location,city,country,value,unit,date_utc,date_local,,sourceType,mobile,coordinates_latitude,coordinates_longitude,averagingPeriod_unit,averagingPeriod_value,attribution_name,attribution_url
+export const templateCsv = `parameter,location,city,country,value,unit,date_utc,date_local,sourceType,mobile,coordinates_latitude,coordinates_longitude,averagingPeriod_unit,averagingPeriod_value,attribution_name,attribution_url
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,`

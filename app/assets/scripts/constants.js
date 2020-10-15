@@ -9,7 +9,7 @@ const failureType = {
   },
   2: {
     code: 2,
-    text: 'It looks like you are missing one or more of the required headers (columns). See full details below.',
+    text: 'It looks like you are missing one or more of the required headers (columns). See below for details.',
     details: false
   },
   3: {

@@ -75,7 +75,7 @@
         },
         "sourceType": {
             "type": "string",
-            "enum": ["government", "research", "other"]
+            "enum": ["government", "research"]
         },
         "mobile": {
             "type": ["boolean", "string"],

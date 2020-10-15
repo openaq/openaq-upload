@@ -1,25 +1,5 @@
 'use strict';
 
-<<<<<<< HEAD
-var fs = require('fs');
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var watchify = require('watchify');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var sourcemaps = require('gulp-sourcemaps');
-var gutil = require('gulp-util');
-var exit = require('gulp-exit');
-var rev = require('gulp-rev');
-var revReplace = require('gulp-rev-replace');
-var SassString = require('node-sass').types.String;
-var notifier = require('node-notifier');
-var OPENAQ_ADDONS = require('openaq-design-system/gulp-addons');
-=======
 const fs = require('fs');
 const gulp = require('gulp');
 const $ = require('gulp-load-plugins')({
@@ -49,7 +29,6 @@ const through2 = require('through2');
 const { compile } = require('collecticons-processor');
 
 const OPENAQ_ADDONS = require('openaq-design-system/gulp-addons');
->>>>>>> 764de64... updates to upload tool
 
 // /////////////////////////////////////////////////////////////////////////////
 // --------------------------- Variables -------------------------------------//
@@ -117,14 +96,7 @@ gulp.task('serve', ['vendorScripts', 'javascript', 'collecticons', 'styles'], fu
 });
 
 gulp.task('clean', function () {
-<<<<<<< HEAD
-  return del(['.tmp', 'dist'])
-    .then(function () {
-      $.cache.clearAll();
-    });
-=======
   return del(['.tmp', 'dist']);
->>>>>>> 764de64... updates to upload tool
 });
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -264,24 +236,6 @@ gulp.task('html', function () {
 });
 
 gulp.task('images', function () {
-<<<<<<< HEAD
-  return gulp.src(['app/assets/graphics/**/*'])
-    .pipe($.cache($.imagemin([
-      $.imagemin.gifsicle({interlaced: true}),
-      $.imagemin.jpegtran({progressive: true}),
-      $.imagemin.optipng({optimizationLevel: 5}),
-      // don't remove IDs from SVGs, they are often used
-      // as hooks for embedding and styling
-      $.imagemin.svgo({plugins: [{cleanupIDs: false}]})
-    ])))
-    .pipe(gulp.dest('dist/assets/graphics'));
-});
-
-gulp.task('fonts', function () {
-  return gulp.src('app/assets/fonts/**/*')
-    .pipe(gulp.dest('.tmp/assets/fonts'))
-    .pipe(gulp.dest('dist/assets/fonts'));
-=======
   return gulp.src(['app/assets/graphics/**/*', OPENAQ_ADDONS.graphicsPath + '/**/*'])
     .pipe($.imagemin([
       $.imagemin.gifsicle({ interlaced: true }),
@@ -292,7 +246,6 @@ gulp.task('fonts', function () {
       $.imagemin.svgo({ plugins: [{ cleanupIDs: false }] })
     ]))
     .pipe(gulp.dest('dist/assets/graphics'));
->>>>>>> 764de64... updates to upload tool
 });
 
 gulp.task('extras', function () {

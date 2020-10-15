@@ -102,8 +102,8 @@ class UploadForm extends React.Component {
             {
               this.state.menuState === 0 ?
                 <section className="section-wrapper">
-                  <h2>Validate your data</h2>
-                  <p>View the <Link to={{ pathname: '/format' }}>guide for formatting your data</Link>. Or view a <a onClick={() => { downloadFile('openaq_upload_tool_sample.csv', exampleCsv) }}>sample CSV</a> or <a onClick={() => { downloadFile('openaq_upload_tool_template.csv', templateCsv) }}>template CSV</a>.</p>
+                  <h2>Format your data</h2>
+                  <p>To see what data attributes we require, check out our data <Link to={{ pathname: '/format' }}>format guide</Link>. Or view a <a onClick={() => { downloadFile('openaq_upload_tool_sample.csv', exampleCsv) }}>sample CSV</a> or <a onClick={() => { downloadFile('openaq_upload_tool_template.csv', templateCsv) }}>template CSV</a>. We only accept csv files at this time.</p>
                   <fieldset className='form__fieldset'>
                     <Dropzone
                       accept='text/*, application/vnd.ms-excel,'
@@ -128,7 +128,7 @@ class UploadForm extends React.Component {
                         </section>
                       )}
                     </Dropzone>
-                    <p>Verifying your data will all be performed in the browser. No data will be uploaded at this point.</p>
+                    <p>Note: Without logging in, your data will not be uploaded to the platform. The site just checks that the data is formatted correctly.</p>
                     <div>
                       <button disabled={!this.csvFile} className='button button--primary button--verify' type='button' onClick={this.handleVerifyClick.bind(this)}>
                         <span>Verify</span>
@@ -146,18 +146,18 @@ class UploadForm extends React.Component {
                       </div>
                       :
                       <section className="section-wrapper">
-                        <h2>Validate your data</h2>
+                        <h2>Format your data</h2>
                         {
                           this.state.errors.length > 0 ?
                             <div className="upload-status upload-status-error">
                               <h5>Status: Some changes necessary</h5>
                               <p>Please review notes below. After reformatting your data, you can check the formatting again. </p>
-                              <p>Guide for formatting your data <Link to={{ pathname: '/format' }}>here</Link>, or download a <a target="_blank" href="https://gist.githubusercontent.com/dqgorelick/2812154e78816b7246fd3ee336048232/raw/25274d5890a8ccad4a356bd58c3ab2d0301c285e/openaq_upload_tool_sample_csv.csv">CSV sample</a> or a <a target="_blank" href="https://gist.githubusercontent.com/dqgorelick/07104a91fc92705f6e5f67d75de8d3fc/raw/a37b83868bb0a4c9ce535138316c2d9c1399b629/openaq_upload_tool_csv_template.csv">CSV template</a>.</p>
+                            <p>Guide for formatting your data <Link to={{ pathname: '/format' }}>here</Link> and you can download a template CSV <a onClick={() => { downloadFile('openaq_upload_tool_template.csv', templateCsv) }}>here</a> or a sample <a onClick={() => { downloadFile('openaq_upload_tool_example.csv', exampleCsv) }}>here</a>.</p>
                             </div>
                             : this.props.uploadSuccess ?
                               <div className="upload-status upload-status-success">
-                                <h5>Status: Data Uploaded succesfully!</h5>
-                                <p>Your data will appear in the OpenAQ databases in the next <strong>15 minutes.</strong></p>
+                                <h5>Status: Data Uploaded successfully!</h5>
+                                <p>The fetch process runs every 10 minutes and your data will be ingested onto the platform very soon.</p>
                               </div>
                               : this.props.uploadFailed ?
                                 <div className="upload-status upload-status-success">
