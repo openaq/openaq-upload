@@ -125,28 +125,24 @@ module.exports.clearS3Bucket = (event, context, callback) => {
     }
     const isoPattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/
     for (let i = 0; i < data.Contents.length; i++) {
+      const lastModified = JSON.stringify(data.Contents[i].LastModified)
       const key = data.Contents[i].Key
-      deletePromises.push(((data, key) => {
         try {
-          if (key.match(isoPattern) !== null) {
-            const created = moment(key.match(isoPattern)[0])
+          if (lastModified.match(isoPattern) !== null) {
+            const created = moment(lastModified.match(isoPattern)[0])
             const difference = moment.duration(now.diff(created));
             if (difference > TTL) {
-              s3.deleteObject({
+              deletePromises.push(s3.deleteObject({
                 Bucket: UPLOAD_BUCKET,
                 Key: key
-              }, function (err, data) {
-                if (err) {
-                } else {
-                  clearedCount++
-                }
-              });
+              }).promise())
             }
+          } else {
+            console.log('Could not match', key)
           }
         } catch (e) {
           callback(`Error reading ${data.Contents[i].key}: ${e}`)
         }
-      }).promise)
     }
     await Promise.all(deletePromises);
     callback(null, 'done')
