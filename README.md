@@ -97,7 +97,7 @@ An example policy to attach to the **upload S3 bucket**
             ],
             "Principal": {
                 "AWS": [
-                    "arn:aws:iam::337884027122:role/openaq-upload-tool-<STAGE>-us-east-1-lambdaRole"
+                    "arn:aws:iam::<ACCOUNT_ID>:role/openaq-upload-tool-<STAGE>-us-east-1-lambdaRole"
                 ]
             }
         }
