@@ -1,0 +1,11 @@
+parameter,location,city,country,value,unit,date/utc,date/local,sourceName,sourceType,mobile,coordinates/latitude,coordinates/longitude,averagingPeriod/unit,averagingPeriod/value,attribution/name/1,attribution/url/1
+no2,HU0042A,Budapest,HU,14.35521,µg/m³,2020-09-17T21:00:00Z,2020-09-17T23:00:00+02:00,EEA Hungary,government,false,47.5419439994654,19.146122,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+pm10,HU0036A,Budapest,HU,27.26611,µg/m³,2020-09-17T21:00:00Z,2020-09-17T23:00:00+02:00,EEA Hungary,government,false,47.5619430494654,18.96000862,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+co,HU0036A,Budapest,HU,337.3743,µg/m³,2020-09-17T21:00:00Z,2020-09-17T23:00:00+02:00,EEA Hungary,government,false,47.5619430494654,18.96000862,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+o3,HU0042A,Budapest,HU,84.70672,µg/m³,2020-09-17T21:00:00Z,2020-09-17T23:00:00+02:00,EEA Hungary,government,false,47.5419439994654,19.146122,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+no2,HU0022A,Budapest,HU,14.36391,µg/m³,2020-09-17T21:00:00Z,2020-09-17T23:00:00+02:00,EEA Hungary,government,false,47.4308357194652,19.18417358,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+co,EE0015A,Harjumaa,EE,188.76,µg/m³,2020-09-17T21:00:00Z,2020-09-18T00:00:00+03:00,EEA Estonia,government,false,59.4569435095305,24.69862366,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+co,EE0018A,Harjumaa,EE,135.568,µg/m³,2020-09-17T21:00:00Z,2020-09-18T00:00:00+03:00,EEA Estonia,government,false,59.4141766899562,24.6495019016544,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+co,EE0009R,Lääne-Virumaa,EE,157.907,µg/m³,2020-09-17T21:00:00Z,2020-09-18T00:00:00+03:00,EEA Estonia,government,false,59.4944375368663,25.9305893283373,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+pm25,EE0016A,Jõgevamaa,EE,-1.515,µg/m³,2020-09-17T21:00:00Z,2020-09-18T00:00:00+03:00,EEA Estonia,government,false,58.7027778595238,26.75889778,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality
+pm25,EE0011R,Saaremaa,EE,22.954,µg/m³,2020-09-17T21:00:00Z,2020-09-18T00:00:00+03:00,EEA Estonia,government,false,58.3761100795211,21.84501266,hours,1,EEA,http://www.eea.europa.eu/themes/air/air-quality

@@ -1,0 +1,94 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": ["location", "country", "parameter", "unit", "value", "date_utc", "date_local", "sourceType", "mobile", "coordinates_latitude", "coordinates_longitude", "attribution_name", "attribution_url" ,"averagingPeriod_value","averagingPeriod_unit"],
+    "patternProperties": {
+        "^attribution_name_\\d{1,}$": {
+            "type": "string",
+            "minLength": 1
+        },
+        "^attribution_url_\\d{1,}$": {
+            "type": "string",
+            "pattern": "^(https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?"
+        }
+    },
+    "properties": {
+        "location": {
+            "type": "string",
+            "minLength": 1
+        },
+        "parameter": {
+            "type": "string",
+            "enum": ["pm25", "pm10", "no2", "so2", "o3", "co", "bc"]
+        },
+        "unit": {
+            "type": "string",
+            "enum": ["µg/m³", "ppm"]
+        },
+        "averagingPeriod_value": {
+            "value": {
+                "type": "number"
+            }
+        },
+        "averagingPeriod_unit": {
+            "unit": {
+                "type": "string",
+                "enum": ["hours"]
+            }
+        },
+        "attribution_name": {
+            "type": "string",
+            "minLength": 1
+        },
+        "attribution_url": {
+            "type": "string",
+            "pattern": "^(https?:\/\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\/\\w \\.-]*)*\/?"
+        },
+        "attribution": {
+            "type": "string"
+        },
+        "coordinates_latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+        },
+        "coordinates_longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+        },
+        "value": {
+            "type": "number"
+        },
+        "date_utc": {
+            "type": "string",
+            "pattern": "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+        },
+        "date_local": {
+            "type": "string",
+            "pattern": "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\+|-)\\d{2}:\\d{2}"
+        },
+        "sourceName": {
+            "type": "string",
+            "minLength": 1,
+            "enum": ["Upload Tool"]
+        },
+        "sourceType": {
+            "type": "string",
+            "enum": ["government", "research"]
+        },
+        "mobile": {
+            "type": ["boolean", "string"],
+            "enum": [true, false, "true", "false"]
+        },
+        "city": {
+            "type": "string",
+            "minLength": 1
+        },
+        "country": {
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 2
+        }
+    }
+}

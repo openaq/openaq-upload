@@ -1,23 +1,34 @@
 'use strict';
 
-var fs = require('fs');
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var watchify = require('watchify');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var sourcemaps = require('gulp-sourcemaps');
-var gutil = require('gulp-util');
-var exit = require('gulp-exit');
-var rev = require('gulp-rev');
-var revReplace = require('gulp-rev-replace');
-var SassString = require('node-sass').types.String;
-var notifier = require('node-notifier');
-var OPENAQ_ADDONS = require('openaq-design-system/gulp-addons');
+const fs = require('fs');
+const gulp = require('gulp');
+const $ = require('gulp-load-plugins')({
+  rename: {
+    'gulp-uglify-es': 'uglify'
+  },
+  postRequireTransforms: {
+    'uglify': function (uglify) {
+      return uglify.default;
+    }
+  }
+});
+const del = require('del');
+const browserSync = require('browser-sync');
+const reload = browserSync.reload;
+const historyApiFallback = require('connect-history-api-fallback');
+const watchify = require('watchify');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const sourcemaps = require('gulp-sourcemaps');
+const log = require('fancy-log');
+const SassString = require('node-sass').types.String;
+const notifier = require('node-notifier');
+const runSequence = require('run-sequence');
+const through2 = require('through2');
+const { compile } = require('collecticons-processor');
+
+const OPENAQ_ADDONS = require('openaq-design-system/gulp-addons');
 
 // /////////////////////////////////////////////////////////////////////////////
 // --------------------------- Variables -------------------------------------//
@@ -25,14 +36,15 @@ var OPENAQ_ADDONS = require('openaq-design-system/gulp-addons');
 
 // The package.json
 var pkg;
+var pkgDependencies;
 
 // Environment
 // Set the correct environment, which controls what happens in config.js
-if (!process.env.DS_ENV) {
-  if (!process.env.TRAVIS_BRANCH || process.env.TRAVIS_BRANCH !== process.env.DEPLOY_BRANCH) {
-    process.env.DS_ENV = 'staging';
+if (!process.env.NODE_ENV) {
+  if (!process.env.TRAVIS_BRANCH || process.env.TRAVIS_BRANCH !== process.env.PRODUCTION_BRANCH) {
+    process.env.NODE_ENV = 'staging';
   } else {
-    process.env.DS_ENV = 'production';
+    process.env.NODE_ENV = 'production';
   }
 }
 
@@ -44,6 +56,8 @@ var prodBuild = false;
 
 function readPackage () {
   pkg = JSON.parse(fs.readFileSync('package.json'));
+  pkgDependencies = Object.assign({}, pkg.dependencies);
+  delete pkgDependencies['tachyons-flexbox'];
 }
 readPackage();
 
@@ -56,35 +70,33 @@ gulp.task('default', ['clean'], function () {
   gulp.start('build');
 });
 
-gulp.task('serve', ['vendorScripts', 'javascript', 'styles', 'fonts'], function () {
+gulp.task('serve', ['vendorScripts', 'javascript', 'collecticons', 'styles'], function () {
   browserSync({
     port: 3000,
     server: {
       baseDir: ['.tmp', 'app'],
       routes: {
         '/node_modules': './node_modules'
-      },
-      middleware: OPENAQ_ADDONS.graphicsMiddleware(fs)
-    }
+      }
+    },
+    middleware: [
+      historyApiFallback(),
+      OPENAQ_ADDONS.graphicsMiddleware(fs)
+    ]
   });
 
   // watch for changes
   gulp.watch([
     'app/*.html',
-    'app/assets/graphics/**/*',
-    '.tmp/assets/fonts/**/*'
+    'app/assets/graphics/**/*'
   ]).on('change', reload);
 
   gulp.watch('app/assets/styles/**/*.scss', ['styles']);
-  gulp.watch('app/assets/fonts/**/*', ['fonts']);
   gulp.watch('package.json', ['vendorScripts']);
 });
 
 gulp.task('clean', function () {
-  return del(['.tmp', 'dist'])
-    .then(function () {
-      $.cache.clearAll();
-    });
+  return del(['.tmp', 'dist']);
 });
 
 // /////////////////////////////////////////////////////////////////////////////
@@ -102,11 +114,11 @@ gulp.task('javascript', function () {
     cache: {},
     packageCache: {},
     fullPaths: true
-  }), {poll: true});
+  }), { poll: true });
 
   function bundler () {
-    if (pkg.dependencies) {
-      watcher.external(Object.keys(pkg.dependencies));
+    if (pkgDependencies) {
+      watcher.external(Object.keys(pkgDependencies));
     }
     return watcher.bundle()
       .on('error', function (e) {
@@ -114,7 +126,7 @@ gulp.task('javascript', function () {
           title: 'Oops! Browserify errored:',
           message: e.message
         });
-        console.log('Javascript error:', e);
+        console.log('Javascript error:', e); // eslint-disable-line
         if (prodBuild) {
           process.exit(1);
         }
@@ -124,17 +136,27 @@ gulp.task('javascript', function () {
       .pipe(source('bundle.js'))
       .pipe(buffer())
       // Source maps.
-      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(sourcemaps.init({ loadMaps: true }))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('.tmp/assets/scripts'))
-      .pipe(reload({stream: true}));
+      .pipe(reload({ stream: true }));
   }
 
   watcher
-  .on('log', gutil.log)
-  .on('update', bundler);
+    .on('log', log)
+    .on('update', bundler);
 
   return bundler();
+});
+
+gulp.task('collecticons', function () {
+  return compile({
+    dirPath: 'app/assets/icons/collecticons/',
+    fontName: 'Collecticons',
+    styleDest: 'app/assets/styles/',
+    styleName: '_collecticons',
+    preview: false
+  });
 });
 
 // Vendor scripts. Basically all the dependencies in the package.js.
@@ -144,27 +166,27 @@ gulp.task('vendorScripts', function () {
   readPackage();
   var vb = browserify({
     debug: true,
-    require: pkg.dependencies ? Object.keys(pkg.dependencies) : []
+    require: pkgDependencies ? Object.keys(pkgDependencies) : []
   });
   return vb.bundle()
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .on('error', log.bind(log, 'Browserify Error'))
     .pipe(source('vendor.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('.tmp/assets/scripts/'))
-    .pipe(reload({stream: true}));
+    .pipe(reload({ stream: true }));
 });
 
 // //////////////////////////////////////////////////////////////////////////////
 // --------------------------- Helper tasks -----------------------------------//
 // ----------------------------------------------------------------------------//
 
-gulp.task('build', ['vendorScripts', 'javascript'], function () {
-  gulp.start(['html', 'images', 'fonts', 'extras'], function () {
+gulp.task('build', function () {
+  runSequence(['vendorScripts', 'javascript', 'collecticons', 'styles'], ['html', 'images', 'extras'], function () {
     return gulp.src('dist/**/*')
-      .pipe($.size({title: 'build', gzip: true}))
-      .pipe(exit());
+      .pipe($.size({ title: 'build', gzip: true }))
+      .pipe($.exit());
   });
 });
 
@@ -175,7 +197,7 @@ gulp.task('styles', function () {
         title: 'Oops! Sass errored:',
         message: e.message
       });
-      console.log('Sass error:', e.toString());
+      console.log('Sass error:', e.toString()); // eslint-disable-line
       if (prodBuild) {
         process.exit(1);
       }
@@ -193,40 +215,37 @@ gulp.task('styles', function () {
           return v;
         }
       },
-      includePaths: require('node-bourbon').with('node_modules/jeet/scss', OPENAQ_ADDONS.scssPath)
+      includePaths: require('node-bourbon').with('node_modules/jeet/scss', require('openaq-design-system/gulp-addons').scssPath)
     }))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/assets/styles'))
-    .pipe(reload({stream: true}));
+    .pipe(reload({ stream: true }));
 });
 
-gulp.task('html', ['styles'], function () {
+gulp.task('html', function () {
   return gulp.src('app/*.html')
-    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe($.if('*.js', $.uglify()))
+    .pipe($.useref({ searchPath: ['.tmp', 'app', '.'] }))
+    .pipe(cacheUseref())
+    // Do not compress comparisons, to avoid MapboxGLJS minification issue
+    // https://github.com/mapbox/mapbox-gl-js/issues/4359#issuecomment-286277540
+    .pipe($.if('*.js', $.uglify({ compress: { comparisons: false } })))
     .pipe($.if('*.css', $.csso()))
-    .pipe($.if(/\.(css|js)$/, rev()))
-    .pipe(revReplace())
+    .pipe($.if(/\.(css|js)$/, $.rev()))
+    .pipe($.revRewrite())
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('images', function () {
-  return gulp.src(['app/assets/graphics/**/*'])
-    .pipe($.cache($.imagemin([
-      $.imagemin.gifsicle({interlaced: true}),
-      $.imagemin.jpegtran({progressive: true}),
-      $.imagemin.optipng({optimizationLevel: 5}),
+  return gulp.src(['app/assets/graphics/**/*', OPENAQ_ADDONS.graphicsPath + '/**/*'])
+    .pipe($.imagemin([
+      $.imagemin.gifsicle({ interlaced: true }),
+      $.imagemin.jpegtran({ progressive: true }),
+      $.imagemin.optipng({ optimizationLevel: 5 }),
       // don't remove IDs from SVGs, they are often used
       // as hooks for embedding and styling
-      $.imagemin.svgo({plugins: [{cleanupIDs: false}]})
-    ])))
+      $.imagemin.svgo({ plugins: [{ cleanupIDs: false }] })
+    ]))
     .pipe(gulp.dest('dist/assets/graphics'));
-});
-
-gulp.task('fonts', function () {
-  return gulp.src('app/assets/fonts/**/*')
-    .pipe(gulp.dest('.tmp/assets/fonts'))
-    .pipe(gulp.dest('dist/assets/fonts'));
 });
 
 gulp.task('extras', function () {
@@ -241,3 +260,28 @@ gulp.task('extras', function () {
     dot: true
   }).pipe(gulp.dest('dist'));
 });
+
+/**
+ * Caches the useref files.
+ * Avoid sending repeated js and css files through the minification pipeline.
+ * This happens when there are multiple html pages to process.
+ */
+function cacheUseref () {
+  let files = {
+    // path: content
+  };
+  return through2.obj(function (file, enc, cb) {
+    const path = file.relative;
+    if (files[path]) {
+      // There's a file in cache. Check if it's the same.
+      const prev = files[path];
+      if (Buffer.compare(file.contents, prev) !== 0) {
+        this.push(file);
+      }
+    } else {
+      files[path] = file.contents;
+      this.push(file);
+    }
+    cb();
+  });
+}
