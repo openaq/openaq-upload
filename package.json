@@ -80,7 +80,7 @@
     "gulp-useref": "^3.1.5",
     "json-schema-faker": "github:json-schema-faker/json-schema-faker#develop",
     "node-bourbon": "^4.2.8",
-    "node-notifier": "^5.2.1",
+    "node-notifier": "^8.0.1",
     "node-sass": "^4.9.0",
     "require-globify": "^1.4.1",
     "run-sequence": "^2.2.1",
